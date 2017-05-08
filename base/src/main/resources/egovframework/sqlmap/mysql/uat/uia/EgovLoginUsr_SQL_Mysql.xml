@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="LoginUsr">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="loginVO" type="egovframework.com.uat.uia.service.LoginVO"/>
+
+	<!-- 로그인 처리를 위한 resultMap -->
+	<resultMap id="login" class="egovframework.com.uat.uia.service.LoginVO">
+		<result property="id" column="id" columnIndex="1"/>
+		<result property="name" column="name" columnIndex="2"/>
+		<result property="email" column="email" columnIndex="3"/>
+		<result property="password" column="password" columnIndex="4"/>
+		<result property="confmAt" column="confmAt" columnIndex="5"/>
+		<result property="userSe" column="userSe" columnIndex="6"/>	
+		<result property="siteId" column="siteId" columnIndex="7"/>	
+	</resultMap>
+	
+	<!-- 아이디 찾기를 위한 resultMap -->
+	<resultMap id="id" class="egovframework.com.uat.uia.service.LoginVO">
+		<result property="id" column="id" columnIndex="1"/>
+		<result property="name" column="name" columnIndex="2"/>
+		<result property="mobileNo" column="mobileNo" columnIndex="3"/>
+		<result property="email" column="email" columnIndex="4"/>
+	</resultMap>
+	
+	<!-- 비밀번호 처리를 위한 resultMap -->
+	<resultMap id="password" class="egovframework.com.uat.uia.service.LoginVO">
+		<result property="id" column="id" columnIndex="1"/>
+		<result property="name" column="name" columnIndex="2"/>
+		<result property="password" column="password" columnIndex="3"/>
+		<result property="mobileNo" column="mobileNo" columnIndex="4"/>
+		<result property="email" column="email" columnIndex="5"/>
+	</resultMap>
+	
+	<!-- 공통  일반 로그인 -->
+	<select id="loginDAO.actionLogin" resultMap="login">
+			SELECT USER_ID AS id
+			     , USER_NM AS name
+			     , EMAIL_ADRES AS email
+			     , PASSWORD AS password
+			     , CONFM_AT AS confmAt
+			     , USER_SE_CODE AS userSe
+			     , SITE_ID AS siteId
+			 FROM COMTNMBER
+			 WHERE USER_ID = #id#
+			   AND PASSWORD = #password#
+               AND DELETE_AT = 'N'
+               AND CONFM_AT = 'Y'
+	</select>
+	
+	<!-- 공통 인증서 로그인 -->
+	<select id="loginDAO.actionCrtfctLogin" resultMap="login">
+		<![CDATA[
+			SELECT USER_ID AS id
+			     , USER_NM AS name
+			     , EMAIL_ADRES AS email
+			     , PASSWORD AS password
+			     , CONFM_AT AS confmAt
+			     , USER_SE_CODE AS userSe
+			     , SITE_ID AS siteId
+			FROM COMTNMBER
+            WHERE USER_ID=#id# 
+            	AND CRTFCT_DN = #dn#
+            	AND DELETE_AT = 'N'
+            	AND CONFM_AT = 'Y'
+            	AND USER_SE_CODE IN ('08', '10', '99')
+        ]]>
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="loginDAO.searchId" resultMap="id">
+		<!-- 일반회원 -->
+			
+			SELECT 
+				USER_ID AS id
+				, USER_NM AS name
+				, MOBLPHON_NO AS mobileNo
+				, EMAIL_ADRES AS email
+			  FROM COMTNMBER
+			 WHERE 
+			 	DELETE_AT = 'N' AND CONFM_AT = 'Y'
+			 	AND USER_NM = #name#
+				<isEqual prepend="AND" property="findSe" compareValue="email">
+					EMAIL_ADRES = #email#
+			   </isEqual>
+			   <isEqual prepend="AND" property="findSe" compareValue="mobileNo">
+					MOBLPHON_NO = #mobileNo#
+			   </isEqual>
+			   <isEqual prepend="AND" property="userSeCode" compareValue="06">
+					USER_SE_CODE IN ('06')
+			   </isEqual>
+			   <isEqual prepend="AND" property="userSeCode" compareValue="08">
+					USER_SE_CODE IN ('08', '10', '99')
+			   </isEqual>
+			   <isEqual prepend="AND" property="userSeCode" compareValue="02">
+					USER_SE_CODE IN ('02', '04')
+			   </isEqual>
+				AND ROWNUM = 1
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="loginDAO.searchPassword" resultMap="password">
+		<![CDATA[
+			SELECT
+				USER_ID AS id 
+				, USER_NM AS name
+				, PASSWORD AS password
+				, MOBLPHON_NO AS mobileNo
+				, EMAIL_ADRES AS email
+			  FROM COMTNMBER
+			 WHERE USER_ID = #id#
+			   AND CREDT_ID = #ihidNum#
+			   AND DELETE_AT = 'N'
+			   AND CONFM_AT = 'Y'
+		]]>
+	</select>
+	
+	<!-- 변경된 비밀번호를 저장 -->
+	<update id="loginDAO.updatePassword">
+	<![CDATA[
+		UPDATE COMTNMBER
+			SET PASSWORD = #password#
+			, LAST_UPDUSR_PNTTM		= SYSDATE()
+		WHERE user_id = #id#
+	]]>
+	</update>
+	
+	<!-- SSO정보 -->
+	<select id="loginDAO.searchSSOLogin" resultMap="password">
+		<![CDATA[
+			SELECT
+				USER_ID AS id 
+				, USER_NM AS name
+				, PASSWORD AS password
+				, MOBLPHON_NO AS mobileNo
+				, EMAIL_ADRES AS email
+			  FROM COMTNMBER
+			 WHERE USER_ID = #userId#
+			   AND DELETE_AT = 'N'
+			   AND CONFM_AT = 'Y'
+		]]>
+	</select>
+	
+</sqlMap>

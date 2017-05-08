@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Comtnbbsctgrymaster">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="comtnbbsctgrymasterSerarchVO" type="egovframework.com.cop.bbs.service.CtgryMaster"/>
+	
+	<resultMap id="comtnbbsctgrymaster" class="egovframework.com.cop.bbs.service.CtgryMaster">
+		<result property="siteId" column="SITE_ID" columnIndex="1"/>
+		<result property="sysTyCode" column="SYS_TY_CODE" columnIndex="2"/>
+		<result property="ctgrymasterId" column="CTGRYMASTER_ID" columnIndex="3"/>
+		<result property="ctgrymasterNm" column="CTGRYMASTER_NM" columnIndex="4"/>
+		<result property="creatDt" column="CREAT_DT" columnIndex="5"/>
+	</resultMap>
+	
+	<insert id="comtnbbsctgrymasterDAO.insertComtnbbsctgrymaster_S">
+		<![CDATA[
+			INSERT INTO COMTNBBSCTGRYMASTER 
+				( SITE_ID
+				  , SYS_TY_CODE
+				  , CTGRYMASTER_ID
+				  , CTGRYMASTER_NM
+				  , CREAT_DT
+				  , USE_AT )
+			VALUES ( 
+				  IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				  , IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+			 	  ,#ctgrymasterId#
+				  , #ctgrymasterNm#
+				  , SYSDATE()
+				  , 'Y' )
+		]]>
+	</insert>
+	
+	<update id="comtnbbsctgrymasterDAO.updateComtnbbsctgrymaster_S">
+		<![CDATA[
+			UPDATE COMTNBBSCTGRYMASTER
+				SET SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+					, SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+					, CTGRYMASTER_NM=#ctgrymasterNm#
+			WHERE CTGRYMASTER_ID=#ctgrymasterId#
+				AND SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+		]]>
+	</update>
+	
+	<delete id="comtnbbsctgrymasterDAO.deleteComtnbbsctgrymaster_S">
+		<![CDATA[
+			UPDATE COMTNBBSCTGRYMASTER
+				SET USE_AT='N'
+			WHERE CTGRYMASTER_ID=#ctgrymasterId#
+				AND SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+		]]>
+	</delete>
+	
+	<select id="comtnbbsctgrymasterDAO.selectComtnbbsctgrymaster_S" resultMap="comtnbbsctgrymaster">
+		<![CDATA[
+			SELECT
+				SITE_ID
+				, SYS_TY_CODE
+				, CTGRYMASTER_ID
+				, CTGRYMASTER_NM
+				, CREAT_DT
+			FROM COMTNBBSCTGRYMASTER
+			WHERE CTGRYMASTER_ID=#ctgrymasterId#
+				AND SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+		]]>
+	</select>
+	
+	<select id="comtnbbsctgrymasterDAO.selectComtnbbsctgrymasterList_D" parameterClass="comtnbbsctgrymasterSerarchVO" resultMap="comtnbbsctgrymaster">
+			SELECT
+				SITE_ID
+				, SYS_TY_CODE
+				, CTGRYMASTER_ID
+				, CTGRYMASTER_NM
+				, CREAT_DT
+			FROM COMTNBBSCTGRYMASTER
+			WHERE
+				SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#) 
+				AND USE_AT = 'Y'
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+				<![CDATA[	CTGRYMASTER_NM LIKE '%' || #searchKeyword# || '%' 		]]>
+			</isEqual>
+			ORDER BY CTGRYMASTER_ID DESC 
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	<select id="comtnbbsctgrymasterDAO.selectComtnbbsctgrymasterListTotCnt_S" parameterClass="comtnbbsctgrymasterSerarchVO" resultClass="int">
+			SELECT
+					COUNT(*)
+			FROM COMTNBBSCTGRYMASTER
+			WHERE 
+				SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#) 
+				AND USE_AT = 'Y'
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+				<![CDATA[	CTGRYMASTER_NM LIKE '%' || #searchKeyword# || '%' 		]]>
+			</isEqual>
+	</select>
+
+</sqlMap>

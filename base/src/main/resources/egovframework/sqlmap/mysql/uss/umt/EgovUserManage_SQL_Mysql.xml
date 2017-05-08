@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="User">
+
+    <typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="userVO"       type = "egovframework.com.uss.umt.service.UserManageVO"/>
+	
+	<select id="userManageDAO.selectUserAuthList" parameterClass="userVO" resultClass="egovMap">
+		SELECT
+				USER_ID
+				 , SITE_ID
+				 , CREDT_ID
+				 , PASSWORD
+				 , USER_NM
+				 , EMAIL_ADRES
+				 , TLPHON_NO
+				 , MOBLPHON_NO
+				 , USER_SE_CODE
+				 , ZIP
+				 , ADRES
+				 , ADRES_DETAIL
+				 , FRST_REGIST_PNTTM
+				 , CONFM_AT
+		    FROM    COMTNMBER
+		        WHERE 
+		        	DELETE_AT = 'N'
+		        <isNotEmpty property="siteId" prepend="AND">
+					SITE_ID = #siteId#
+				</isNotEmpty>
+		        <isNotEmpty property="searchSe" prepend="AND">
+					USER_SE_CODE = #searchSe#
+				</isNotEmpty>
+		        <isEqual prepend="AND" property="searchCondition" compareValue="0">
+		            USER_ID LIKE '%' ||#searchKeyword#|| '%'
+		        </isEqual>
+		        <isEqual prepend="AND" property="searchCondition" compareValue="1">
+		            USER_NM LIKE '%' ||#searchKeyword#|| '%'
+		        </isEqual>
+		        <isEqual prepend="AND" property="searchCondition" compareValue="2">
+		        	<!-- 
+		            FN_CRYPT('DES', EMAIL_ADRES, 'J2M') 
+		             -->
+		            EMAIL_ADRES LIKE '%' ||#searchKeyword#|| '%'
+		        </isEqual>
+        ORDER BY USER_ID ASC
+    </select>
+    
+    <select id="userManageDAO.selectUserAuthListTotCnt" parameterClass="userVO" resultClass="int">
+            SELECT COUNT(1) totcnt
+            FROM    COMTNMBER
+            WHERE DELETE_AT = 'N'
+            	<isNotEmpty property="siteId" prepend="AND">
+					SITE_ID = #siteId#
+				</isNotEmpty>
+            	<isNotEmpty property="searchSe" prepend="AND">
+					USER_SE_CODE = #searchSe#
+				</isNotEmpty>
+		        <isEqual prepend="AND" property="searchCondition" compareValue="0">
+		            USER_ID LIKE '%' ||#searchKeyword#|| '%'
+		        </isEqual>
+		        <isEqual prepend="AND" property="searchCondition" compareValue="1">
+		            USER_NM LIKE '%' ||#searchKeyword#|| '%'
+		        </isEqual>
+		        <isEqual prepend="AND" property="searchCondition" compareValue="2">
+		            <!-- 
+		            FN_CRYPT('DES', EMAIL_ADRES, 'J2M') 
+		             -->
+		            EMAIL_ADRES LIKE '%' ||#searchKeyword#|| '%'
+		        </isEqual>
+    </select>
+	
+	<select id="userManageDAO.selectUserList" parameterClass="userVO" resultClass="egovMap">
+		    SELECT
+				A.USER_ID
+				 , A.SITE_ID
+				 , A.CREDT_ID
+				 <!-- , A.PASSWORD -->
+				 , A.USER_NM
+				 , A.EMAIL_ADRES
+				 , A.TLPHON_NO
+				 , A.MOBLPHON_NO
+				 , A.MOBLPHON_RECPTN_AT
+				 , A.ZIP
+				 , A.ADRES
+				 , A.ADRES_DETAIL
+				 , A.BRTHDY
+				 , A.SEXDSTN
+				 , A.USER_SE_CODE
+				 , DATE_FORMAT(now(), '%Y-%m-%d') AS FRST_REGIST_PNTTM
+				 , A.CONFM_AT
+		    FROM COMTNMBER A
+		        WHERE 
+		        	A.DELETE_AT = 'N'
+	        	<isNotEmpty property="siteId" prepend="AND">
+					SITE_ID = #siteId#
+				</isNotEmpty>
+				<isNotEmpty property="searchSe" prepend="AND">
+					A.USER_SE_CODE = #searchSe#
+				</isNotEmpty>
+				<isEqual property="searchCnd" compareValue="AND">
+			        <isEqual prepend="AND" property="searchCondition" compareValue="0">
+			            A.USER_ID = #searchKeyword#
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="1">
+			            A.USER_NM = #searchKeyword#
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="2">
+			            A.MOBLPHON_NO = #searchKeyword#
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="3">
+			            A.EMAIL_ADRES = #searchKeyword#
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="7">
+			            A.BRTHDY = #searchKeyword#
+			        </isEqual>
+		        </isEqual>
+		        <isEqual property="searchCnd" compareValue="OR">
+			        <isEqual prepend="AND" property="searchCondition" compareValue="0">
+			            A.USER_ID LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="1">
+			            A.USER_NM LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="2">
+			            A.MOBLPHON_NO LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="3">
+			            A.EMAIL_ADRES LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="7">
+			            A.BRTHDY LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+		        </isEqual>
+		        <isNotEmpty property="recptnAt" prepend="AND">
+					A.MOBLPHON_RECPTN_AT = #recptnAt#
+				</isNotEmpty>
+        ORDER BY A.USER_ID ASC
+    </select>
+    
+    <select id="userManageDAO.selectUserListTotCnt" parameterClass="userVO" resultClass="int">
+            SELECT COUNT(1) totcnt
+            FROM COMTNMBER A
+            WHERE A.DELETE_AT = 'N'
+            	<isNotEmpty property="siteId" prepend="AND">
+					SITE_ID = #siteId#
+				</isNotEmpty>
+				<isNotEmpty property="searchSe" prepend="AND">
+					A.USER_SE_CODE = #searchSe#
+				</isNotEmpty>
+				<isEqual property="searchCnd" compareValue="AND">
+			        <isEqual prepend="AND" property="searchCondition" compareValue="0">
+			            A.USER_ID = #searchKeyword#
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="1">
+			            A.USER_NM = #searchKeyword#
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="2">
+			            A.MOBLPHON_NO = #searchKeyword#
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="3">
+			            A.EMAIL_ADRES = #searchKeyword#
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="7">
+			            A.BRTHDY = #searchKeyword#
+			        </isEqual>
+		        </isEqual>
+		        <isEqual property="searchCnd" compareValue="OR">
+			        <isEqual prepend="AND" property="searchCondition" compareValue="0">
+			            A.USER_ID LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="1">
+			            A.USER_NM LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="2">
+			            A.MOBLPHON_NO LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="3">
+			            A.EMAIL_ADRES LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+			        <isEqual prepend="AND" property="searchCondition" compareValue="7">
+			            A.BRTHDY LIKE '%' ||#searchKeyword#|| '%' 
+			        </isEqual>
+		        </isEqual>
+		        <isNotEmpty property="recptnAt" prepend="AND">
+					A.MOBLPHON_RECPTN_AT = #recptnAt#
+				</isNotEmpty>
+    </select>
+        
+    <select id="userManageDAO.selectUser" resultClass="userVO">
+        <![CDATA[
+            SELECT 
+				USER_ID userId
+				  , SITE_ID siteId
+				  , CREDT_ID credtId
+				  , PASSWORD password
+				  , USER_NM userNm
+				  , EMAIL_ADRES emailAdres
+				  , TLPHON_NO tlphonNo
+				  , MOBLPHON_NO moblphonNo
+				  , ZIP zip
+				  , ADRES adres
+				  , ADRES_DETAIL adresDetail
+				  , USER_SE_CODE userSeCode
+				  , BRTHDY brthdy
+				  , SEXDSTN sexdstn
+				  , SLRCLD_LRR_CODE	slrcldLrrCode
+				  , EMAIL_RECPTN_AT emailRecptnAt
+				  , MOBLPHON_RECPTN_AT moblphonRecptnAt
+				  , PHOTO_ORIGINAL_FILE_NM photoOriginalFileNm
+				  , PHOTO_STRE_FILE_NM photoStreFileNm
+				  , FRST_REGIST_PNTTM frstRegistPnttm
+				  , CONFM_AT confmAt
+				  , ST_GRADE stGrade
+				  , ST_CLASS stClass
+				  , ST_CODE stCode
+				  , (SELECT CODE_NM FROM COMTCCMMNDETAILCODE WHERE USE_AT='Y' AND CODE=ST_CODE) stName
+				  , ST_TY_CODE stTyCode
+				FROM COMTNMBER
+            WHERE USER_ID=#userId#
+            	AND DELETE_AT = 'N'
+        ]]>
+    </select>
+    
+    <!-- 20130225 이재현 회원가입시 개별정보 학교 조회  -->
+    <select id="userManageDAO.selectSchool" resultClass="userVO">
+        <![CDATA[
+           SELECT CODE_NM codeNm
+           		, CODE code
+		   FROM COMTCCMMNDETAILCODE
+		   WHERE CODE LIKE '%ELE%'
+		       	 OR CODE LIKE '%MSK%'
+		       	 OR CODE LIKE '%HGS%' AND USE_AT = 'Y'
+        ]]>
+    </select>
+    
+    <select id="userManageDAO.selectUserSchoolList" resultClass="userVO">
+		      SELECT 
+                A.USER_ID userId
+                  , A.SITE_ID siteId
+                  , A.CREDT_ID credtId
+                  , A.PASSWORD password
+                  , A.USER_NM userNm
+                  , A.EMAIL_ADRES emailAdres
+                  , A.TLPHON_NO tlphonNo
+                  , A.MOBLPHON_NO moblphonNo
+                  , A.ZIP zip
+                  , A.ADRES adres
+                  , A.ADRES_DETAIL adresDetail
+                  , A.USER_SE_CODE userSeCode
+                  , A.BRTHDY brthdy
+                  , A.SEXDSTN sexdstn
+                  , A.SLRCLD_LRR_CODE slrcldLrrCode
+                  , A.EMAIL_RECPTN_AT emailRecptnAt
+                  , A.MOBLPHON_RECPTN_AT moblphonRecptnAt
+                  , A.PHOTO_ORIGINAL_FILE_NM photoOriginalFileNm
+                  , A.PHOTO_STRE_FILE_NM photoStreFileNm
+                  , A.FRST_REGIST_PNTTM frstRegistPnttm
+                  , A.CONFM_AT confmAt
+                  , A.ST_GRADE stGrade
+                  , A.ST_CLASS stClass
+                  , A.ST_CODE stCode
+                  , B.CODE_NM stName
+                  , A.ST_TY_CODE stTyCode
+            FROM COMTNMBER A LEFT OUTER JOIN 
+                	(SELECT CODE, CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID='CA0014' AND USE_AT='Y') B
+                    ON A.ST_CODE = B.CODE
+            WHERE A.DELETE_AT = 'N'
+            	AND A.ST_GRADE = #stGrade#
+            	AND A.ST_CLASS = #stClass#
+            	AND A.ST_CODE = #stCode#
+    </select>
+    
+	<insert id="userManageDAO.insertUser">
+		<![CDATA[
+			INSERT INTO COMTNMBER 
+				( USER_ID
+				  , SITE_ID
+				  , CREDT_ID
+				  , PASSWORD
+				  , USER_NM
+				  , EMAIL_ADRES
+				  , TLPHON_NO
+				  , MOBLPHON_NO
+				  , ZIP
+				  , ADRES
+				  , ADRES_DETAIL
+				  , USER_SE_CODE
+				  , BRTHDY
+				  , SLRCLD_LRR_CODE
+				  , SEXDSTN
+				  , EMAIL_RECPTN_AT
+				  , MOBLPHON_RECPTN_AT
+				  , PHOTO_ORIGINAL_FILE_NM
+				  , PHOTO_STRE_FILE_NM
+				  , FRST_REGIST_PNTTM
+				  , DELETE_AT
+				  , CONFM_AT
+				  , ST_GRADE
+				  , ST_CLASS
+				  , ST_CODE
+				  , ST_TY_CODE
+				  )
+			VALUES ( #userId#
+				  , #siteId#
+				  , #credtId#
+				  , #password#
+				  , #userNm#
+				  , #emailAdres#
+				  , #tlphonNo#
+				  , #moblphonNo#
+				  , #zip#
+				  , #adres#
+				  , #adresDetail#
+				  , #userSeCode#
+				  , #brthdy#
+				  , #slrcldLrrCode#
+				  , #sexdstn#
+				  , #emailRecptnAt#
+				  , #moblphonRecptnAt#
+				  , #photoOriginalFileNm#
+				  , #photoStreFileNm#
+				  , SYSDATE()
+				  , 'N' 
+				  , 'Y' 
+				  , #stGrade#
+  				  , #stClass#
+  				  , #stCode#
+  				  , #stTyCode#
+  				  )
+		]]>
+	</insert>
+		
+	<update id="userManageDAO.updateManageUser">
+        	UPDATE COMTNMBER
+			SET USER_ID					= #userId#
+				<!-- , SITE_ID				= #siteId# -->
+				<isNotEmpty property="userNm" prepend=",">USER_NM				= #userNm# </isNotEmpty>
+				<isNotEmpty property="password" prepend=",">PASSWORD = #password#</isNotEmpty>
+				, EMAIL_ADRES			= #emailAdres#
+				, TLPHON_NO				= #tlphonNo#
+				, MOBLPHON_NO			= #moblphonNo#
+				, ZIP					= #zip# 
+				, ADRES					= #adres# 
+				, ADRES_DETAIL			= #adresDetail# 
+				<isNotEmpty property="brthdy" prepend=",">BRTHDY = #brthdy# </isNotEmpty>
+				<isNotEmpty property="slrcldLrrCode" prepend=",">SLRCLD_LRR_CODE = #slrcldLrrCode#</isNotEmpty>
+				<isNotEmpty property="sexdstn" prepend=",">SEXDSTN = #sexdstn# </isNotEmpty>
+				<isNotEmpty property="emailRecptnAt" prepend=",">EMAIL_RECPTN_AT = #emailRecptnAt# </isNotEmpty>
+				<isNotEmpty property="moblphonRecptnAt" prepend=",">MOBLPHON_RECPTN_AT = #moblphonRecptnAt# </isNotEmpty>
+				<isNotEmpty property="userSeCode" prepend=",">USER_SE_CODE = #userSeCode# </isNotEmpty>
+				<isNotEmpty property="photoOriginalFileNm" prepend=",">
+				PHOTO_ORIGINAL_FILE_NM	= #photoOriginalFileNm# 
+				, PHOTO_STRE_FILE_NM	= #photoStreFileNm#
+			   </isNotEmpty>
+				, LAST_UPDUSR_ID		= #lastUpdusrId#
+				, LAST_UPDUSR_PNTTM		= SYSDATE()   
+			WHERE  USER_ID				= #targetId#
+				 AND DELETE_AT = 'N'
+    </update>
+    
+	<update id="userManageDAO.updateUser">
+        	UPDATE COMTNMBER
+			SET EMAIL_ADRES				= #emailAdres#
+				, TLPHON_NO				= #tlphonNo#
+				, MOBLPHON_NO			= #moblphonNo#
+				, ZIP					= #zip# 
+				, ADRES					= #adres# 
+				, ADRES_DETAIL			= #adresDetail# 
+				<isNotEmpty property="brthdy" prepend=",">BRTHDY = #brthdy# </isNotEmpty>
+				<isNotEmpty property="slrcldLrrCode" prepend=",">SLRCLD_LRR_CODE = #slrcldLrrCode#</isNotEmpty>
+				<isNotEmpty property="sexdstn" prepend=",">SEXDSTN = #sexdstn# </isNotEmpty>
+				<isNotEmpty property="emailRecptnAt" prepend=",">EMAIL_RECPTN_AT = #emailRecptnAt# </isNotEmpty>
+				<isNotEmpty property="moblphonRecptnAt" prepend=",">MOBLPHON_RECPTN_AT = #moblphonRecptnAt# </isNotEmpty>
+				<isNotEmpty property="userSeCode" prepend=",">USER_SE_CODE = #userSeCode# </isNotEmpty>
+				<isNotEmpty property="photoOriginalFileNm" prepend=",">
+				PHOTO_ORIGINAL_FILE_NM	= #photoOriginalFileNm# 
+				, PHOTO_STRE_FILE_NM	= #photoStreFileNm#
+			   </isNotEmpty>
+				, LAST_UPDUSR_ID		= #lastUpdusrId#
+				, LAST_UPDUSR_PNTTM		= SYSDATE()
+				, ST_GRADE		= #stGrade#
+				, ST_CLASS		= #stClass#
+				, ST_CODE		= #stCode#
+				, ST_TY_CODE		= #stTyCode#
+			WHERE  USER_ID				= #userId#
+				 AND DELETE_AT = 'N'
+
+    </update>
+    
+    <update id="userManageDAO.updatePassword">
+        	UPDATE COMTNMBER
+			SET PASSWORD				= #password#
+			WHERE  USER_ID = #userId# <!--  AND DELETE_AT = 'N' AND CONFM_AT = 'Y' -->
+    </update>
+    
+    <update id="userManageDAO.updateUserRhibt">
+        	UPDATE COMTNMBER
+			SET
+				CONFM_AT				= 'N', 
+				CONFM_PNTTM 			= SYSDATE(), 
+				LAST_UPDUSR_PNTTM		= SYSDATE()
+			WHERE  USER_ID				= #userId#
+				 AND DELETE_AT = 'N'
+    </update>
+    
+    <update id="userManageDAO.updateUserRelis">
+        	UPDATE COMTNMBER
+			SET
+				CONFM_AT				= 'Y', 
+				CONFM_PNTTM 			= SYSDATE(),
+				LAST_UPDUSR_PNTTM		= SYSDATE()
+			WHERE  USER_ID				= #userId#
+				 AND DELETE_AT = 'N'
+    </update>
+    
+	<select id="userManageDAO.selectLoingUser" resultClass="userVO">
+        <![CDATA[
+            SELECT 
+				USER_ID userId, 
+				USER_NM userName, 
+				CONFM_AT confmAt
+				FROM COMTNMBER
+            WHERE USER_ID=#userId# AND DELETE_AT = 'N'
+        ]]>
+    </select>
+    
+    <select id="userManageDAO.checkDiDplct" resultClass="int">
+        <![CDATA[
+            SELECT COUNT(CREDT_ID)
+            FROM COMTNMBER
+            WHERE CREDT_ID = #credtId#
+        ]]>
+    </select>
+    
+    <select id="userManageDAO.checkUserDplct" resultClass="userVO">
+        <![CDATA[
+            SELECT USER_ID userId
+            FROM COMTNMBER
+            WHERE CREDT_ID = #credtId# AND ROWNUM = 1
+        ]]>
+    </select>
+    
+    <select id="userManageDAO.checkIdDplct" resultClass="int">
+        <![CDATA[
+            SELECT COUNT(USER_ID)
+            FROM COMTNMBER
+            WHERE USER_ID = #checkId#
+        ]]>
+    </select>
+    
+    <select id="userManageDAO.selectCheckPassword" resultClass="int">
+        <![CDATA[
+            SELECT
+                    COUNT(USER_ID)
+            FROM    COMTNMBER
+            WHERE   USER_ID = #userId# AND PASSWORD = #password#
+        ]]>
+    </select>
+        	
+	<update id="userManageDAO.deleteUser">
+        	UPDATE COMTNMBER
+			SET CREDT_ID				= ''
+				, USER_NM				= ''
+				, PASSWORD				= #userId# <!-- FN_CRYPT('ENC', #userId#, 'J2M') -->
+				, EMAIL_ADRES			= ''
+				, TLPHON_NO				= ''
+				, MOBLPHON_NO			= ''
+				, ZIP					= '' 
+				, ADRES					= '' 
+				, ADRES_DETAIL			= ''
+				, BRTHDY				= ''
+				, SLRCLD_LRR_CODE		= ''
+				, SEXDSTN				= ''
+				, EMAIL_RECPTN_AT		= ''
+				, MOBLPHON_RECPTN_AT	= ''
+				, PHOTO_ORIGINAL_FILE_NM	= ''
+				, PHOTO_STRE_FILE_NM	= ''
+				, LAST_UPDUSR_ID		= #lastUpdusrId#
+				, LAST_UPDUSR_PNTTM		= SYSDATE()
+				, DELETE_RESN			= #deleteResn#
+				, DELETE_AT				= 'Y'
+				, DELETE_PNTTM			= SYSDATE()
+				, CONFM_AT 				= 'N'
+			WHERE  USER_ID				= #userId#
+				 AND DELETE_AT = 'N'
+
+    </update>
+    
+    
+    <insert id="userManageDAO.insertUserTmp">
+		<![CDATA[
+			INSERT INTO COMTNMBERTMP
+				( USER_ID
+				  , SITE_ID
+				  , PASSWORD
+				  , USER_NM
+				  , EMAIL_ADRES
+				  , TLPHON_NO
+				  , MOBLPHON_NO
+				  , ZIP
+				  , ADRES
+				  , ADRES_DETAIL
+				  , USER_SE_CODE
+				  , BRTHDY
+				  , SLRCLD_LRR_CODE
+				  , SEXDSTN
+				  , EMAIL_RECPTN_AT
+				  , MOBLPHON_RECPTN_AT
+				  , PHOTO_ORIGINAL_FILE_NM
+				  , PHOTO_STRE_FILE_NM
+				  , MESSAGE
+				  , FRST_REGIST_PNTTM
+				  , ST_GRADE
+				  , ST_CLASS
+				  , ST_NUMBER
+				  )
+			VALUES ( #userId#
+				  , #siteId#
+				  , #password#
+				  , #userNm#
+				  , #emailAdres#
+				  , #tlphonNo#
+				  , #moblphonNo#
+				  , #zip#
+				  , #adres#
+				  , #adresDetail#
+				  , #userSeCode#
+				  , #brthdy#
+				  , #slrcldLrrCode#
+				  , #sexdstn#
+				  , 'Y'
+				  , 'Y'
+				  , #photoOriginalFileNm#
+				  , #photoStreFileNm#
+				  , #message#
+				  , SYSDATE() 
+				  , #stGrade#
+				  , #stClass#
+				  , #stNumber#
+				  )
+		]]>
+	</insert>
+	
+	<insert id="userManageDAO.insertUserForTmp">
+		<![CDATA[
+			INSERT INTO COMTNMBER 
+				( USER_ID
+				  , SITE_ID
+				  , PASSWORD
+				  , USER_NM
+				  , EMAIL_ADRES
+				  , TLPHON_NO
+				  , MOBLPHON_NO
+				  , ZIP
+				  , ADRES
+				  , ADRES_DETAIL
+				  , USER_SE_CODE
+				  , BRTHDY
+				  , SLRCLD_LRR_CODE
+				  , SEXDSTN
+				  , EMAIL_RECPTN_AT
+				  , MOBLPHON_RECPTN_AT
+				  , PHOTO_ORIGINAL_FILE_NM
+				  , PHOTO_STRE_FILE_NM
+				  , FRST_REGIST_PNTTM
+				  , DELETE_AT
+				  , CONFM_AT)
+			SELECT
+				USER_ID
+				  , SITE_ID
+				  , PASSWORD
+				  , USER_NM
+				  , EMAIL_ADRES
+				  , TLPHON_NO
+				  , MOBLPHON_NO
+				  , ZIP
+				  , ADRES
+				  , ADRES_DETAIL
+				  , DECODE(USER_SE_CODE, 'S', '06', 'T', '08')
+				  , BRTHDY
+				  , SLRCLD_LRR_CODE
+				  , SEXDSTN
+				  , EMAIL_RECPTN_AT
+				  , MOBLPHON_RECPTN_AT
+				  , PHOTO_ORIGINAL_FILE_NM
+				  , PHOTO_STRE_FILE_NM
+				  , SYSDATE()
+				  , 'N' 
+				  , 'Y'
+			FROM COMTNMBERTMP
+			WHERE SITE_ID=#siteId#
+		]]>
+	</insert>
+	
+	<select id="userManageDAO.selectUserTmpErrorList" resultClass="userVO">
+		SELECT ROWNUM as no, A.*		
+		FROM
+		(
+            SELECT 
+				USER_ID as userId
+				  , SITE_ID as siteId
+				  , PASSWORD as password
+				  , USER_NM as userNm
+				  , EMAIL_ADRES as emailAdres
+				  , TLPHON_NO as tlphonNo
+				  , MOBLPHON_NO as moblphonNo
+				  , ZIP as zip
+				  , ADRES as adres
+				  , ADRES_DETAIL as adresDetail
+				  , USER_SE_CODE as userSeCode
+				  , BRTHDY as brthdy
+				  , SLRCLD_LRR_CODE as slrcldLrrCode
+				  , SEXDSTN as sexdstn
+				  , EMAIL_RECPTN_AT as emailRecptnAt
+				  , MOBLPHON_RECPTN_AT as moblphonRecptnAt
+				  , PHOTO_ORIGINAL_FILE_NM as photoOriginalFileNm
+				  , PHOTO_STRE_FILE_NM as photoStreFileNm
+				  , MESSAGE as message
+				  , ST_GRADE as stGrade
+				  , ST_CLASS as stClass
+				  , ST_NUMBER as stNumber
+				FROM COMTNMBERTMP
+            WHERE SITE_ID=#siteId#
+            	AND MESSAGE IS NOT NULL
+            ORDER BY USER_ID ASC
+		) A
+    </select>
+    
+    <select id="userManageDAO.selectUserTmpDplctList" resultClass="userVO">
+		SELECT ROWNUM as no, A.*		
+		FROM
+		(
+            SELECT 
+				A.USER_ID as userId
+				  , A.SITE_ID as siteId
+				  , A.PASSWORD as password
+				  , A.USER_NM as userNm
+				  , A.EMAIL_ADRES as emailAdres
+				  , A.TLPHON_NO as tlphonNo
+				  , A.MOBLPHON_NO as moblphonNo
+				  , A.ZIP as zip
+				  , A.ADRES as adres
+				  , A.ADRES_DETAIL as adresDetail
+				  , A.USER_SE_CODE as userSeCode
+				  , A.BRTHDY as brthdy
+				  , A.SLRCLD_LRR_CODE as slrcldLrrCode
+				  , A.SEXDSTN as sexdstn
+				  , A.EMAIL_RECPTN_AT as emailRecptnAt
+				  , A.MOBLPHON_RECPTN_AT as moblphonRecptnAt
+				  , A.PHOTO_ORIGINAL_FILE_NM as photoOriginalFileNm
+				  , A.PHOTO_STRE_FILE_NM as photoStreFileNm
+				  , A.MESSAGE as message
+				  , A.ST_GRADE as stGrade
+				  , A.ST_CLASS as stClass
+				  , A.ST_NUMBER as stNumber
+				FROM COMTNMBERTMP A, COMTNMBER B
+            WHERE A.USER_ID = B.USER_ID AND A.SITE_ID=#siteId#
+            ORDER BY A.USER_ID ASC
+		) A
+    </select>
+    
+    <insert id="userManageDAO.insertUserTmpForSrm">
+		<![CDATA[
+			
+		]]>
+	</insert>
+	
+    <delete id="userManageDAO.deleteUserTmp">
+		DELETE FROM COMTNMBERTMP
+		WHERE SITE_ID=#siteId#
+ 	</delete>
+    
+</sqlMap>

@@ -1,0 +1,1145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Comtnschdulinfo">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="comtnschdulinfoVO" type="egovframework.com.evt.service.ComtnschdulinfoVO"/>
+	<typeAlias  alias="comtnschdulinfoSerarchVO" type="egovframework.com.evt.service.ComtnschdulinfoDefaultVO"/>
+	<typeAlias  alias="comtneventadhrncVO" type="egovframework.com.evt.service.ComtneventadhrncVO"/>
+	<typeAlias  alias="comtneventadhrncSerarchVO" type="egovframework.com.evt.service.ComtneventadhrncDefaultVO"/>
+	<typeAlias  alias="comtneventprzwnerSerarchVO" type="egovframework.com.evt.service.ComtneventprzwnerDefaultVO"/>
+
+	<resultMap id="comtnschdulinfo" class="egovframework.com.evt.service.ComtnschdulinfoVO">
+		<result property="schdulId" column="SCHDUL_ID" columnIndex="1"/>
+		<result property="schdulClCode" column="SCHDUL_CL_CODE" columnIndex="2"/>
+		<result property="schdulBgnde" column="SCHDUL_BGNDE" columnIndex="3"/>
+		<result property="schdulEndde" column="SCHDUL_ENDDE" columnIndex="4"/>
+		<result property="schdulNm" column="SCHDUL_NM" columnIndex="5"/>
+		<result property="schdulStreFileNm" column="SCHDUL_STRE_FILE_NM" columnIndex="6"/>
+		<result property="schdulCn" column="SCHDUL_CN" columnIndex="7"/>
+		<result property="schdulChargerId" column="SCHDUL_CHARGER_ID" columnIndex="8"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="9"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="10"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="11"/>
+		<result property="useAt" column="USE_AT" columnIndex="12"/>
+		<result property="przwnerNmpr" column="PRZWNER_NMPR" columnIndex="13"/>
+		<result property="presnatnDe" column="PRESNATN_DE" columnIndex="14"/>
+		<result property="state" column="STATE" columnIndex="15"/>
+		<result property="popupAt" column="POPUP_AT" columnIndex="16"/>
+		<result property="siteId" column="SITE_ID" columnIndex="17"/>
+	</resultMap>
+	
+	<resultMap id="eventListView" class="egovframework.com.evt.service.ComtnschdulinfoVO">
+	  	<result property="schdulId" column="SCHDUL_ID" columnIndex="1"/>
+		<result property="schdulClCode" column="SCHDUL_CL_CODE" columnIndex="2"/>
+		<result property="schdulBgnde" column="SCHDUL_BGNDE" columnIndex="3"/>
+		<result property="schdulEndde" column="SCHDUL_ENDDE" columnIndex="4"/>
+		<result property="schdulNm" column="SCHDUL_NM" columnIndex="5"/>
+		<result property="schdulStreFileNm" column="SCHDUL_STRE_FILE_NM" columnIndex="6"/>
+		<result property="schdulCn" column="SCHDUL_CN" columnIndex="7"/>
+		<result property="schdulChargerId" column="SCHDUL_CHARGER_ID" columnIndex="8"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="9"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="10"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="11"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="12"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="13"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="14"/>
+		<result property="useAt" column="USE_AT" columnIndex="15"/>
+		<result property="przwnerNmpr" column="PRZWNER_NMPR" columnIndex="16"/>
+		<result property="presnatnDe" column="PRESNATN_DE" columnIndex="17"/>
+		<result property="state" column="STATE" columnIndex="18"/>
+		<result property="questionList" column="SCHDUL_ID" select="comtnschdulinfoDAO.getEventQuestionAll" />
+	</resultMap>
+	
+	<resultMap id="eventListViewResult" class="egovframework.com.evt.service.ComtnschdulinfoVO">
+	  	<result property="schdulId" column="SCHDUL_ID" columnIndex="1"/>
+		<result property="schdulClCode" column="SCHDUL_CL_CODE" columnIndex="2"/>
+		<result property="schdulBgnde" column="SCHDUL_BGNDE" columnIndex="3"/>
+		<result property="schdulEndde" column="SCHDUL_ENDDE" columnIndex="4"/>
+		<result property="schdulNm" column="SCHDUL_NM" columnIndex="5"/>
+		<result property="totalCo" column="TOTAL_CO" columnIndex="6"/>
+		<result property="questionList" column="SCHDUL_ID" select="comtnschdulinfoDAO.getEventQuestionAllResult" />
+	</resultMap>
+  
+	<resultMap id="comtneventqesitm" class="egovframework.com.evt.service.ComtneventqesitmVO">
+		<result property="qesitmId" column="QESITM_ID" columnIndex="1"/>
+		<result property="qesitmSn" column="QESITM_SN" columnIndex="2"/>
+		<result property="qesitmTyCode" column="QESITM_TY_CODE" columnIndex="3"/>
+		<result property="qesitmSj" column="QESITM_SJ" columnIndex="4"/>
+		<result property="qesitmCn" column="QESITM_CN" columnIndex="5"/>
+		<result property="mxmmAnswerCo" column="MXMM_ANSWER_CO" columnIndex="6"/>
+		<result property="schdulId" column="SCHDUL_ID" columnIndex="7"/>
+		<result property="exampleList" column="QESITM_ID" select="comtnschdulinfoDAO.getOnlineEventExamples" />
+		<result property="answerList" column="QESITM_ID" select="comtnschdulinfoDAO.getOnlineEventAnswers" />
+	</resultMap>
+	
+	<resultMap id="comtneventqesitmResult" class="egovframework.com.evt.service.ComtneventqesitmVO">
+		<result property="qesitmId" column="QESITM_ID" columnIndex="1"/>
+		<result property="qesitmSn" column="QESITM_SN" columnIndex="2"/>
+		<result property="qesitmTyCode" column="QESITM_TY_CODE" columnIndex="3"/>
+		<result property="qesitmSj" column="QESITM_SJ" columnIndex="4"/>
+		<result property="qesitmCn" column="QESITM_CN" columnIndex="5"/>
+		<result property="mxmmAnswerCo" column="MXMM_ANSWER_CO" columnIndex="6"/>
+		<result property="schdulId" column="QESITM_ID" columnIndex="7"/>
+		<result property="exampleList" column="QESITM_ID" select="comtnschdulinfoDAO.getOnlineEventExamplesResult" />
+		<result property="answerList" column="QESITM_ID" select="comtnschdulinfoDAO.getOnlineEventAnswers" />
+	</resultMap>
+	
+	<resultMap id="comtneventqesitmex" class="egovframework.com.evt.service.ComtneventqesitmexVO">
+		<result property="exId" column="EX_ID" columnIndex="1"/>
+		<result property="exSn" column="EX_SN" columnIndex="2"/>
+		<result property="exCn" column="EX_CN" columnIndex="3"/>
+		<result property="qesitmId" column="QESITM_ID" columnIndex="4"/>
+	</resultMap>
+	
+	<resultMap id="comtneventqesitmexResult" class="egovframework.com.evt.service.ComtneventqesitmexVO">
+		<result property="exId" column="EX_ID" columnIndex="1"/>
+		<result property="exSn" column="EX_SN" columnIndex="2"/>
+		<result property="exCn" column="EX_CN" columnIndex="3"/>
+		<result property="qesitmId" column="QESITM_ID" columnIndex="4"/>
+		<result property="qesitUserCo" column="QESITM_USER_CO" columnIndex="5"/>
+		<!-- <result property="userSta" column="USER_STA" columnIndex="6"/> -->		
+	</resultMap>
+	
+	<resultMap id="comtneventcnsr" class="egovframework.com.evt.service.ComtneventcnsrVO">
+		<result property="cnsrId" column="CNSR_ID" columnIndex="1"/>
+		<result property="qesitmId" column="QESITM_ID" columnIndex="2"/>
+		<result property="cnsrSn" column="CNSR_SN" columnIndex="3"/>
+		<result property="choiseCnsr" column="CHOISE_CNSR" columnIndex="4"/>
+		<result property="sbjctCnsr" column="SBJCT_CNSR" columnIndex="5"/>
+	</resultMap>
+	
+	<resultMap id="selectUserEventList" class="egovframework.com.evt.service.ComtnschdulinfoVO">
+		<result property="schdulNm" column="SCHDUL_NM" columnIndex="1"/>
+		<result property="schdulBgnde" column="SCHDUL_BGNDE" columnIndex="2"/>
+		<result property="schdulEndde" column="SCHDUL_ENDDE" columnIndex="3"/>
+		<result property="schdulClCode" column="SCHDUL_CL_CODE" columnIndex="4"/>
+		<result property="przwnerNmpr" column="PRZWNER_NMPR" columnIndex="5"/>
+		<result property="presnatnDe" column="PRESNATN_DE" columnIndex="6"/>
+		<result property="useAt" column="USE_AT" columnIndex="7"/>
+		<result property="state" column="STATE" columnIndex="8"/>
+		<result property="wner" column="WNER" columnIndex="9"/>
+	</resultMap>
+  
+	<resultMap id="comtneventform" class="egovframework.com.evt.service.ComtnschdulinfoVO">
+		<result property="reqstId" column="REQST_ID" columnIndex="1"/>
+		<result property="schdulId" column="SCHDUL_ID" columnIndex="2"/>
+		<result property="reqstForm" column="REQST_FORM" columnIndex="3"/>
+	</resultMap>
+  
+  	<resultMap id="comtneventformaswper" class="egovframework.com.evt.service.ComtneventformaswperVO">
+		<result property="aswperId" column="ASWPER_ID" columnIndex="1"/>
+		<result property="reqstCn" column="REQST_CN" columnIndex="2"/>
+		<result property="reqstId" column="REQST_ID" columnIndex="3"/>
+		<result property="schdulId" column="SCHDUL_ID" columnIndex="4"/>
+		<result property="userId" column="USER_ID" columnIndex="5"/>
+	</resultMap>
+	
+	<resultMap id="sbjctList" class="egovframework.com.evt.service.ComtneventaswperVO">
+		<result property="essayCnsr" column="ESSAY_CNSR" columnIndex="1"/>
+	</resultMap>
+	
+	<resultMap id="eventListUserList" class="egovframework.com.evt.service.ComtneventadhrncVO">
+		<result property="userId" column="USER_ID" columnIndex="1"/>
+		<result property="adhrncNm" column="ADHRNC_NM" columnIndex="2"/>
+		<result property="userTy" column="USER_TY" columnIndex="3"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="4"/>
+		<result property="wnerAt" column="WNER_AT" columnIndex="5"/>
+	</resultMap>
+
+	<resultMap id="comtneventuserAnswerResult" class="egovframework.com.evt.service.ComtneventqesitmVO">
+		<result property="qesitmSn" column="QESITM_SN" columnIndex="1"/>
+		<result property="userCnsr" column="USER_CNSR" columnIndex="2"/>
+		<result property="userScore" column="USER_SCORE" columnIndex="3"/>
+	</resultMap>
+	
+	<parameterMap id="paramInsert" class="egovframework.com.evt.service.ComtnschdulinfoVO">
+		<parameter property="schdulId" />
+		<parameter property="schdulClCode"/>
+		<parameter property="schdulBgnde"/>
+		<parameter property="schdulEndde"/>
+		<parameter property="schdulNm"/>
+		<parameter property="schdulStreFileNm"/>
+		<parameter property="schdulCn" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="schdulChargerId"/>
+		<parameter property="atchFileId"/>
+		<parameter property="frstRegisterId"/>
+		<parameter property="useAt"/>
+		<parameter property="przwnerNmpr"/>
+		<parameter property="presnatnDe"/>
+		<parameter property="popupAt"/>
+		<parameter property="siteId"/>
+	</parameterMap>
+	
+	<parameterMap id="paramUpdate" class="egovframework.com.evt.service.ComtnschdulinfoVO">	
+		<parameter property="schdulClCode"/>
+		<parameter property="schdulBgnde"/>
+		<parameter property="schdulEndde"/>
+		<parameter property="schdulNm"/>
+		<parameter property="schdulStreFileNm"/>
+		<parameter property="schdulCn" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="atchFileId"/>
+		<parameter property="lastUpdusrId"/>
+		<parameter property="przwnerNmpr"/>
+		<parameter property="presnatnDe"/>
+		<parameter property="useAt"/>
+		<parameter property="popupAt"/>
+		<parameter property="siteId"/>
+		<parameter property="schdulId" />
+	</parameterMap>
+	
+	
+	
+	<select id="comtnschdulinfoDAO.getUserAnswerList" resultMap="Comtnschdulinfo.comtneventuserAnswerResult">
+	<![CDATA[
+  		SELECT 
+            QESITM_SN,
+            NULL AS USER_CNSR,
+            DECODE(COUNT(*), SUM(BINGO), 1, 0) USER_SCORE
+        FROM
+        (
+            SELECT 
+                A.QESITM_SN,
+                CASE 
+                    WHEN A.QESITM_TY_CODE = 1 THEN
+                        CASE WHEN B.CHOICE_ANSWER = B.USER_CHOICE_ANSWER THEN 1 END
+                    WHEN A.QESITM_TY_CODE = 2 THEN
+                        CASE WHEN TRIM(B.ESSAY_ANSWER) = REPLACE(B.USER_ESSAY_ANSWER,' ','') THEN 1 END
+                END AS BINGO,
+				B.ASWPER_SN,
+                DECODE(A.QESITM_TY_CODE, 1, TO_CHAR(USER_CHOICE_ANSWER), USER_ESSAY_ANSWER) AS ANSWER
+                
+            FROM COMTNEVENTQESITM A, 
+            (
+                SELECT 
+					C.USER_ID,
+					B.QESITM_ID,
+					MAX(B.CNSR_SN) ASWPER_SN,
+					MAX(B.CHOISE_CNSR) CHOICE_ANSWER,
+					MAX(B.SBJCT_CNSR) ESSAY_ANSWER,
+					MAX(C.CHOICE_CNSR) USER_CHOICE_ANSWER,
+					MAX(C.ESSAY_CNSR) USER_ESSAY_ANSWER
+				FROM 
+					COMTNEVENTCNSR B, COMTNEVENTASWPER C
+				WHERE
+					C.USER_ID = #userId#
+					AND B.QESITM_ID = C.QESITM_ID(+)
+				GROUP BY C.USER_ID, B.QESITM_ID
+            ) B
+            WHERE 
+               A.QESITM_ID = B.QESITM_ID
+               AND A.SCHDUL_ID = #schdulId#
+        ) A 
+        GROUP BY QESITM_SN
+        ORDER BY QESITM_SN ASC
+	]]>
+	</select>
+	
+	<insert id="comtnschdulinfoDAO.insertEventUser" parameterClass="egovframework.com.evt.service.ComtneventadhrncVO">
+	    <dynamic prepend="INSERT INTO COMTNEVENTADHRNC" open=" (" close=")">
+		  <isNotNull property="userId" prepend=","> USER_ID </isNotNull>
+	      <isNotNull property="adhrncNm" prepend=","> ADHRNC_NM </isNotNull>
+	      <isNotNull property="adhrncCttpc" prepend=","> ADHRNC_CTTPC </isNotNull>
+	      <isNotNull property="adhrncAdres" prepend=","> ADHRNC_ADRES </isNotNull>
+	      <isNotNull property="adhrncZip" prepend=","> ADHRNC_ZIP </isNotNull>
+		  <isNotNull property="adhrncEmail" prepend=","> ADHRNC_EMAIL </isNotNull>
+		  <isNotNull property="frstRegisterIp" prepend=","> FRST_REGISTER_IP </isNotNull>
+		  <isNull property="frstRegisterPnttm" prepend=","> FRST_REGISTER_PNTTM </isNull>
+		  <isNull property="useAt" prepend=","> USE_AT </isNull>
+		  <isNotNull property="schdulId" prepend=","> SCHDUL_ID </isNotNull>
+	    </dynamic>
+	    <dynamic prepend="VALUES" open=" (" close=")">
+	      <isNotNull property="userId" prepend=","> #userId# </isNotNull>
+	      <isNotNull property="adhrncNm" prepend=","> TRIM(#adhrncNm#) </isNotNull>
+	      <isNotNull property="adhrncCttpc" prepend=","> #adhrncCttpc# </isNotNull>
+	      <isNotNull property="adhrncAdres" prepend=","> #adhrncAdres# </isNotNull>
+	      <isNotNull property="adhrncZip" prepend=","> #adhrncZip# </isNotNull>
+	      <isNotNull property="adhrncEmail" prepend=","> #adhrncEmail# </isNotNull>
+		  <isNotNull property="frstRegisterIp" prepend=","> #frstRegisterIp# </isNotNull>
+		  <isNull property="frstRegisterPnttm" prepend=","> SYSDATE() </isNull>
+		  <isNull property="useAt" prepend=","> 'Y' </isNull>
+		  <isNotNull property="schdulId" prepend=","> #schdulId# </isNotNull>
+	    </dynamic>
+	</insert>
+  
+	<insert id="comtnschdulinfoDAO.insertEventFormAswper" parameterClass="egovframework.com.evt.service.ComtneventformaswperVO">
+	    <dynamic prepend="INSERT INTO COMTNEVENTFORMASWPER" open=" (" close=")">
+		  <isNotNull property="aswperId" prepend=","> ASWPER_ID </isNotNull>
+	      <isNotNull property="reqstCn" prepend=","> REQST_CN </isNotNull>
+	      <isNotNull property="reqstId" prepend=","> REQST_ID </isNotNull>
+	      <isNotNull property="schdulId" prepend=","> SCHDUL_ID </isNotNull>
+	      <isNotNull property="userId" prepend=","> USER_ID </isNotNull>
+	    </dynamic>
+	    <dynamic prepend="VALUES" open=" (" close=")">
+	      <isNotNull property="aswperId" prepend=","> #aswperId# </isNotNull>
+	      <isNotNull property="reqstCn" prepend=","> #reqstCn# </isNotNull>
+	      <isNotNull property="reqstId" prepend=","> #reqstId# </isNotNull>
+	      <isNotNull property="schdulId" prepend=","> #schdulId# </isNotNull>
+	      <isNotNull property="userId" prepend=","> #userId# </isNotNull>
+	    </dynamic>
+	</insert>
+  
+	<update id="comtnschdulinfoDAO.updateEventFormAswper" parameterClass="egovframework.com.evt.service.ComtneventformaswperVO">
+		UPDATE COMTNEVENTFORMASWPER
+		SET REQST_CN=#reqstCn#
+		WHERE ASWPER_ID = #aswperId# AND USER_ID = #userId#
+	</update>
+
+	<insert id="comtnschdulinfoDAO.addUserAnswer" parameterClass="egovframework.com.evt.service.ComtneventaswperVO">
+	    <dynamic prepend="INSERT INTO COMTNEVENTASWPER" open=" (" close=")">
+	      <isNotNull property="aswperId" prepend=","> ASWPER_ID </isNotNull>
+		  <isNotNull property="qesitmId" prepend=","> QESITM_ID </isNotNull>
+		  <isNotNull property="aswperSn" prepend=","> ASWPER_SN </isNotNull>
+	      <isNotNull property="choiceCnsr" prepend=","> CHOICE_CNSR </isNotNull>
+	      <isNotNull property="essayCnsr" prepend=","> ESSAY_CNSR </isNotNull>
+	      <isNotNull property="userId" prepend=","> USER_ID </isNotNull>
+	      <isNotNull property="schdulId" prepend=","> SCHDUL_ID </isNotNull>
+	    </dynamic>
+	    <dynamic prepend="VALUES" open=" (" close=")">
+	      <isNotNull property="aswperId" prepend=","> #aswperId# </isNotNull>
+		  <isNotNull property="qesitmId" prepend=","> #qesitmId# </isNotNull>
+		  <isNotNull property="aswperSn" prepend=","> #aswperSn# </isNotNull>
+	      <isNotNull property="choiceCnsr" prepend=","> #choiceCnsr# </isNotNull>
+	      <isNotNull property="essayCnsr" prepend=","> #essayCnsr# </isNotNull>
+	      <isNotNull property="userId" prepend=","> #userId# </isNotNull>
+	      <isNotNull property="schdulId" prepend=","> #schdulId# </isNotNull>
+	    </dynamic>
+	</insert>
+	
+	<select id="comtnschdulinfoDAO.selectComtneventform_S" resultMap="Comtnschdulinfo.comtneventform">
+	<![CDATA[
+		SELECT
+			REQST_ID
+			, SCHDUL_ID
+			, REQST_FORM
+		FROM COMTNEVENTFORM
+		WHERE SCHDUL_ID=#schdulId#
+	]]>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtnschduInfo_S" resultMap="Comtnschdulinfo.eventListView">
+	<![CDATA[
+		SELECT
+			SCHDUL_ID
+			, SCHDUL_CL_CODE
+			, SCHDUL_BGNDE
+			, SCHDUL_ENDDE
+			, SCHDUL_NM
+			, SCHDUL_STRE_FILE_NM
+			, SCHDUL_CN
+			, SCHDUL_CHARGER_ID
+			, ATCH_FILE_ID
+			, FRST_REGISTER_PNTTM
+			, FRST_REGISTER_ID
+			, LAST_UPDUSR_PNTTM
+			, LAST_UPDUSR_ID
+			, INQIRE_CO
+			, USE_AT
+			, PRZWNER_NMPR
+			, PRESNATN_DE
+			, 0 AS QUESTION_COUNT
+			, (CASE WHEN DATE_FORMAT(now(),'%m%d%Y%H%i%s') >= SCHDUL_BGNDE and SCHDUL_ENDDE >= DATE_FORMAT(now(),'%m%d%Y%H%i%s') THEN 1 ELSE 0 END) AS STATE
+		FROM COMTNSCHDULINFO
+		WHERE USE_AT != 'N' AND SCHDUL_ID=#schdulId#
+	]]>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtnschduInfoResult_S" resultMap="Comtnschdulinfo.eventListViewResult">
+	<![CDATA[
+		SELECT
+			A.SCHDUL_ID
+			, A.SCHDUL_CL_CODE
+			, A.SCHDUL_BGNDE
+			, A.SCHDUL_ENDDE
+			, A.SCHDUL_NM
+			, (SELECT COUNT(SCHDUL_ID) FROM COMTNEVENTADHRNC WHERE SCHDUL_ID = A.SCHDUL_ID AND USE_AT = 'Y') TOTAL_CO
+		FROM COMTNSCHDULINFO A
+		WHERE USE_AT != 'N' AND SCHDUL_ID=#schdulId#
+	]]>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.getEventQuestionAll" resultMap="Comtnschdulinfo.comtneventqesitm">
+	<![CDATA[
+		SELECT
+			QESITM_ID
+			, QESITM_SN
+			, QESITM_TY_CODE
+			, QESITM_SJ
+			, QESITM_CN
+			, MXMM_ANSWER_CO
+			, SCHDUL_ID
+		FROM COMTNEVENTQESITM
+		WHERE SCHDUL_ID=#value#
+	]]>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.getEventQuestionAllResult" resultMap="Comtnschdulinfo.comtneventqesitmResult">
+	<![CDATA[
+		SELECT
+			QESITM_ID
+			, QESITM_SN
+			, QESITM_TY_CODE
+			, QESITM_SJ
+			, QESITM_CN
+			, MXMM_ANSWER_CO
+			, SCHDUL_ID
+		FROM COMTNEVENTQESITM
+		WHERE SCHDUL_ID=#value#
+	]]>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.getOnlineEventExamples" resultMap="Comtnschdulinfo.comtneventqesitmex">
+	<![CDATA[
+	SELECT
+		EX_ID
+		, EX_SN
+		, EX_CN
+		, QESITM_ID
+	FROM COMTNEVENTQESITMEX
+	WHERE QESITM_ID=#value#
+	]]>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.getOnlineEventExamplesResult" resultMap="Comtnschdulinfo.comtneventqesitmexResult">
+	
+		SELECT
+			EX_ID
+			, EX_SN
+			, EX_CN
+			, QESITM_ID
+			, ( SELECT COUNT(ASWPER_ID) FROM COMTNEVENTASWPER WHERE QESITM_ID = A.QESITM_ID AND CHOICE_CNSR = A.EX_SN ) QESITM_USER_CO
+			<!--, FN_EXAM_STA(QESITM_ID, EX_SN) USER_STA-->
+		FROM COMTNEVENTQESITMEX A
+		WHERE QESITM_ID=#value#
+	
+	</select>
+	
+	<select id="comtnschdulinfoDAO.getOnlineEventAnswers" resultMap="Comtnschdulinfo.comtneventcnsr">
+	<![CDATA[
+	SELECT
+		CNSR_ID
+		, QESITM_ID
+		, CNSR_SN
+		, CHOISE_CNSR
+		, SBJCT_CNSR
+	FROM COMTNEVENTCNSR
+	WHERE QESITM_ID=#value#
+	]]>
+	</select>
+
+	<update id="comtnschdulinfoDAO.updateComtneventqesitm" parameterClass="egovframework.com.evt.service.ComtneventqesitmVO">
+		UPDATE
+			COMTNEVENTQESITM
+	    <dynamic prepend="SET">
+	      <!-- <isNotNull property="qesitmId" prepend=","> QESITM_ID = #qesitmId# </isNotNull> -->
+	      <isNotNull property="schdulId" prepend=","> SCHDUL_ID = #schdulId# </isNotNull>
+	      <isNotNull property="qesitmSn" prepend=","> QESITM_SN = #qesitmSn# </isNotNull>
+		  <isNotNull property="qesitmTyCode" prepend=","> QESITM_TY_CODE = #qesitmTyCode# </isNotNull>
+		  <isNotNull property="qesitmSj" prepend=","> QESITM_SJ = #qesitmSj# </isNotNull>
+	      <isNotNull property="qesitmCn" prepend=","> QESITM_CN = #qesitmCn# </isNotNull>
+	      <isNotNull property="mxmmAnswerCo" prepend=","> MXMM_ANSWER_CO = #mxmmAnswerCo# </isNotNull>
+	    </dynamic>
+		WHERE
+			QESITM_ID = #qesitmId#
+  </update>
+  
+	<update id="comtnschdulinfoDAO.updateComtneventqesitmex" parameterClass="egovframework.com.evt.service.ComtneventqesitmexVO">
+		UPDATE
+			COMTNEVENTQESITMEX
+			<dynamic prepend="SET">
+				<!-- <isNotNull property="exId" prepend=","> EX_ID = #exId# </isNotNull> -->
+				<isNotNull property="exSn" prepend=","> EX_SN = #exSn# </isNotNull>
+				<isNotNull property="exCn" prepend=","> EX_CN = #exCn# </isNotNull>
+				<isNotNull property="qesitmId" prepend=","> QESITM_ID = #qesitmId# </isNotNull>
+			</dynamic>
+		WHERE
+			EX_ID = #exId#
+	</update>
+  
+	<update id="comtnschdulinfoDAO.updateComtneventcnsr" parameterClass="egovframework.com.evt.service.ComtneventcnsrVO">
+		UPDATE
+	      COMTNEVENTCNSR
+	    <dynamic prepend="SET">
+		  <isNotNull property="qesitmId" prepend=","> QESITM_ID = #qesitmId# </isNotNull>
+	      <isNotNull property="cnsrSn" prepend=","> CNSR_SN = #cnsrSn# </isNotNull>
+	      <isNotNull property="choiseCnsr" prepend=","> CHOISE_CNSR = #choiseCnsr# </isNotNull>
+	      <isNotNull property="sbjctCnsr" prepend=","> SBJCT_CNSR = #sbjctCnsr# </isNotNull>
+	    </dynamic>
+		WHERE
+			CNSR_ID = #cnsrId#
+	</update>
+
+
+	<delete id="comtnschdulinfoDAO.delExampleNotInExampleIdList" parameterClass="java.util.HashMap">
+		DELETE FROM COMTNEVENTQESITMEX
+		WHERE
+		QESITM_ID = #questionId#
+		<iterate property="exampleIdList" prepend=" AND EX_ID NOT IN" open=" (" close=") " conjunction=",">#exampleIdList[]#</iterate>
+	</delete>
+  
+	<delete id="comtnschdulinfoDAO.delAnswerNotInAnswerIdList" parameterClass="java.util.HashMap">
+		DELETE FROM COMTNEVENTCNSR
+		WHERE
+		QESITM_ID = #questionId#
+		<iterate property="answerIdList" prepend=" AND CNSR_ID NOT IN" open=" (" close=") " conjunction=",">#answerIdList[]#</iterate>
+  </delete>
+  
+  <delete id="comtnschdulinfoDAO.delAnswerNotInQuestionIdList" parameterClass="java.util.HashMap">
+	DELETE FROM COMTNEVENTCNSR
+	WHERE
+	QESITM_ID IN (
+		SELECT
+			QESITM_ID
+		FROM 
+			COMTNEVENTQESITM
+		WHERE
+			SCHDUL_ID = #onlineEventId# 
+	<iterate property="questionIdList" prepend=" AND QESITM_ID NOT IN" open=" (" close=") " conjunction=",">#questionIdList[]#</iterate>
+	)
+  </delete>
+  
+	<delete id="comtnschdulinfoDAO.delExampleNotInQuestionIdList" parameterClass="java.util.HashMap">
+		DELETE FROM COMTNEVENTQESITMEX
+		WHERE
+		QESITM_ID IN 
+			(
+		    SELECT
+		      QESITM_ID
+		    FROM 
+		      COMTNEVENTQESITM
+		    WHERE
+		      SCHDUL_ID = #onlineEventId# 
+		<iterate property="questionIdList" prepend=" AND QESITM_ID NOT IN" open=" (" close=") " conjunction=",">#questionIdList[]#</iterate>
+  		)
+	</delete>
+ 
+	<delete id="comtnschdulinfoDAO.delQuestionNotInQuestionIdList" parameterClass="java.util.HashMap">
+		DELETE FROM COMTNEVENTQESITM
+		WHERE
+		SCHDUL_ID = #onlineEventId# 
+		<iterate property="questionIdList" prepend=" AND QESITM_ID NOT IN" open=" (" close=") " conjunction=",">#questionIdList[]#</iterate>
+	</delete>
+  
+	<insert id="comtnschdulinfoDAO.insertComtneventform_S">
+		<![CDATA[
+		INSERT INTO COMTNEVENTFORM 
+			( REQST_ID
+			  , REQST_FORM
+			  , SCHDUL_ID )
+		VALUES ( #reqstId#
+			  , #reqstForm#
+			  , #schdulId# )
+		]]>
+	</insert>
+
+	<insert id="comtnschdulinfoDAO.insertComtnschdulinfo_S">
+		<![CDATA[
+		INSERT INTO COMTNSCHDULINFO 
+			( SCHDUL_ID
+			  , SCHDUL_CL_CODE
+			  , SCHDUL_BGNDE
+			  , SCHDUL_ENDDE
+			  , SCHDUL_NM
+			  , SCHDUL_STRE_FILE_NM
+			  , SCHDUL_CN
+			  , SCHDUL_CHARGER_ID
+			  , ATCH_FILE_ID
+			  , FRST_REGISTER_PNTTM
+			  , FRST_REGISTER_ID
+			  , USE_AT
+			  , PRZWNER_NMPR
+			  , PRESNATN_DE
+			  , POPUP_AT
+			  , SITE_ID)
+		VALUES ( #schdulId#
+			  , #schdulClCode#
+			  , #schdulBgnde#
+			  , #schdulEndde#
+			  , #schdulNm#
+			  , #schdulStreFileNm#
+			  , #schdulCn#
+			  , #schdulChargerId#
+			  , #atchFileId#
+			  , SYSDATE()
+			  , #frstRegisterId#
+			  , #useAt#
+			  , #przwnerNmpr#
+			  , #presnatnDe#
+			  , #popupAt#
+			  , #siteId#)
+		]]>
+	</insert>
+
+	
+	<select id="comtnschdulinfoDAO.isRegDuplicate" parameterClass="egovframework.com.evt.service.ComtneventadhrncVO" resultClass="boolean">
+		SELECT
+	      COUNT(*) as value
+	    FROM
+	      COMTNEVENTADHRNC
+	    WHERE
+		  SCHDUL_ID = #schdulId# 
+		  AND USER_ID = #userId#
+	</select>
+  
+	<select id="comtnschdulinfoDAO.isAnswerDuplicate" parameterClass="egovframework.com.evt.service.ComtnschdulinfoVO" resultClass="boolean">
+	    SELECT
+	      COUNT(*) as value
+	    FROM
+	      COMTNEVENTADHRNC A, COMTNEVENTASWPER B
+	    WHERE
+		  A.SCHDUL_ID = B.SCHDUL_ID AND
+		  A.SCHDUL_ID = #schdulId# AND
+		  B.USER_ID = #userId#
+	  </select>
+  
+	<insert id="comtnschdulinfoDAO.insertComtneventqesitm_S" parameterClass="egovframework.com.evt.service.ComtneventqesitmVO">
+		<dynamic prepend="INSERT INTO COMTNEVENTQESITM" open=" (" close=")">
+			<isNotNull property="qesitmId" prepend=","> QESITM_ID </isNotNull>
+			<isNotNull property="qesitmSn" prepend=","> QESITM_SN </isNotNull>
+			<isNotNull property="qesitmTyCode" prepend=","> QESITM_TY_CODE </isNotNull>
+			<isNotNull property="qesitmSj" prepend=","> QESITM_SJ </isNotNull>
+			<isNotNull property="qesitmCn" prepend=","> QESITM_CN </isNotNull>
+			<isNotNull property="mxmmAnswerCo" prepend=","> MXMM_ANSWER_CO </isNotNull>
+			<isNotNull property="schdulId" prepend=","> SCHDUL_ID </isNotNull>
+		</dynamic>
+		<dynamic prepend="VALUES" open=" (" close=")">
+			<isNotNull property="qesitmId" prepend=","> #qesitmId# </isNotNull>
+			<isNotNull property="qesitmSn" prepend=","> #qesitmSn# </isNotNull>
+			<isNotNull property="qesitmTyCode" prepend=","> #qesitmTyCode# </isNotNull>
+			<isNotNull property="qesitmSj" prepend=","> #qesitmSj# </isNotNull>
+			<isNotNull property="qesitmCn" prepend=","> #qesitmCn# </isNotNull>
+			<isNotNull property="mxmmAnswerCo" prepend=","> #mxmmAnswerCo# </isNotNull>
+			<isNotNull property="schdulId" prepend=","> #schdulId# </isNotNull>
+		</dynamic>
+	</insert>
+	
+	
+	<insert id="comtnschdulinfoDAO.insertComtneventqesitmex_S" parameterClass="egovframework.com.evt.service.ComtneventqesitmexVO">
+		<dynamic prepend="INSERT INTO COMTNEVENTQESITMEX" open=" (" close=")">
+			<isNotNull property="exSn" prepend=","> EX_ID </isNotNull>
+			<isNotNull property="exSn" prepend=","> EX_SN </isNotNull>
+			<isNotNull property="exCn" prepend=","> EX_CN </isNotNull>
+			<isNotNull property="qesitmId" prepend=","> QESITM_ID </isNotNull>
+		</dynamic>
+		<dynamic prepend="VALUES" open=" (" close=")">
+			<isNotNull property="exSn" prepend=","> #exId# </isNotNull>
+			<isNotNull property="exSn" prepend=","> #exSn# </isNotNull>
+			<isNotNull property="exCn" prepend=","> #exCn# </isNotNull>
+			<isNotNull property="qesitmId" prepend=","> #qesitmId# </isNotNull>
+		</dynamic>
+	</insert>
+
+	<insert id="comtnschdulinfoDAO.insertComtneventcnsr_S" parameterClass="egovframework.com.evt.service.ComtneventcnsrVO">
+		<dynamic prepend="INSERT INTO COMTNEVENTCNSR" open=" (" close=")">
+			<isNotNull property="cnsrId" prepend=","> CNSR_ID </isNotNull>
+			<isNotNull property="qesitmId" prepend=","> QESITM_ID </isNotNull>
+			<isNotNull property="cnsrSn" prepend=","> CNSR_SN </isNotNull>
+			<isNotNull property="choiseCnsr" prepend=","> CHOISE_CNSR </isNotNull>
+			<isNotNull property="sbjctCnsr" prepend=","> SBJCT_CNSR </isNotNull>
+		</dynamic>
+		<dynamic prepend="VALUES" open=" (" close=")">
+			<isNotNull property="cnsrId" prepend=","> #cnsrId# </isNotNull>
+			<isNotNull property="qesitmId" prepend=","> #qesitmId# </isNotNull>
+			<isNotNull property="cnsrSn" prepend=","> #cnsrSn# </isNotNull>
+			<isNotNull property="choiseCnsr" prepend=","> #choiseCnsr# </isNotNull>
+			<isNotNull property="sbjctCnsr" prepend=","> #sbjctCnsr# </isNotNull>
+		</dynamic>
+	</insert>
+
+	<update id="comtnschdulinfoDAO.updateComtneventform_S">
+		<![CDATA[
+			UPDATE COMTNEVENTFORM
+			SET REQST_FORM=#reqstForm#
+			WHERE REQST_ID=#reqstId#
+		]]>
+	</update>
+	
+	<update id="comtnschdulinfoDAO.updateComtnschdulinfo_S" parameterMap="paramUpdate">
+		UPDATE COMTNSCHDULINFO
+		SET SCHDUL_CL_CODE=?
+			, SCHDUL_BGNDE=?
+			, SCHDUL_ENDDE=?
+			, SCHDUL_NM=?
+			, SCHDUL_STRE_FILE_NM = IFNULL(?, SCHDUL_STRE_FILE_NM)
+			, SCHDUL_CN=?
+			, ATCH_FILE_ID=?
+			, LAST_UPDUSR_PNTTM=SYSDATE()
+			, LAST_UPDUSR_ID=?
+			, PRZWNER_NMPR=IFNULL(?, PRZWNER_NMPR)
+			, PRESNATN_DE=IFNULL(?, PRESNATN_DE)
+			, USE_AT=?
+			, POPUP_AT = ?
+			, SITE_ID = ?
+		WHERE SCHDUL_ID=?
+	</update>
+	
+	<delete id="comtnschdulinfoDAO.deleteComtnschdulinfo_S">
+		<![CDATA[
+			UPDATE COMTNSCHDULINFO
+			SET USE_AT = 'N'
+			WHERE SCHDUL_ID=#schdulId#
+		]]>
+	</delete>
+	
+	<delete id="comtnschdulinfoDAO.deleteComtneventaswper_S">
+		<![CDATA[
+			DELETE FROM COMTNEVENTASWPER
+			WHERE SCHDUL_ID=#schdulId#
+			AND USER_ID = #userId#
+		]]>
+	</delete>
+	
+	<delete id="comtnschdulinfoDAO.deleteComtneventadhrnc_S">
+		<![CDATA[
+			DELETE FROM COMTNEVENTADHRNC
+			WHERE SCHDUL_ID=#schdulId#
+			AND USER_ID = #userId#
+		]]>
+	</delete>
+	
+	<delete id="comtnschdulinfoDAO.deleteComtneventprzwner_S">
+		<![CDATA[
+			DELETE FROM COMTNEVENTPRZWNER
+			WHERE SCHDUL_ID=#schdulId#
+			AND USER_ID = #userId#
+		]]>
+	</delete>
+	
+	<select id="comtnschdulinfoDAO.selectComtnschdulinfo_S" resultMap="Comtnschdulinfo.comtnschdulinfo">
+		<![CDATA[
+			SELECT
+				SITE_ID
+				, SCHDUL_ID
+				, SCHDUL_CL_CODE
+				, SCHDUL_BGNDE
+				, SCHDUL_ENDDE
+				, SCHDUL_NM
+				, SCHDUL_STRE_FILE_NM
+				, SCHDUL_CN
+				, SCHDUL_CHARGER_ID
+				, ATCH_FILE_ID
+				, FRST_REGISTER_PNTTM
+				, INQIRE_CO
+				, USE_AT
+				, PRZWNER_NMPR
+				, PRESNATN_DE
+				, (CASE WHEN DATE_FORMAT(now(),'%m%d%Y%H%i%s') >= SCHDUL_BGNDE and SCHDUL_ENDDE >= DATE_FORMAT(now(),'%m%d%Y%H%i%s') THEN 1 ELSE 0 END) AS STATE
+				, POPUP_AT
+			FROM COMTNSCHDULINFO
+			WHERE SCHDUL_ID=#schdulId# AND USE_AT != 'N'
+		]]>
+	</select>
+	
+	<delete id="comtnschdulinfoDAO.updateComtnschdulinfoCo">
+		<![CDATA[
+			UPDATE COMTNSCHDULINFO
+			SET INQIRE_CO = NVL(INQIRE_CO, 0) + 1
+			WHERE SCHDUL_ID=#schdulId#
+		]]>
+	</delete>
+	
+	<select id="comtnschdulinfoDAO.selectComtnschdulinfoList_S" parameterClass="comtnschdulinfoSerarchVO" resultClass="egovMap">
+		SELECT
+			SCHDUL_ID
+			, SCHDUL_CL_CODE
+			, SCHDUL_BGNDE
+			, SCHDUL_ENDDE
+			, SCHDUL_NM
+			, SCHDUL_STRE_FILE_NM
+			, SCHDUL_CN
+			, SCHDUL_CHARGER_ID
+			, ATCH_FILE_ID
+			, FRST_REGISTER_PNTTM
+			, FRST_REGISTER_ID
+			, LAST_UPDUSR_PNTTM
+			, LAST_UPDUSR_ID
+			, IF(INQIRE_CO = NULL, 0, INQIRE_CO) AS INQIRE_CO
+			, USE_AT
+			, PRZWNER_NMPR
+			, PRESNATN_DE
+			, SITE_ID
+		FROM 
+			COMTNSCHDULINFO
+		WHERE SITE_ID = #siteId# 
+			AND USE_AT IN ('Y','C')
+			<isNotEmpty property="searchCondition">
+				<isNotEmpty property="searchCondition">
+					<isEqual prepend="AND" property="searchCondition" compareValue="0">
+						SCHDUL_NM LIKE '%' || #searchKeyword# || '%'
+					</isEqual>
+					<isEqual prepend="AND" property="searchCondition" compareValue="1">
+						SCHDUL_CN LIKE '%' || #searchKeyword# || '%'
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="searchDate" prepend="AND">
+			 	(#searchDate# BETWEEN SUBSTR(SCHDUL_BGNDE, 1, 6)  AND SUBSTR(SCHDUL_ENDDE, 1, 6) ) 
+			</isNotEmpty>
+			<isNotEmpty property="searchSe" prepend="AND">
+				SCHDUL_CL_CODE = #searchSe#
+			</isNotEmpty>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtnschdulinfoList_D" parameterClass="comtnschdulinfoSerarchVO" resultClass="egovMap">
+			SELECT
+				SCHDUL_ID
+				, SCHDUL_CL_CODE
+				, SCHDUL_BGNDE
+				, SCHDUL_ENDDE
+				, SCHDUL_NM
+				, SCHDUL_STRE_FILE_NM
+				, SCHDUL_CN
+				, SCHDUL_CHARGER_ID
+				, ATCH_FILE_ID
+				, FRST_REGISTER_PNTTM
+				, FRST_REGISTER_ID
+				, LAST_UPDUSR_PNTTM
+				, LAST_UPDUSR_ID
+				, IF(INQIRE_CO = NULL, 0, INQIRE_CO) AS INQIRE_CO
+				, PRESNATN_DE
+				, PRZWNER_NMPR
+				, USE_AT
+				, (CASE WHEN DATE_FORMAT(now(),'%m%d%Y%H%i%s') >= SCHDUL_BGNDE and SCHDUL_ENDDE >= DATE_FORMAT(now(),'%m%d%Y%H%i%s') THEN 1 ELSE 0 END) AS STATE
+				FROM COMTNSCHDULINFO
+				WHERE SITE_ID = #siteId# 
+					AND USE_AT IN ('Y','C'
+				<isEqual prepend="," property="adminYn" compareValue="Y">
+					'R'
+				</isEqual>
+				)
+				<isNotEmpty property="searchCondition">
+					<isNotEmpty property="searchCondition">
+					<isEqual prepend="AND" property="searchCondition" compareValue="0">
+						SCHDUL_NM LIKE '%' || #searchKeyword# || '%'
+					</isEqual>
+					<isEqual prepend="AND" property="searchCondition" compareValue="1">
+						SCHDUL_CN LIKE '%' || #searchKeyword# || '%'
+					</isEqual>
+					</isNotEmpty>
+				</isNotEmpty>
+				<isEqual prepend="AND" property="searchCondition" compareValue="99">
+				SCHDUL_CL_CODE IN (2,3) AND DATE_FORMAT(now(),'%m%d%Y%H%i%s') >= SCHDUL_BGNDE and SCHDUL_ENDDE >= DATE_FORMAT(now(),'%m%d%Y%H%i%s') AND USE_AT = 'Y'
+				</isEqual>
+				<isNotEmpty property="searchSe" prepend="AND">
+					SCHDUL_CL_CODE = #searchSe#
+				</isNotEmpty>
+		ORDER BY FRST_REGISTER_PNTTM DESC
+		LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>
+		
+	<select id="comtnschdulinfoDAO.selectComtnschdulinfoListTotCnt_S" parameterClass="comtnschdulinfoSerarchVO" resultClass="int">
+			SELECT 
+				COUNT(*) totcnt
+			FROM 
+				COMTNSCHDULINFO
+			WHERE SITE_ID = #siteId# 
+				AND USE_AT IN ('Y','C'
+			<isEqual prepend="," property="adminYn" compareValue="Y">
+				'R'
+			</isEqual>
+			)
+			<isNotEmpty property="searchCondition">
+				<isNotEmpty property="searchCondition">
+				<isEqual prepend="AND" property="searchCondition" compareValue="0">
+					SCHDUL_NM LIKE '%' || #searchKeyword# || '%'
+				</isEqual>
+				<isEqual prepend="AND" property="searchCondition" compareValue="1">
+					SCHDUL_CN LIKE '%' || #searchKeyword# || '%'
+				</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEqual prepend="AND" property="searchCondition" compareValue="99">
+				SCHDUL_CL_CODE IN (2,3) AND DATE_FORMAT(now(),'%m%d%Y%H%i%s') >= SCHDUL_BGNDE and SCHDUL_ENDDE >= DATE_FORMAT(now(),'%m%d%Y%H%i%s') AND USE_AT = 'Y'
+			</isEqual>
+			<isNotEmpty property="searchSe" prepend="AND">
+				SCHDUL_CL_CODE = #searchSe#
+			</isNotEmpty>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtneventadhrncList_D" parameterClass="comtneventadhrncVO" resultMap="Comtnschdulinfo.eventListUserList">
+			SELECT
+				A.USER_ID
+				, B.USER_NM AS ADHRNC_NM
+				, B.USER_SE_CODE AS USER_TY
+				, A.FRST_REGISTER_PNTTM
+				, (
+					SELECT 
+						COUNT(USER_ID) 
+					FROM COMTNEVENTPRZWNER 
+					WHERE SCHDUL_ID = A.SCHDUL_ID AND USER_ID = A.USER_ID AND USE_AT = 'Y'
+				) AS WNER_AT
+			FROM COMTNEVENTADHRNC A
+				LEFT OUTER JOIN COMTNMBER B
+				ON A.USER_ID = B.USER_ID  
+			WHERE A.SCHDUL_ID = #schdulId# and A.USE_AT = 'Y'
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+				A.USER_ID LIKE '%' || #searchKeyword# || '%'
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="1">
+				B.USER_NM LIKE '%' || #searchKeyword# || '%'
+			</isEqual>
+		ORDER BY A.FRST_REGISTER_PNTTM DESC
+		LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtneventadhrncListTotCnt_S" parameterClass="comtneventadhrncVO" resultClass="int">
+		SELECT 
+			COUNT(A.SCHDUL_ID) totcnt
+		FROM COMTNEVENTADHRNC A
+			LEFT OUTER JOIN COMTNMBER B
+			ON A.USER_ID = B.USER_ID  
+		WHERE A.SCHDUL_ID = #schdulId# and A.USE_AT = 'Y'
+		<isEqual prepend="AND" property="searchCondition" compareValue="0">
+			A.USER_ID LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isEqual prepend="AND" property="searchCondition" compareValue="1">
+			B.USER_NM LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+	</select>
+
+	<delete id="comtnschdulinfoDAO.deleteComtneventprzwner_D">
+	    DELETE FROM COMTNEVENTPRZWNER 
+		WHERE SCHDUL_ID=#schdulId#
+	</delete>
+
+	<insert id="comtnschdulinfoDAO.insertComtneventprzwner_S" parameterClass="egovframework.com.evt.service.ComtneventprzwnerVO">
+	INSERT INTO COMTNEVENTPRZWNER (SCHDUL_ID, USER_ID, FRST_REGISTER_PNTTM, USE_AT)
+		SELECT 
+            	#schdulId#, USER_ID, SYSDATE(), 'Y'
+            FROM
+            (   
+			SELECT 
+                    USER_ID
+                FROM
+                (
+                    SELECT 
+                        USER_ID,
+                        QESITM_SN,
+						COUNT(*) SCORE,
+                        DECODE(COUNT(*), SUM(BINGO), 1, 0) MY_SCORE
+                    FROM
+                    (
+                        SELECT 
+                            A.QESITM_SN,
+                            B.USER_ID,
+                            CASE 
+                                WHEN A.QESITM_TY_CODE = 1 THEN
+                                    CASE WHEN B.CHOICE_CNSR = B.USER_CHOICE_CNSR THEN 1 END
+                                WHEN A.QESITM_TY_CODE = 2 THEN
+                                    CASE WHEN TRIM(B.ESSAY_CNSR) = REPLACE(B.USER_ESSAY_CNSR,' ','') THEN 1 END
+                            END AS BINGO
+                            
+                        FROM COMTNEVENTQESITM A, 
+                        (
+                            SELECT 
+                                C.USER_ID,
+                                B.QESITM_ID,
+                                MAX(B.CNSR_SN) CNSR_SN,
+                                MAX(B.CHOISE_CNSR) CHOICE_CNSR,
+                                MAX(B.SBJCT_CNSR) ESSAY_CNSR,
+                                MAX(C.CHOICE_CNSR) USER_CHOICE_CNSR,
+                                MAX(C.ESSAY_CNSR) USER_ESSAY_CNSR
+                            FROM COMTNEVENTCNSR B, COMTNEVENTASWPER C
+                            WHERE 
+                                B.QESITM_ID = C.QESITM_ID(+)
+                                AND B.CNSR_SN = C.ASWPER_SN(+)
+                            GROUP BY C.USER_ID, B.QESITM_ID
+                        ) B
+                        WHERE 
+                           A.QESITM_ID = B.QESITM_ID
+                           AND A.SCHDUL_ID = #schdulId#
+                    ) A 
+                    GROUP BY USER_ID, QESITM_SN
+                ) A
+                GROUP BY USER_ID
+				HAVING SUM(SCORE) = SUM(MY_SCORE)
+                ORDER BY DBMS_RANDOM.RANDOM
+				) A 
+            WHERE #przwnerNmpr# >= ROWNUM
+	</insert>
+	
+	<insert id="comtnschdulinfoDAO.insertComtneventprzwnerhopr_S" parameterClass="egovframework.com.evt.service.ComtneventprzwnerVO">
+        <![CDATA[
+            INSERT INTO COMTNEVENTPRZWNER 
+                  ( SCHDUL_ID
+                  , USER_ID
+                  , FRST_REGISTER_PNTTM
+                  , USE_AT )
+           VALUES ( #schdulId#
+                  , #userId#
+                  , SYSDATE()
+                  , 'Y')
+        ]]>
+    </insert>
+    
+	<delete id="comtnschdulinfoDAO.updateComtneventprzwner" parameterClass="egovframework.com.evt.service.ComtneventprzwnerVO">
+		DELETE FROM COMTNEVENTPRZWNER 
+		WHERE SCHDUL_ID = #schdulId# AND USER_ID = #userId#
+	</delete>
+
+	<select id="comtnschdulinfoDAO.selectComtneventprzwnerList_D" parameterClass="comtneventprzwnerSerarchVO" resultClass="egovMap">
+		SELECT 
+	        A.USER_ID,
+	        A.USE_AT,
+	        A.SCHDUL_ID,
+	        B.USER_NM,
+	        <!-- 
+	        FN_CRYPT('DES', B.EMAIL_ADRES, 'J2M') EMAIL,
+	         -->
+	         B.EMAIL_ADRES,
+	        A.FRST_REGISTER_PNTTM 
+	    FROM
+	        COMTNEVENTPRZWNER A
+			LEFT OUTER JOIN COMTNMBER B
+			ON A.USER_ID = B.USER_ID  
+	    WHERE A.SCHDUL_ID =  #schdulId#  
+	        AND A.USE_AT = 'Y'   
+	    ORDER BY
+	        A.FRST_REGISTER_PNTTM DESC
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtneventprzwnerCnt" parameterClass="comtneventprzwnerSerarchVO" resultClass="int">
+		SELECT
+			COUNT(USER_ID)
+		FROM 
+			COMTNEVENTPRZWNER
+		WHERE 
+			SCHDUL_ID = #schdulId#
+			AND USE_AT = 'Y'
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtneventformaswper_S" resultMap="comtneventformaswper">
+		<![CDATA[
+			SELECT
+				ASWPER_ID
+				, REQST_CN
+				, REQST_ID
+				, SCHDUL_ID
+				, USER_ID
+			FROM COMTNEVENTFORMASWPER
+			WHERE USER_ID=#aswperId# AND SCHDUL_ID = #schdulId#
+		]]>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectUserEventList" parameterClass="comtnschdulinfoVO" resultClass="egovMap">
+		SELECT A.SCHDUL_ID, B.SCHDUL_NM, B.SCHDUL_BGNDE, B.SCHDUL_ENDDE, B.SCHDUL_CL_CODE, B.PRZWNER_NMPR, B.PRESNATN_DE, B.USE_AT, 
+		( CASE WHEN DATE_FORMAT(now(),'%m%d%Y%H%i%s') >= B.SCHDUL_BGNDE and B.SCHDUL_ENDDE >= DATE_FORMAT(now(),'%m%d%Y%H%i%s') THEN 1 ELSE 0 END) AS STATE, 
+		(
+			SELECT 
+				USER_ID 
+			FROM COMTNEVENTPRZWNER 
+			WHERE SCHDUL_ID = A.SCHDUL_ID AND USER_ID = A.USER_ID AND USE_AT = 'Y'
+		) AS WNER 
+		
+		FROM COMTNEVENTADHRNC A, COMTNSCHDULINFO B  
+		WHERE A.SCHDUL_ID = B.SCHDUL_ID
+			AND B.SITE_ID = #siteId#
+			AND A.USER_ID = #userId# 
+			AND B.USE_AT IN ('Y','C')
+		<isNotEmpty prepend="AND" property="searchBeginDate" > 
+			<![CDATA[	A.FRST_REGISTER_PNTTM >= TO_DATE(#searchBeginDate#, 'YYYY-MM-DD') 				]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="searchEndDate" > 
+			<![CDATA[	A.FRST_REGISTER_PNTTM < TO_DATE(#searchEndDate#, 'YYYY-MM-DD') + 1 				]]>
+		</isNotEmpty>
+		LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectUserEventListTotCnt" parameterClass="comtnschdulinfoVO" resultClass="int">
+		SELECT COUNT(*) totcnt
+		FROM COMTNEVENTADHRNC A, COMTNSCHDULINFO B
+		WHERE A.SCHDUL_ID = B.SCHDUL_ID
+			AND B.SITE_ID = #siteId#
+			AND A.USER_ID = #userId# 
+			AND B.USE_AT IN ('Y','C')
+		<isNotEmpty prepend="AND" property="searchBeginDate" > 
+		<![CDATA[	A.FRST_REGISTER_PNTTM >= TO_DATE(#searchBeginDate#, 'YYYY-MM-DD') 				]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="searchEndDate" > 
+			<![CDATA[	A.FRST_REGISTER_PNTTM < TO_DATE(#searchEndDate#, 'YYYY-MM-DD') + 1 				]]>
+		</isNotEmpty>
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectUserEventMain" parameterClass="comtnschdulinfoVO" resultClass="egovMap">
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+		    SELECT B.SCHDUL_ID, B.SCHDUL_NM, B.SCHDUL_BGNDE, B.SCHDUL_ENDDE, B.SCHDUL_CL_CODE, B.PRZWNER_NMPR, B.PRESNATN_DE, B.USE_AT
+			FROM COMTNEVENTADHRNC A, COMTNSCHDULINFO B
+			WHERE A.SCHDUL_ID = B.SCHDUL_ID
+				AND B.SITE_ID = #siteId#
+				AND A.USER_ID = #userId# 
+				AND A.USE_AT = 'Y'
+				AND B.USE_AT IN ('Y','C')
+		) TB ) WHERE rn = 1
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtneventprzwneUserList" parameterClass="comtneventprzwnerSerarchVO" resultClass="egovMap">
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT 
+				A.USER_ID, B.SCHDUL_NM, B.SCHDUL_BGNDE, B.SCHDUL_ENDDE, B.PRZWNER_NMPR, B.PRESNATN_DE 
+			FROM COMTNEVENTPRZWNER A, COMTNSCHDULINFO B
+			WHERE A.SCHDUL_ID = B.SCHDUL_ID
+				AND B.SITE_ID = #siteId#
+				AND A.USE_AT = 'Y' 
+				AND B.USE_AT != 'N' 
+				AND A.USER_ID = #userId#
+		) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+	</select>
+		
+	<select id="comtnschdulinfoDAO.selectComtneventprzwnerUserListCnt" parameterClass="comtneventprzwnerSerarchVO" resultClass="int">
+		SELECT 
+			COUNT(A.USER_ID) 
+		FROM COMTNEVENTPRZWNER A, COMTNSCHDULINFO B
+			WHERE A.SCHDUL_ID = B.SCHDUL_ID
+				AND B.SITE_ID = #siteId#
+				AND A.USE_AT = 'Y' 
+				AND B.USE_AT != 'N' 
+				AND A.USER_ID = #userId#
+    </select>
+    
+    <select id="comtnschdulinfoDAO.selectCommunitySbjctList" parameterClass="egovframework.com.evt.service.ComtneventaswperVO" resultMap="sbjctList">
+		SELECT 
+			ESSAY_CNSR 
+		FROM 
+			COMTNEVENTASWPER 
+		WHERE 
+			QESITM_ID = #qesitmId#
+	</select>
+	
+	 <select id="comtnschdulinfoDAO.selectCommunityAswper" parameterClass="egovframework.com.evt.service.ComtneventaswperVO" resultClass="egovMap">
+		SELECT 
+			A.QESITM_ID, A.CHOICE_CNSR, A.ESSAY_CNSR, A.ASWPER_SN, B.EX_CN, C.QESITM_SJ, C.QESITM_TY_CODE
+		FROM COMTNEVENTASWPER A LEFT JOIN COMTNEVENTQESITMEX B
+			ON A.QESITM_ID = B.QESITM_ID AND A.CHOICE_CNSR = B.EX_SN
+			LEFT JOIN COMTNEVENTQESITM C
+			ON C.QESITM_ID = A.QESITM_ID
+		WHERE A.SCHDUL_ID = #schdulId# AND A.USER_ID = #userId#
+			ORDER BY ASWPER_ID ASC
+	</select>
+	
+	<select id="comtnschdulinfoDAO.selectComtneventadhrncCnt" parameterClass="comtnschdulinfoVO" resultClass="int">
+		SELECT 
+			COUNT(SCHDUL_ID) 
+		FROM 
+			COMTNEVENTADHRNC
+		WHERE 
+			SCHDUL_ID = #schdulId# 
+			AND USER_ID = #userId# 
+			AND USE_AT = 'Y'
+    </select>
+    
+    
+    <select id="comtnschdulinfoDAO.selectComtnschdulinfoByPopupList" resultClass="egovMap">
+		<![CDATA[
+			SELECT
+                SCHDUL_ID
+            FROM COMTNSCHDULINFO
+            WHERE SCHDUL_CL_CODE IN (3)
+            	AND SITE_ID = #siteId# 
+                AND DATE_FORMAT(now(),'%m%d%Y%H%i%s') >= SCHDUL_BGNDE and SCHDUL_ENDDE >= DATE_FORMAT(now(),'%m%d%Y%H%i%s') 
+                AND USE_AT = 'Y'
+                AND POPUP_AT = 'Y'
+        	ORDER BY SCHDUL_BGNDE ASC
+		]]>
+	</select>
+</sqlMap>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="LytSourcHistoryDAO">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="LytSourcVO" type="egovframework.com.cop.com.service.LytSourcVO"/>
+	
+	<resultMap id="lytSourc" class="egovframework.com.cop.com.service.LytSourc">
+		<result property="lytSourcHistId" column="LYT_SOURC_HIST_ID" columnIndex="1"/>
+		<result property="lytSourcId" column="LYT_SOURC_ID" columnIndex="2"/>
+		<result property="upendSourc" column="UPEND_SOURC" columnIndex="3"/>
+		<result property="lptSourc" column="LPT_SOURC" columnIndex="4"/>
+		<result property="mobileUpendSourc" column="MOBILE_UPEND_SOURC" columnIndex="5"/>
+		<result property="mobileLptSourc" column="MOBILE_LPT_SOURC" columnIndex="6"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="7"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="8"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="9"/>
+		<result property="sourcSeCode" column="SOURC_SE_CODE" columnIndex="10"/>
+	</resultMap>
+	
+	<resultMap id="lytSourcList" class="egovframework.com.cop.com.service.LytSourc">
+		<result property="lytSourcHistId" column="LYT_SOURC_HIST_ID" columnIndex="1"/>
+		<result property="lytSourcId" column="LYT_SOURC_ID" columnIndex="2"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="3"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="4"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="5"/>
+	</resultMap>
+	
+	<parameterMap id="paramInsert" class="egovframework.com.cop.com.service.LytSourc">
+		<parameter property="lytSourcHistId"/>
+		<parameter property="lytSourcId"/>
+		<parameter property="sourcSeCode"/>
+		<parameter property="upendSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="lptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileUpendSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileLptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="lastUpdusrId"/>
+	</parameterMap>
+ 
+	<insert id="LytSourcHistoryDAO.insertLytSourcHistory">
+		<![CDATA[
+			INSERT INTO COMTHLYTSOURCHISTORY 
+				( LYT_SOURC_HIST_ID
+				  , LYT_SOURC_ID
+				  , SOURC_SE_CODE
+				  , UPEND_SOURC
+				  , LPT_SOURC
+				  , MOBILE_UPEND_SOURC
+				  , MOBILE_LPT_SOURC
+				  , PREVEW_FILE_NM
+				  , LAST_UPDUSR_ID
+				  , LAST_UPDUSR_PNTTM
+				  )
+			VALUES ( #lytSourcHistId#
+				  , #lytSourcId#
+				  , #sourcSeCode#
+				  , #upendSourc#
+				  , #lptSourc#
+				  , #mobileUpendSourc#
+				  , #mobileLptSourc#
+				  , #prevewFileNm#
+				  , #lastUpdusrId#
+				  , SYSDATE()
+				  )
+		]]>
+	</insert>
+
+	<delete id="LytSourcHistoryDAO.deleteLytSourcHistory">
+		<![CDATA[
+			DELETE FROM COMTHLYTSOURCHISTORY
+			WHERE LYT_SOURC_HIST_ID=#lytSourcHistId#
+		]]>
+	</delete>
+	
+	<select id="LytSourcHistoryDAO.selectLytSourcHistory" resultMap="lytSourc">
+		<![CDATA[
+			SELECT
+				LYT_SOURC_HIST_ID
+				, LYT_SOURC_ID
+				, UPEND_SOURC
+				, LPT_SOURC
+				, MOBILE_UPEND_SOURC
+				, MOBILE_LPT_SOURC
+				, PREVEW_FILE_NM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+				, SOURC_SE_CODE
+			FROM COMTHLYTSOURCHISTORY
+			WHERE LYT_SOURC_HIST_ID=#lytSourcHistId#
+		]]>
+	</select>
+	
+	<select id="LytSourcHistoryDAO.selectLytSourcHistoryList" parameterClass="LytSourcVO" resultMap="lytSourcList">
+				SELECT
+					LYT_SOURC_HIST_ID
+					, LYT_SOURC_ID
+					, PREVEW_FILE_NM
+					, LAST_UPDUSR_ID
+					, LAST_UPDUSR_PNTTM
+				FROM COMTHLYTSOURCHISTORY
+				WHERE LYT_SOURC_ID = #lytSourcId#
+				ORDER BY LYT_SOURC_HIST_ID DESC
+				LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	<select id="LytSourcHistoryDAO.selectLytSourcHistoryListCnt" parameterClass="LytSourcVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTHLYTSOURCHISTORY
+			WHERE LYT_SOURC_ID = #lytSourcId#
+	</select>
+
+</sqlMap>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="OrgCode">
+
+	<typeAlias  alias="egovMap"    type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="OrgCodeSearchVO" type="egovframework.com.sym.ext.service.EgovOrgCodeVO"/>
+
+	<resultMap id="OrgAreaCodeList" class="egovframework.com.sym.ext.service.EgovOrgCodeVO">
+		<result property="orgCd" 		column="ORG_CD" 		columnIndex="1"/>
+		<result property="schlNm" 		column="SCHL_NM" 		columnIndex="2"/>
+		<result property="schlShrNm" 	column="SCHL_SHR_NM" 	columnIndex="3"/>
+	</resultMap>
+	
+	<resultMap id="OrgCodeList" class="egovframework.com.sym.ext.service.EgovOrgCodeVO">
+		<result property="orgCd" 		column="ORG_CD" 		columnIndex="1"/>
+		<result property="schlGrdNm" 	column="SCHL_GRD_NM" 	columnIndex="2"/>
+		<result property="schlGrdCd" 	column="SCHL_GRD_CD" 	columnIndex="3"/>
+		<result property="schlNm" 		column="SCHL_NM" 		columnIndex="4"/>
+	</resultMap>
+	
+	<resultMap id="OrgCode" class="egovframework.com.sym.ext.service.EgovOrgCodeVO">
+		<result property="orgCd" 		column="ORG_CD" 		columnIndex="1"/>
+		<result property="blngEduInstCd" column="BLNG_EDU_INST_CD" 		columnIndex="2"/>
+		<result property="schlGrdCd" 	column="SCHL_GRD_CD" 	columnIndex="3"/>
+	</resultMap>
+	
+	<select id="OrgCodeDAO.selectOrgAreaList" parameterClass="OrgCodeSearchVO" resultMap="OrgAreaCodeList">
+		SELECT ORG_CD, SCHL_NM, SCHL_SHR_NM
+	    FROM ORG_CODE
+	    WHERE ORG_DIV = 9 AND BLNG_CITY_CD = #baseBlngCityCd# AND BLNG_EDU_INST_CD IS NULL OR ORG_CD IN(#baseOrgCd#)
+	    ORDER BY ORG_CD ASC
+	</select>
+
+	<select id="OrgCodeDAO.selectOrgCodeList" parameterClass="OrgCodeSearchVO" resultMap="OrgCodeList">
+			SELECT  * 
+			  FROM  (
+			SELECT ROWNUM RNUM, ALL_LIST.* 
+			  FROM  (
+					SELECT 
+						ORG_CD, DECODE(SCHL_GRD_CD, 1, '유치원', 2, '초등학교', 3, '중학교', 4, '고등학교', 5, '특수학교') AS SCHL_GRD_NM, SCHL_GRD_CD, SCHL_NM
+						FROM ORG_CODE
+						WHERE SCHL_GRD_CD IN (1, 2, 3, 4, 5)
+							AND BLNG_EDU_INST_CD IN (SELECT ORG_CD FROM ORG_CODE WHERE ORG_DIV = 9 AND BLNG_CITY_CD = #baseBlngCityCd# AND BLNG_EDU_INST_CD IS NULL OR ORG_CD IN(#baseOrgCd#))
+						<isNotEmpty prepend="AND" property="searchBlngEduInstCd">
+							<![CDATA[ BLNG_EDU_INST_CD = #searchBlngEduInstCd# ]]>
+						</isNotEmpty>
+						<isNotEmpty prepend="AND" property="searchSchlGrdCd">
+							<![CDATA[ SCHL_GRD_CD = #searchSchlGrdCd# ]]>
+						</isNotEmpty>
+						<isEqual prepend="AND" property="searchCondition" compareValue="0">
+							<![CDATA[ SCHL_NM LIKE '%' || #searchKeyword# || '%' ]]>
+						</isEqual>
+					ORDER BY SCHL_GRD_CD ASC, SCHL_NM ASC
+		<![CDATA[
+				    ) ALL_LIST
+				    )
+			 WHERE  RNUM  > #firstIndex#
+			   AND  RNUM <= #firstIndex# + #recordCountPerPage#
+		]]>
+
+	</select>
+
+	<select id="OrgCodeDAO.selectOrgCodeListTotCnt" parameterClass="OrgCodeSearchVO" resultClass="int">
+		
+			SELECT  COUNT(*) totcnt 
+			FROM ORG_CODE
+			WHERE SCHL_GRD_CD IN (1, 2, 3, 4, 5)
+				AND BLNG_EDU_INST_CD IN (SELECT ORG_CD FROM ORG_CODE WHERE ORG_DIV = 9 AND BLNG_CITY_CD = #baseBlngCityCd# AND BLNG_EDU_INST_CD IS NULL OR ORG_CD IN(#baseOrgCd#))
+			<isNotEmpty prepend="AND" property="searchBlngEduInstCd">
+				<![CDATA[ BLNG_EDU_INST_CD = #searchBlngEduInstCd# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchSchlGrdCd">
+				<![CDATA[ SCHL_GRD_CD = #searchSchlGrdCd# ]]>
+			</isNotEmpty>
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+				<![CDATA[ SCHL_NM LIKE '%' || #searchKeyword# || '%' ]]>
+			</isEqual>
+	</select>
+	
+	<select id="OrgCodeDAO.selectOrgCode" parameterClass="OrgCodeSearchVO" resultMap="OrgCode">
+		SELECT  ORG_CD, BLNG_EDU_INST_CD, SCHL_GRD_CD
+		FROM ORG_CODE
+		WHERE ORG_CD = #orgCd#
+	</select>
+
+</sqlMap>            

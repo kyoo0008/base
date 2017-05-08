@@ -1,0 +1,31 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#advfile_dlg.dialog_title}</title>
+	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="js/file.js"></script>
+	<link href="css/advfile.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="pop_file">
+	<form name="source" onsubmit="FileDialog.insert();return false;" action="#">
+		
+		<div class="pop_file_cont">
+			<p class="ftip">현재 <span class="blue" id="lblCurrSize">0MB</span> / <span class="orange" id="lblMaxSize">0MB</span>까지 첨부 되었습니다.</p>
+			
+			<div id="plugin" class="file_upload">
+				
+			</div>
+
+			<h2 class="tit_safe">저작권을 보호해 주세요!</h2>
+			<p class="txt_safe">
+				저작권자의 허락 없이 임의로 저작물<span class="blue">(음악, 동영상, 사진, 글 등)</span>을 인터넷 게시판에 올릴 경우 <span class="blue">관련법령에 의하여 처벌</span>을 받을 수 있습니다.
+			</p>
+		</div>
+
+		<div class="mceActionPanel">
+			<input type="submit" id="insert" name="insert" value="{#insert}" />
+			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+		</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+    <formset>
+		<form name="lytTmplatVO" >				
+			<field property="tmplatLcasCode" depends="required">
+        		<arg0 key="cop.tmplatLcasCode" />
+			</field>	
+			<field property="tmplatMlsfcCode" depends="required">
+        		<arg0 key="cop.tmplatMlsfcCode" />
+			</field>
+			<field property="tmplatNm" depends="required, maxlength">
+        		<arg0 key="cop.tmplatNm" />
+        		<arg1 key="50" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>			
+		</form>
+		<form name="bbsTmplatVO" >	
+			<field property="tmplatSeCode" depends="required">
+        		<arg0 key="cop.tmplatSeCode" />
+			</field>
+			<field property="tmplatNm" depends="required, maxlength">
+        		<arg0 key="cop.tmplatNm" />
+        		<arg1 key="50" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>			
+		</form>
+		<form name="bbsSourcVO" >	
+			<field property="sourcSeCode" depends="required">
+        		<arg0 key="cop.sourcSeCode" />
+			</field>
+			<field property="sourcNm" depends="required, maxlength">
+        		<arg0 key="cop.sourcNm" />
+        		<arg1 key="50" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>	
+			<field property="listSourc" depends="required">
+        		<arg0 key="cop.listSourc" />
+			</field>	
+			<field property="viewSourc" depends="required">
+        		<arg0 key="cop.viewSourc" />
+			</field>
+			<field property="formSourc" depends="required">
+        		<arg0 key="cop.formSourc" />
+			</field>
+			<field property="cmSourc" depends="required">
+        		<arg0 key="cop.cmSourc" />
+			</field>	
+		</form>
+		<form name="lytSourcVO" >	
+			<field property="sourcSeCode" depends="required">
+        		<arg0 key="cop.sourcSeCode" />
+			</field>
+			<field property="sourcNm" depends="required, maxlength">
+        		<arg0 key="cop.sourcNm" />
+        		<arg1 key="50" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>	
+			<field property="upendSourc" depends="required">
+        		<arg0 key="cop.upendSourc" />
+			</field>	
+			<field property="lptSourc" depends="required">
+        		<arg0 key="cop.lptSourc" />
+			</field>
+		</form>
+    </formset>
+
+</form-validation>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+
+        <form name="userManageVO"> 
+
+        	<field property="userId" depends="required, minlength, maxlength">
+                <arg0 key="cop.userId" resource="true"/>
+                <arg1 key="8"/>
+                <var>
+	                <var-name>minlength</var-name>
+	                <var-value>8</var-value>
+                </var>
+                <arg2 key="20"/>
+                <var>
+	                <var-name>maxlength</var-name>
+	                <var-value>20</var-value>
+                </var>
+            </field>
+            <!-- 
+            <field property="password" depends="required, password1, password3, password4">
+                <arg0 key="cop.userPass" resource="true"/>
+            </field>
+             -->
+       		 <field property="userNm" depends="required, maxlength">
+                <arg0 key="cop.ncrdNm" resource="true"/>
+                <arg1 key="10"/>
+                <var>
+	                <var-name>maxlength</var-name>
+	                <var-value>10</var-value>
+                </var>
+            </field>
+
+			<field property="tel1" depends="required, maxlength, integer">
+                <arg0 key="자택전화번호 앞번호" resource="false"/>
+                <arg1 key="4" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>4</var-value>
+                </var>
+            </field> 
+            
+            <field property="tel2" depends="required, maxlength, integer">
+                <arg0 key="자택전화번호 중간번호" resource="false"/>
+                <arg1 key="4" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>4</var-value>
+                </var>
+            </field>
+            
+            <field property="tel3" depends="required, maxlength, integer">
+                <arg0 key="자택전화번호 마지막번호" resource="false"/>
+                <arg1 key="4" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>4</var-value>
+                </var>
+            </field>
+            
+            <field property="phone1" depends="required, maxlength, integer">
+                <arg0 key="휴대전화번호 앞번호" resource="false"/>
+                <arg1 key="4" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>4</var-value>
+                </var>
+            </field> 
+            
+            <field property="phone2" depends="required, maxlength, integer">
+                <arg0 key="휴대전화번호 중간번호" resource="false"/>
+                <arg1 key="4" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>4</var-value>
+                </var>
+            </field>
+            
+            <field property="phone3" depends="required, maxlength, integer">
+                <arg0 key="휴대전화번호 마지막번호" resource="false"/>
+                <arg1 key="4" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>4</var-value>
+                </var>
+            </field>
+            
+            <field property="email1" depends="required, maxlength">
+                <arg0 key="이메일 계정" resource="false"/>
+                <arg1 key="30" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>30</var-value>
+                </var>
+            </field>
+            
+            <field property="email2" depends="required, maxlength">
+                <arg0 key="이메일 도메인" resource="false"/>
+                <arg1 key="20" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>20</var-value>
+                </var>
+            </field>
+            <!-- 
+			<field property="moblphonNo" depends="required">
+                <arg0 key="cop.mbtlNum" resource="true"/>
+            </field>
+            
+			<field property="emailAdres" depends="required">
+                <arg0 key="cop.emailAdres" resource="true"/>
+            </field>
+			 -->
+            <field property="zip" depends="required, maxlength">
+                <arg0 key="cop.zip" resource="true"/>
+                <arg1 key="7" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>7</var-value>
+                </var>
+            </field>
+            
+            <field property="adres" depends="required, maxlength">
+                <arg0 key="cop.adres" resource="true"/>
+                <arg1 key="100" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>100</var-value>
+                </var>
+            </field>
+            
+            <field property="adresDetail" depends="required, maxlength">
+                <arg0 key="cop.adresDetail" resource="true"/>
+                <arg1 key="100" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>100</var-value>
+                </var>
+            </field>
+
+        </form>
+
+    </formset>
+
+</form-validation>

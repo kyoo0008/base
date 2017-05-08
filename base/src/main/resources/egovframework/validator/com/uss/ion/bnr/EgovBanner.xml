@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+        <form name="banner">
+        	
+        	<field property="siteId" depends="required">
+                <arg0 key="사이트" resource="false"/>
+            </field>
+            <field property="bannerNm" depends="required, maxlength">
+                <arg0 key="배너 명" resource="false"/>     
+                <arg1 key="50" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>50</var-value>
+                </var>                       
+            </field>
+            <field property="linkUrl" depends="required">
+                <arg0 key="링크URL" resource="false"/>
+            </field>
+            <field property="bannerDc" depends="required">
+                <arg0 key="배너설명" resource="false"/>     
+                <arg1 key="200" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>200</var-value>
+                </var> 
+            </field>
+            <field property="sortOrdr" depends="required, integer">
+                <arg0 key="정렬순서" resource="false"/>
+            </field>        
+        </form>
+    </formset>
+
+</form-validation>

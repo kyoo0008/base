@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="LytTmplatHistoryDAO">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="LytTmplatVO" type="egovframework.com.cop.com.service.LytTmplatVO"/>
+	
+	<resultMap id="lytTmplat" class="egovframework.com.cop.com.service.LytTmplat">
+		<result property="lytTmplatHistId" column="LYT_TMPLAT_HIST_ID" columnIndex="1"/>
+		<result property="lytTmplatId" column="LYT_TMPLAT_ID" columnIndex="2"/>
+		<result property="tmplatLcasCode" column="TMPLAT_LCAS_CODE" columnIndex="3"/>
+		<result property="tmplatMlsfcCode" column="TMPLAT_MLSFC_CODE" columnIndex="4"/>
+		<result property="cssSourc" column="CSS_SOURC" columnIndex="5"/>
+		<result property="scriptSourc" column="SCRIPT_SOURC" columnIndex="6"/>
+		<result property="mobileCssSourc" column="MOBILE_CSS_SOURC" columnIndex="7"/>
+		<result property="mobileScriptSourc" column="MOBILE_SCRIPT_SOURC" columnIndex="8"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="9"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="10"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="11"/>
+	</resultMap>
+	
+	<resultMap id="lytTmplatList" class="egovframework.com.cop.com.service.LytTmplat">
+		<result property="lytTmplatHistId" column="LYT_TMPLAT_HIST_ID" columnIndex="1"/>
+		<result property="lytTmplatId" column="LYT_TMPLAT_ID" columnIndex="2"/>
+		<result property="tmplatLcasCode" column="TMPLAT_LCAS_CODE" columnIndex="3"/>
+		<result property="tmplatMlsfcCode" column="TMPLAT_MLSFC_CODE" columnIndex="4"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="5"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="6"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="7"/>
+	</resultMap>
+	
+	<parameterMap id="paramInsert" class="egovframework.com.cop.com.service.LytTmplat">
+		<parameter property="lytTmplatHistId"/>
+		<parameter property="lytTmplatId"/>
+		<parameter property="tmplatLcasCode"/>
+		<parameter property="tmplatMlsfcCode"/>
+		<parameter property="cssSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="scriptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileCssSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileScriptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="lastUpdusrId"/>
+	</parameterMap>
+
+	<insert id="LytTmplatHistoryDAO.insertLytTmplatHistory">
+		<![CDATA[
+			INSERT INTO COMTHLYTTMPLATHISTORY 
+				( LYT_TMPLAT_HIST_ID
+				  , LYT_TMPLAT_ID
+				  , TMPLAT_LCAS_CODE
+				  , TMPLAT_MLSFC_CODE
+				  , CSS_SOURC
+				  , SCRIPT_SOURC
+				  , MOBILE_CSS_SOURC
+				  , MOBILE_SCRIPT_SOURC
+				  , PREVEW_FILE_NM
+				  , LAST_UPDUSR_ID
+				  , LAST_UPDUSR_PNTTM
+				  )
+			VALUES ( #lytTmplatHistId#
+				  , #lytTmplatId#
+				  , #tmplatLcasCode#
+				  , #tmplatMlsfcCode#
+				  , #cssSourc#
+				  , #scriptSourc#
+				  , #mobileCssSourc#
+				  , #mobileScriptSourc#
+				  , #prevewFileNm#
+				  , #lastUpdusrId#
+				  , SYSDATE()
+				  )
+		]]>
+	</insert>
+
+	 
+	<delete id="LytTmplatHistoryDAO.deleteLytTmplatHistory">
+		<![CDATA[
+			DELETE FROM COMTHLYTTMPLATHISTORY
+			WHERE LYT_TMPLAT_HIST_ID=#lytTmplatHistId#
+		]]>
+	</delete>
+	
+	<select id="LytTmplatHistoryDAO.selectLytTmplatHistory" resultMap="lytTmplat">
+		<![CDATA[
+			SELECT
+				LYT_TMPLAT_HIST_ID
+				, LYT_TMPLAT_ID
+				, TMPLAT_LCAS_CODE
+				, TMPLAT_MLSFC_CODE
+				, CSS_SOURC
+				, SCRIPT_SOURC
+				, MOBILE_CSS_SOURC
+				, MOBILE_SCRIPT_SOURC
+				, PREVEW_FILE_NM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+			FROM COMTHLYTTMPLATHISTORY
+			WHERE LYT_TMPLAT_HIST_ID=#lytTmplatHistId#
+		]]>
+	</select>
+	
+	<select id="LytTmplatHistoryDAO.selectLytTmplatHistoryList" parameterClass="LytTmplatVO" resultMap="lytTmplatList">
+				SELECT
+					LYT_TMPLAT_HIST_ID
+					, LYT_TMPLAT_ID
+					, TMPLAT_LCAS_CODE
+					, TMPLAT_MLSFC_CODE
+					, PREVEW_FILE_NM
+					, LAST_UPDUSR_ID
+					, LAST_UPDUSR_PNTTM
+				FROM COMTHLYTTMPLATHISTORY
+				WHERE LYT_TMPLAT_ID = #lytTmplatId#
+				ORDER BY LYT_TMPLAT_HIST_ID DESC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	<select id="LytTmplatHistoryDAO.selectLytTmplatHistoryListCnt" parameterClass="LytTmplatVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTHLYTTMPLATHISTORY
+			WHERE LYT_TMPLAT_ID = #lytTmplatId#
+	</select>
+
+</sqlMap>

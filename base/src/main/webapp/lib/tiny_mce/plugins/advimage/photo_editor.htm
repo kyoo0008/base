@@ -1,0 +1,91 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript" src="/template/common/js/jquery/jquery-1.9.1.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>포토에디터</title>
+	<link href="css/advimage.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		//$.extend({       getUrlVars: function(){         var vars = [], hash;         var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');         for(var i = 0; i < hashes.length; i++)         {           hash = hashes[i].split('=');           vars.push(hash[0]);           vars[hash[0]] = hash[1];         }         return vars;       },       getUrlVar: function(name){         return $.getUrlVars()[name];       }     }); 
+		
+		var win = opener.win;
+		var adfile_external_param = opener.adfile_external_param;
+		var param_src = "";
+		$(document).ready( function() {
+			
+			var param = "path=" +  adfile_external_param.storePath;
+			param += ",SiteId=" +  adfile_external_param.siteId;
+			param += ",appendPath=" +  adfile_external_param.appendPath;
+			param += ",UploadType=PHOTO";
+			param += ",MaxFileSize=" + ($('#posblAtchFileSize_' + adfile_external_param.editorId, win.document).val() - $('#fileCurrSize_' + adfile_external_param.editorId, win.document).val());
+			param += ",MaxFileCount=" + ($('#posblAtchFileNumber_' + adfile_external_param.editorId, win.document).val() - $('#fileCurrCount_' + adfile_external_param.editorId, win.document).val());
+			param += ",AtchFileId=" +  $('#fileGroupId_' + adfile_external_param.editorId, win.document).val();
+			
+			param_src = $('#src', opener.document).val();
+			if(param_src != "") {
+				$.extend({       getUrlVars: function(){         var vars = [], hash;         var hashes = param_src.slice(param_src.indexOf('?') + 1).split('&');         for(var i = 0; i < hashes.length; i++)         {           hash = hashes[i].split('=');           vars.push(hash[0]);           vars[hash[0]] = hash[1];         }         return vars;       },       getUrlVar: function(name){         return $.getUrlVars()[name];       }     });
+				if($.getUrlVar('atchFileId') && $.getUrlVar('fileSn')) {
+					if($.getUrlVar('atchFileId') == $('#fileGroupId', win.document).val()) {
+						param += ", FileSn=" +  $.getUrlVar('fileSn');
+						param += ", IsEdit=Y";
+						if($('#' + $.getUrlVar('atchFileId') + '_' + $.getUrlVar('fileSn'), win.document).attr('class') != 'db') {
+							param += ", isTempEdit=Y";
+						}
+					}
+				}
+			}
+
+			var plugin = "				<object id='PhotoEditor' data='data:application/x-silverlight-2,' type='application/x-silverlight-2' width='100%' height='100%'>";
+			plugin += "				   <param name='onload' value='pluginLoaded' />";
+			plugin += "				  <param name='source' value='PhotoEditor.xap'/>";
+			plugin += "				  <param name='onError' value='onSilverlightError' />";
+			plugin += "				  <param name='background' value='white' />";
+			plugin += "				  <param name='minRuntimeVersion' value='4.0.50826.0' />";
+			plugin += "				  <param name='autoUpgrade' value='true' />";
+			plugin += "				  <param name='initParams' value='" + param + "' />";
+			plugin += "				  <a href='http://go.microsoft.com/fwlink/?LinkID=149156&v=4.0.50826.0' style='text-decoration:none'>";
+			plugin += "					  <img src='http://go.microsoft.com/fwlink/?LinkId=161376' alt='Microsoft Silverlight 얻기' style='border-style:none'/>";
+			plugin += "				  </a>";
+			plugin += "				</object><iframe id='_sl_historyFrame' style='visibility:hidden;height:0px;width:0px;border:0px'></iframe></div>";
+			
+			document.getElementById("plugin").innerHTML = plugin;
+			
+			
+		});
+		
+        var slCtl = null;
+        function pluginLoaded(sender) {
+            slCtl = document.getElementById("PhotoEditor");
+            slCtl.Content.Control.UploadFinished = UploadFinished;
+            
+            slCtl.Content.Control.MaximumFileSizeReached = MaximumFileSizeReached;
+            slCtl.Content.Control.MaximumFileCountReached = MaximumFileCountReached;
+            
+            //var src= decodeURIComponent($.getUrlVar('src'));
+            if(param_src != "") {
+            	slCtl.Content.Control.SetInitData(param_src);
+            }
+        }
+
+        function UploadFinished() {
+        	var userFile = slCtl.Content.Control.UserFile();
+        	
+            opener.fnPhotoEditorClose(userFile.ResUserFile);
+            
+            window.close();
+        }
+        
+        function MaximumFileSizeReached() {
+            alert('첨부가능한 최대용량을 초과 하였습니다.');
+        }
+        
+        function MaximumFileCountReached() {
+        	alert('첨부가능한 최대갯수를 초과 하였습니다.');
+        }
+    </script>
+</head>
+<body leftmargin="0" topmargin="0">
+	<div id="plugin">
+        </div> 
+</body> 
+</html> 

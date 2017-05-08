@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SysLog">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<!-- 로그인로그 VO -->	
+	<typeAlias  alias="loginLog" type="egovframework.com.sym.log.service.LoginLog"/>
+	<!-- 웹로그 VO -->	
+	<typeAlias  alias="webLog" type="egovframework.com.sym.log.service.WebLog"/>
+	<!-- 데이터사용로그 VO -->	
+	<typeAlias  alias="dataUseLog" type="egovframework.com.sym.log.service.DataUseLog"/>
+	
+	<!-- 웹로그 맵 -->	
+	<resultMap id="WebLogVO" class="egovframework.com.sym.log.service.WebLog">
+		<result property="siteId" column="SITE_ID"/>
+		<result property="sysTyCode" column="SYS_TY_CODE"/>
+		<result property="menuId" column="MENU_ID"/>
+		<result property="requstId" column="REQUST_ID"/>		
+		<result property="occrrncDe" column="OCCRRNC_DE"/>
+		<result property="url" column="URL"/>		
+		<result property="rqesterIp" column="RQESTER_IP"/>		
+		<result property="rqesterId" column="RQESTER_ID"/>
+		<result property="rqsterNm" column="RQESTER_NM"/>			
+	</resultMap>	
+
+	<!-- 로그인로그 맵 -->	
+	<resultMap id="LoginLogVO" class="egovframework.com.sym.log.service.LoginLog">
+		<result property="siteId" column="SITE_ID"/>
+		<result property="sysTyCode" column="SYS_TY_CODE"/>
+		<result property="logId" column="LOG_ID"/>		
+		<result property="creatDt" column="CREAT_DT"/>
+		<result property="loginMthd" column="LOGIN_MTHD"/>		
+		<result property="loginIp" column="LOGIN_IP"/>		
+		<result property="loginId" column="LOGIN_ID"/>
+		<result property="loginNm" column="LOGIN_NM"/>			
+	</resultMap>	
+
+
+	<!-- 로그인 로그 등록 -->
+	<insert id="LogManageDAO.logInsertLoginLog" parameterClass="loginLog" >
+		<![CDATA[
+			INSERT INTO COMTNLOGINLOG 
+				( LOG_ID
+				  , LOGIN_MTHD
+				  , LOGIN_ID
+				  , LOGIN_IP
+				  , ERR_OCCRR_AT
+				  , ERROR_CODE
+				  , CREAT_DT
+				  , SITE_ID
+				  , SYS_TY_CODE
+				)
+			VALUES ( #logId#
+				  , #loginMthd#
+				  , #loginId#
+				  , #loginIp#
+				  , #errOccrrAt#
+				  , #errorCode#
+				  , SYSDATE()
+				  , IFNULL(#siteId#, 'SITE_000000000000001')
+				  , IFNULL(#sysTyCode#, 'SYS01')
+				  )
+		]]>
+	</insert>
+	
+	<!-- 로그인 로그 상세  조회 -->
+	<select id="LogManageDAO.selectLoginLog" parameterClass="loginLog" resultMap="LoginLogVO">
+		<![CDATA[	
+			SELECT 
+				  a.LOG_ID
+				, a.CREAT_DT
+				, a.LOGIN_MTHD
+				, a.LOGIN_IP
+				, a.LOGIN_ID
+				, '' AS LOGIN_NM
+				, SITE_ID
+				, SYS_TY_CODE
+			FROM
+				COMTNLOGINLOG a
+			WHERE 
+				a.LOG_ID = #logId#
+			]]>	
+	</select>	
+	
+	<!-- 로그인 로그 목록  조회 -->
+	<select id="LogManageDAO.selectLoginLogInf" parameterClass="loginLog" resultMap="LoginLogVO">
+		<![CDATA[	
+			SELECT 
+				  a.LOG_ID
+				, a.CREAT_DT
+				, a.LOGIN_MTHD
+				, a.LOGIN_IP
+				, a.LOGIN_ID
+				, '' AS LOGIN_NM
+			FROM
+				COMTNLOGINLOG a
+			WHERE 
+				1 = 1
+			]]>	
+			<isNotEmpty prepend="AND" property="searchWrd">
+				<![CDATA[	a.LOGIN_MTHD LIKE '%' || #searchWrd# }} '%' ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchBgnDe">
+				<![CDATA[	DATE_FORMAT(a.CREAT_DT, '%Y-%m-%d') BETWEEN #searchBgnDe# AND #searchEndDe# ]]>
+			</isNotEmpty>		
+		<![CDATA[			
+			ORDER BY a.CREAT_DT DESC 
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>			
+	</select>	
+	
+	<!-- 로그인 로그 총건수 -->
+	<select id="LogManageDAO.selectLoginLogInfCnt"  parameterClass="loginLog"  resultClass="java.lang.Integer">
+		<![CDATA[ 
+			SELECT COUNT(a.LOG_ID) as cnt
+			FROM
+				COMTNLOGINLOG a
+			WHERE 
+				1 = 1
+			]]>	
+			<isNotEmpty prepend="AND" property="searchWrd">
+				<![CDATA[	a.LOGIN_MTHD LIKE '%' || #searchWrd# }} '%' ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchBgnDe">
+				<![CDATA[	DATE_FORMAT(a.CREAT_DT, '%Y-%m-%d') BETWEEN #searchBgnDe# AND #searchEndDe# ]]>
+			</isNotEmpty>			
+	</select>	
+
+	<!-- 웹 로그 등록 -->
+	<insert id="LogManageDAO.logInsertWebLog" parameterClass="webLog" >
+		<![CDATA[
+			INSERT INTO COMTNWEBLOG 
+				( REQUST_ID
+				  , URL
+				  , RQESTER_ID
+				  , RQESTER_IP
+				  , OCCRRNC_PNTTM
+				  , SITE_ID
+				  , SYS_TY_CODE
+				  , MENU_ID 
+				  , MOBILE_AT
+				 )
+			VALUES ( #requstId#
+				  , #url#
+				  , #rqesterId#
+				  , #rqesterIp#
+				  , SYSDATE()
+				  , IFNULL(#siteId#, 'SITE_000000000000001')
+				  , IFNULL(#sysTyCode#, 'SYS01')
+				  , #menuId#
+				  , #mobileAt#
+				  )
+		]]>
+	</insert>
+	
+	<!-- 웹 로그 상세 조회 -->
+	<select id="LogManageDAO.selectWebLog" parameterClass="webLog" resultMap="WebLogVO">
+		<![CDATA[	
+			SELECT 
+				  a.REQUST_ID
+				, a.OCCRRNC_DE
+				, a.URL
+				, a.RQESTER_IP
+				, a.RQESTER_ID
+				, '' AS RQESTER_NM
+				, a.SITE_ID
+				, a.SYS_TY_CODE
+				, a.MENU_ID 
+			FROM
+				COMTNWEBLOG a
+			WHERE 
+				a.REQUST_ID = #requstId#
+			]]>	
+	</select>	
+	
+	<!-- 웹 로그 목록 조회 -->
+	<select id="LogManageDAO.selectWebLogInf" parameterClass="webLog" resultMap="WebLogVO">
+		<![CDATA[	
+			SELECT 
+				  a.REQUST_ID
+				, a.OCCRRNC_DE
+				, a.URL
+				, a.RQESTER_IP
+				, a.RQESTER_ID
+				, '' AS RQESTER_NM
+				, a.SITE_ID
+				, a.SYS_TY_CODE
+				, a.MENU_ID
+			FROM
+				COMTNWEBLOG a
+			WHERE 
+				1 = 1
+			]]>	
+			<isNotEmpty prepend="AND" property="searchWrd">
+				<![CDATA[	a.URL LIKE '%' || #searchWrd# }} '%' ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchBgnDe">
+				<![CDATA[	a.OCCRRNC_DE BETWEEN #searchBgnDe# AND #searchEndDe# ]]>
+			</isNotEmpty>		
+		<![CDATA[			
+			ORDER BY a.OCCRRNC_DE DESC 
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>			
+	</select>	
+	
+	<!-- 웹 로그 총건수 -->
+	<select id="LogManageDAO.selectWebLogInfCnt"  parameterClass="webLog"  resultClass="java.lang.Integer">
+		<![CDATA[ 
+			SELECT COUNT(a.REQUST_ID) as cnt
+			FROM
+				COMTNWEBLOG a
+			WHERE 
+				1 = 1
+			]]>	
+			<isNotEmpty prepend="AND" property="searchWrd">
+				<![CDATA[ 	a.URL LIKE '%' || #searchWrd# }} '%'  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchBgnDe">
+				<![CDATA[ 	a.OCCRRNC_DE BETWEEN #searchBgnDe# AND #searchEndDe#  ]]>
+			</isNotEmpty>			
+	</select>	
+
+	<!-- 웹 로그 전날 로그 요약 등록 -->
+	<insert id="LogManageDAO.logInsertWebLogSummary">
+		<![CDATA[
+			INSERT INTO COMTSWEBLOGSUMMARY 
+			(
+				OCCRRNC_DE				
+				, SITE_ID
+				, SYS_TY_CODE
+				, MENU_ID
+				, INQIRE_CO
+				, MOBILE_INQIRE_CO
+			)
+			SELECT DATE_FORMAT(b.OCCRRNC_PNTTM, '%Y-%m-%d')
+			     , IFNULL(b.SITE_ID, 'SITE_000000000000001')
+				 , IFNULL(b.SYS_TY_CODE, 'SYS01')
+				 , IFNULL(b.MENU_ID, '00000000000000000000')
+			     , COUNT(IF(MOBILE_AT = 'N', 1, NULL)) AS INQIRE_CO
+			     , COUNT(IF(MOBILE_AT = 'Y', 1, NULL)) AS MOBILE_INQIRE_CO
+			  FROM COMTNWEBLOG b
+			 WHERE NOT EXISTS (SELECT c.OCCRRNC_DE 
+			                     FROM COMTSWEBLOGSUMMARY c
+			                    WHERE c.OCCRRNC_DE = DATE_FORMAT((SYSDATE() - 1), '%Y-%m-%d')
+			                  )
+			   AND b.OCCRRNC_PNTTM >= CURDATE() - 1 AND b.OCCRRNC_PNTTM < CURDATE()
+			 GROUP BY DATE_FORMAT(b.OCCRRNC_PNTTM, '%Y-%m-%d')
+				    , IFNULL(b.SITE_ID, 'SITE_000000000000001')
+				 	, IFNULL(b.SYS_TY_CODE, 'SYS01')
+				 	, IFNULL(b.MENU_ID, '00000000000000000000')
+				  
+		]]>
+	</insert>
+	
+	<!-- 웹 로그 일주일전 로그 삭제 -->
+	<delete id="LogManageDAO.logDeleteWebLogSummary">
+		<![CDATA[
+			DELETE FROM COMTNWEBLOG
+			 WHERE OCCRRNC_PNTTM < SYSDATE() - 365
+				  
+		]]>
+	</delete>
+	
+	<!-- 마일리지 로그 전날 로그 요약 등록 -->
+	<insert id="LogManageDAO.logInsertMlgLogSummary">
+		<![CDATA[
+			INSERT INTO COMTSMLGLOGSUMMARY 
+            SELECT 
+                DATE_FORMAT(b.REGISTER_PNTTM, '%Y-%m-%d')
+                 , b.SITE_ID
+                 , b.MLG_CODE
+                 , IFNULL(SUM(CASE WHEN b.MLG_SCORE > 0 THEN b.MLG_SCORE END), 0)
+                 , IFNULL(SUM(CASE WHEN b.MLG_SCORE < 0 THEN b.MLG_SCORE END), 0)
+              FROM COMTNMLGUSERLOG b
+             WHERE NOT EXISTS (SELECT c.OCCRRNC_DE 
+                                 FROM COMTSMLGLOGSUMMARY c
+                                WHERE c.OCCRRNC_DE = DATE_FORMAT((SYSDATE() - 1), '%Y-%m-%d')
+                              )
+               AND b.REGISTER_PNTTM >= CURDATE() - 1 AND b.REGISTER_PNTTM < CURDATE()
+             GROUP BY DATE_FORMAT(b.REGISTER_PNTTM, '%Y-%m-%d')
+             		, b.SITE_ID
+                    , b.MLG_CODE
+				  
+		]]>
+	</insert>
+	
+	<!-- 게시물 전날 요약 등록  -->
+	<insert id="LogManageDAO.logInsertBbsSummary">
+		<![CDATA[
+			INSERT INTO COMTSBBSSUMMARY (
+			   OCCRRNC_DE
+			   , SITE_ID
+			   , SYS_TY_CODE
+			   , TRGET_ID
+			   , BBS_ID
+			   , CREAT_CO
+			   , TOT_INQIRE_CO
+			   , DWLD_CO) 
+			SELECT
+		        DT
+		        , SITE_ID
+		        , SYS_TY_CODE
+		        , TRGET_ID
+		        , BBS_ID
+		        , SUM(CREAT_CO)
+		        , SUM(TOT_INQIRE_CO)
+		        , SUM(DWLD_CO)
+		    FROM
+		    (
+				SELECT 
+	                DATE_FORMAT(a.FRST_REGISTER_PNTTM, '%Y-%m-%d') AS DT
+	                 , b.SITE_ID
+	                 , b.SYS_TY_CODE
+	                 , c.TRGET_ID
+	                 , b.BBS_ID
+	                 , COUNT(*) AS CREAT_CO
+	                 , SUM(INQIRE_CO) AS TOT_INQIRE_CO
+	                 , NULL AS DWLD_CO
+	             FROM COMTNBBS a, COMTNBBSMASTER b, COMTNBBSUSE c
+	             WHERE a.BBS_ID = b.BBS_ID 
+	                 AND b.BBS_ID = c.BBS_ID
+	                 AND a.USE_AT = 'Y' 
+	                 AND b.USE_AT = 'Y'
+	                 AND c.USE_AT = 'Y'    
+	                 AND c.TRGET_ID = 'SYSTEM_DEFAULT_BOARD'         
+	                 AND NOT EXISTS (SELECT c.OCCRRNC_DE 
+	                                 FROM COMTSBBSSUMMARY c
+	                                WHERE c.OCCRRNC_DE = DATE_FORMAT((SYSDATE() - 1), '%Y-%m-%d')
+	                              )
+	               	AND a.FRST_REGISTER_PNTTM >= CURDATE() - 1 AND a.FRST_REGISTER_PNTTM < CURDATE()
+	             GROUP BY DATE_FORMAT(a.FRST_REGISTER_PNTTM, '%Y-%m-%d')
+	                     , b.SITE_ID
+	                     , b.SYS_TY_CODE
+	                    , c.TRGET_ID
+	                    , b.BBS_ID
+	                    
+	             UNION ALL
+            
+	            SELECT 
+	                DATE_FORMAT(OCCRRNC_PNTTM, '%Y-%m-%d') AS DT
+	                 , SITE_ID
+	                 , SYS_TY_CODE
+	                 , TRGET_ID
+	                 , BBS_ID
+	                 , NULL AS CREAT_CO
+	                 , NULL AS TOT_INQIRE_CO
+	                 , COUNT(*) AS DWLD_CO
+	             FROM COMTNDTAUSELOG
+	             WHERE         OCCRRNC_PNTTM >= TRUNC(SYSDATE()) - 1 AND OCCRRNC_PNTTM < TRUNC(SYSDATE())
+	             	AND TRGET_ID IN ('SYSTEM_DEFAULT_BOARD')
+	             	AND NOT EXISTS (SELECT c.OCCRRNC_DE 
+	                                 FROM COMTSBBSSUMMARY c
+	                                WHERE c.OCCRRNC_DE = DATE_FORMAT((SYSDATE() - 1), '%Y-%m-%d')
+	                              )
+	             GROUP BY DATE_FORMAT(OCCRRNC_PNTTM, '%Y-%m-%d')
+	                    , SITE_ID
+	                    , SYS_TY_CODE
+	                    , TRGET_ID
+	                    , BBS_ID
+             ) A
+             GROUP BY DT, SITE_ID, SYS_TY_CODE, TRGET_ID, BBS_ID
+		]]>
+	</insert>	
+	
+	<!-- 웹 로그 등록 -->
+	<insert id="LogManageDAO.logInsertDataUseLog" parameterClass="dataUseLog" >
+		INSERT INTO COMTNDTAUSELOG (
+		   DTA_USE_ID, SITE_ID, SYS_TY_CODE, 
+		   TRGET_ID, BBS_ID, NTT_ID, 
+		   ATCH_FILE_ID, FILE_SN, RQESTER_IP, 
+		   RQESTER_ID, OCCRRNC_PNTTM) 
+		VALUES ( #dtaUseId#,
+				 IFNULL(#siteId#, 'SITE_000000000000001'),
+				 IFNULL(#sysTyCode#, 'SYS01'),
+				 #trgetId#,
+				 #bbsId#,
+				 #nttId#,
+				 #atchFileId#,
+				 #fileSn#,
+				 #rqesterIp#,
+				 #rqesterId#,
+				 SYSDATE())
+	 </insert>
+	
+</sqlMap>
+

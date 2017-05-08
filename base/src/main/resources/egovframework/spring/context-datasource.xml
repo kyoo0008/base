@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+						http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+	<bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/egovframework/egovProps/globals.properties</value>
+                <!-- value>file:/product/jeus/egovProps/globals.properties</value-->
+            </list>
+        </property>
+    </bean>
+    
+	<!-- DataSource -->
+	<alias name="dataSource-${Globals.DbType}" alias="dataSource" />
+	
+	<!-- 
+	<bean id="dataSource-oracle" class="org.springframework.jndi.JndiObjectFactoryBean">  
+	    <property name="jndiName" value="java:comp/env/jdbc/cait" />  
+	</bean> 
+	 -->
+	 
+	<!-- Oracle -->	
+	<!-- 
+	<bean id="dataSource-oracle" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@192.168.1.111:1521/CAIT" />
+		<property name="username" value="CAIT_BASE_USER"/>
+		<property name="password" value="cait_base_pass"/>
+	</bean>
+	 -->
+	<!-- DB2 -->
+	<!-- 
+	<bean id="dataSource-db2" class="org.springframework.jndi.JndiObjectFactoryBean">  
+	    <property name="jndiName" value="java:comp/env/jdbc/cait" />  
+	</bean> 
+	 -->
+	 <!-- 
+	<bean id="dataSource-db2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver"/>
+		<property name="url" value="jdbc:db2://192.168.10.111:50000/CAIT" />
+		<property name="username" value="db2admin"/>
+		<property name="password" value="emt6417!"/>
+	</bean>
+	 -->
+	<!-- MYSQL -->
+	<!-- 
+	<bean id="dataSource-mysql" class="org.springframework.jndi.JndiObjectFactoryBean">  
+	    <property name="jndiName" value="java:comp/env/jdbc/cait" />  
+	</bean> 
+	 -->
+	
+	<bean id="dataSource-mysql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="core.log.jdbc.driver.MysqlDriver"/>
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/base_db" />
+		<property name="username" value="mysql_base_user"/>
+		<property name="password" value="mysql_base_pass"/>
+	</bean>
+	
+</beans>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Banner">
+
+    <typeAlias  alias="Banner" type="egovframework.com.uss.ion.bnr.service.Banner"/>
+    <typeAlias  alias="BannerVO" type="egovframework.com.uss.ion.bnr.service.BannerVO"/>
+
+    <resultMap id="banner" class="egovframework.com.uss.ion.bnr.service.BannerVO">
+    	<result property="siteId" column="SITE_ID" columnIndex="1"/>
+    	<result property="sysTyCode" column="SYS_TY_CODE" columnIndex="2"/>
+        <result property="bannerNm" column="BANNER_NM" columnIndex="3"/>
+        <result property="bannerId" column="BANNER_ID" columnIndex="4"/>
+        <result property="bannerNm" column="BANNER_NM" columnIndex="5"/>
+        <result property="linkUrl" column="LINK_URL" columnIndex="6"/>
+        <result property="bannerImage" column="BANNER_IMAGE" columnIndex="7"/>
+        <result property="bannerImageFile" column="BANNER_IMAGE_FILE" columnIndex="8"/>
+        <result property="bannerDc" column="BANNER_DC" columnIndex="9"/>
+        <result property="sortOrdr" column="SORT_ORDR" columnIndex="10"/>
+        <result property="reflctAt" column="REFLCT_AT" columnIndex="11"/>
+        <result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="12"/>
+        <result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="13"/>
+        <result property="ntceBgnde" column="NTCE_BGNDE" columnIndex="14"/>
+		<result property="ntceEndde" column="NTCE_ENDDE" columnIndex="15"/>		
+        <result property="popupTrgetAt" column="POPUP_TRGET_AT" columnIndex="16"/>
+        <result property="bannerTyCode" column="BANNER_TY_CODE" columnIndex="17"/>
+        <result property="bannerThemaClCode" 	column="BANNER_THEMA_CL_CODE" 	columnIndex="18"/>
+        <result property="bannerThemaClCodeNm" 	column="BANNER_THEMA_CL_CODE_NM" 	columnIndex="19"/>
+    </resultMap>
+    
+    <resultMap id="serviceBanner" class="egovframework.com.uss.ion.bnr.service.BannerVO">
+        <result property="bannerNm" column="BANNER_NM" columnIndex="1"/>
+        <result property="linkUrl" column="LINK_URL" columnIndex="2"/>
+        <result property="bannerImageFile" column="BANNER_IMAGE_FILE" columnIndex="3"/>
+        <result property="ntceBgnde" column="NTCE_BGNDE" columnIndex="4"/>
+		<result property="ntceEndde" column="NTCE_ENDDE" columnIndex="5"/>	
+        <result property="popupTrgetAt" column="POPUP_TRGET_AT" columnIndex="6"/>
+        <result property="bannerTyCode" column="BANNER_TY_CODE" columnIndex="7"/>
+        <result property="bannerThemaClCode" 	column="BANNER_THEMA_CL_CODE" 	columnIndex="8"/>
+    </resultMap>
+
+    <resultMap id="bannerImage" class="egovframework.com.uss.ion.bnr.service.BannerVO">
+        <result property="bannerImageFile" column="BANNER_IMAGE_FILE" columnIndex="1"/>
+        <result property="linkUrl" column="LINK_URL" columnIndex="2"/>
+    </resultMap>
+
+    <resultMap id="bannerImageFile" class="egovframework.com.cmm.service.FileVO">
+        <result property="fileStreCours" column="FILE_STRE_COURS" columnIndex="1"/>
+        <result property="streFileNm" column="STRE_FILE_NM" columnIndex="2"/>
+    </resultMap>
+
+    <select id="bannerDAO.selectBannerList" parameterClass="BannerVO" resultMap="banner">
+        <![CDATA[    
+            SELECT SITE_ID,
+            	   SYS_TY_CODE,
+            	   BANNER_ID,            
+                   BANNER_NM,            
+                   LINK_URL,             
+                   BANNER_IMAGE,       
+                   BANNER_IMAGE_FILE,  
+                   BANNER_DC, 
+                   SORT_ORDR,           
+                   REFLCT_AT,
+                   A.FRST_REGISTER_ID,
+                   A.FRST_REGISTER_PNTTM,
+                   NTCE_BGNDE,
+                   NTCE_ENDDE,
+                   POPUP_TRGET_AT,
+                   BANNER_TY_CODE,
+                   BANNER_THEMA_CL_CODE,
+                   B.CODE_NM AS BANNER_THEMA_CL_CODE_NM
+              FROM COMTNBANNER A
+              LEFT 	OUTER JOIN COMTCCMMNDETAILCODE B	 ON		B.CODE_ID ='COM109' AND A.BANNER_THEMA_CL_CODE = B.CODE  
+             WHERE A.USE_AT = 'Y'
+             	AND A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+        ]]>
+			<isNotEmpty prepend="AND" property="bannerTyCode">
+				A.BANNER_TY_CODE= #bannerTyCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchCate">
+	      		A.BANNER_THEMA_CL_CODE = #searchCate#
+	      	</isNotEmpty>  	
+			<isNotEmpty property="searchCondition">
+				<isNotEmpty property="searchKeyword">
+		            <isEqual prepend="AND" property="searchCondition" compareValue="1">
+		                BANNER_NM LIKE '%'||#searchKeyword#||'%'
+		            </isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+        <![CDATA[                  
+            ORDER BY FRST_REGISTER_PNTTM DESC, BANNER_ID DESC
+            LIMIT #recordCountPerPage# OFFSET #firstIndex#
+        ]]>                  
+    </select>
+
+    <select id="bannerDAO.selectBannerListTotCnt" parameterClass="BannerVO" resultClass="int">
+ 		<![CDATA[
+            SELECT COUNT(*) totcnt
+            FROM COMTNBANNER
+            WHERE USE_AT = 'Y'
+            	AND SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+		]]>
+			<isNotEmpty prepend="AND" property="bannerTyCode">
+				BANNER_TY_CODE= #bannerTyCode#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchCate">
+	      		BANNER_THEMA_CL_CODE = #searchCate#
+	      	</isNotEmpty>  
+           <isNotEmpty property="searchCondition">
+				<isNotEmpty property="searchKeyword">
+		            <isEqual prepend="AND" property="searchCondition" compareValue="1">
+		                BANNER_NM LIKE '%'||#searchKeyword#||'%'
+		            </isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+    </select>
+    
+    <select id="bannerDAO.selectBanner" resultMap="banner">
+        <![CDATA[
+            SELECT SITE_ID,
+            	   SYS_TY_CODE,
+            	   BANNER_ID,            
+                   BANNER_NM,            
+                   LINK_URL,             
+                   BANNER_IMAGE,      
+                   BANNER_IMAGE_FILE,   
+                   BANNER_DC,
+                   SORT_ORDR,            
+                   REFLCT_AT,            
+                   A.FRST_REGISTER_ID,
+                   A.FRST_REGISTER_PNTTM,
+                   NTCE_BGNDE,
+                   NTCE_ENDDE,
+                   POPUP_TRGET_AT,
+                   BANNER_TY_CODE,
+                   BANNER_THEMA_CL_CODE,
+                   B.CODE_NM AS BANNER_THEMA_CL_CODE_NM
+              FROM COMTNBANNER A
+              LEFT 	OUTER JOIN COMTCCMMNDETAILCODE B	 ON		B.CODE_ID ='COM109' AND A.BANNER_THEMA_CL_CODE = B.CODE  
+             WHERE BANNER_ID = #bannerId# 
+                AND A.USE_AT = 'Y'
+             	AND A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+        ]]>
+    </select>
+
+    <insert id="bannerDAO.insertBanner" parameterClass="Banner">
+        <![CDATA[
+            INSERT INTO COMTNBANNER
+                   (BANNER_ID,
+                    BANNER_NM,
+                    LINK_URL,             
+                    BANNER_IMAGE,   
+                    BANNER_IMAGE_FILE,      
+                    BANNER_DC,    
+                    SORT_ORDR,        
+                    REFLCT_AT,            
+                    FRST_REGISTER_ID,
+                    FRST_REGISTER_PNTTM,
+                    
+                    BANNER_TY_CODE,
+                    NTCE_BGNDE,
+                    NTCE_ENDDE,
+                    POPUP_TRGET_AT,
+                    SITE_ID,
+                    SYS_TY_CODE,
+                    USE_AT,
+                    BANNER_THEMA_CL_CODE
+                    )
+            VALUES (#bannerId#,
+                    #bannerNm#, 
+                    #linkUrl#,
+                    #bannerImage#,
+                    #bannerImageFile#,
+                    #bannerDc#,
+                    #sortOrdr#,
+                    #reflctAt#,
+                    #frstRegisterId#,
+                    SYSDATE(),
+                    
+                    #bannerTyCode#,
+                    #ntceBgnde#,
+                    #ntceEndde#,
+                    #popupTrgetAt#,
+                    IFNULL(#siteId#, 'SITE_000000000000001'),
+                    IFNULL(#sysTyCode#, 'SYS01'),
+                    'Y',
+                    #bannerThemaClCode#                
+                    )   
+        ]]>
+    </insert>     
+
+    <update id="bannerDAO.updateBanner" parameterClass="Banner">
+            UPDATE COMTNBANNER
+               SET BANNER_NM = #bannerNm#,
+                   LINK_URL = #linkUrl#,
+                   <isEqual property="isAtchFile" compareValue="true">
+                   BANNER_IMAGE = #bannerImage#,
+                   BANNER_IMAGE_FILE = #bannerImageFile#,
+                   </isEqual>
+                   BANNER_DC = #bannerDc#,
+                   SORT_ORDR = #sortOrdr#,
+                   REFLCT_AT = #reflctAt#,
+                   LAST_UPDUSR_ID = #lastUpdusrId#,
+                   LAST_UPDUSR_PNTTM = SYSDATE(),
+                   NTCE_BGNDE =  #ntceBgnde#,
+                   NTCE_ENDDE = #ntceEndde#,
+                   POPUP_TRGET_AT = #popupTrgetAt#,
+                   BANNER_THEMA_CL_CODE = #bannerThemaClCode# 
+             WHERE BANNER_ID = #bannerId#    
+             	AND USE_AT = 'Y'
+             	AND SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+    </update>    
+    
+    <delete id="bannerDAO.deleteBanner" parameterClass="Banner">
+        <![CDATA[
+           UPDATE COMTNBANNER
+           SET USE_AT = 'N'
+          		, LAST_UPDUSR_ID = #lastUpdusrId#
+             	, LAST_UPDUSR_PNTTM = SYSDATE()
+             WHERE BANNER_ID = #bannerId#    
+             	AND USE_AT = 'Y'
+             	AND SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+        ]]>
+    </delete>  
+            
+    <select id="bannerDAO.selectBannerResult" resultMap="bannerImage">
+        <![CDATA[
+            SELECT BANNER_IMAGE_FILE,
+                   LINK_URL
+              FROM COMTNBANNER
+             WHERE REFLCT_AT = 'Y'  
+             ORDER BY SORT_ORDR 
+        ]]>
+    </select>
+
+    <select id="bannerDAO.selectBannerFile" parameterClass="Banner" resultMap="bannerImageFile">
+        <![CDATA[
+            SELECT B.FILE_STRE_COURS AS FILE_STRE_COURS,
+                   B.STRE_FILE_NM AS STRE_FILE_NM
+              FROM COMTNBANNER A,
+                   COMTNFILEDETAIL B
+             WHERE 1 = 1
+               AND A.BANNER_ID = #bannerId#
+               AND A.BANNER_IMAGE_FILE = B.ATCH_FILE_ID  
+        ]]>
+    </select>
+    
+    <select id="bannerDAO.selectBannerServiceList" parameterClass="BannerVO" resultMap="serviceBanner">
+        <![CDATA[    
+            SELECT
+                   BANNER_NM,            
+                   LINK_URL,    
+                   BANNER_IMAGE_FILE, 
+                   NTCE_BGNDE,
+                   NTCE_ENDDE,
+                   POPUP_TRGET_AT,
+                   BANNER_TY_CODE,
+                   BANNER_THEMA_CL_CODE
+              FROM COMTNBANNER   
+             WHERE SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+				AND REFLCT_AT = 'Y' 
+				AND USE_AT = 'Y'
+				AND DATE_FORMAT(now(),'%m%d%Y%H%i%s') >= NTCE_BGNDE
+				AND DATE_FORMAT(now(),'%m%d%Y%H%i%s') <=  NTCE_ENDDE
+        ]]>
+			<isNotEmpty prepend="AND" property="bannerTyCode">
+				BANNER_TY_CODE= #bannerTyCode#
+			</isNotEmpty>
+        <![CDATA[                  
+            ORDER BY BANNER_TY_CODE ASC, SORT_ORDR ASC
+        ]]>                  
+    </select>
+</sqlMap>

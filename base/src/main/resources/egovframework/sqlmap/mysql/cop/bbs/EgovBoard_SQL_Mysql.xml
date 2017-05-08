@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Board">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="BoardVO" type="egovframework.com.cop.bbs.service.BoardVO"/>
+	
+	<resultMap id="boardManageSimpleList" class="egovframework.com.cop.bbs.service.BoardVO">
+		<result property="nttNo" column="NTT_NO" columnIndex="1"/>
+		<result property="bbsId" column="BBS_ID" columnIndex="2"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="3"/>
+	</resultMap>
+	
+	<resultMap id="boardList" class="egovframework.com.cop.bbs.service.BoardVO">
+		<result property="nttNo" column="NTT_NO" columnIndex="1"/>
+		<result property="bbsId" column="BBS_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="4"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="7"/>
+		<result property="upperNttNo" column="UPPER_NTT_NO" columnIndex="8"/>
+		<result property="useAt" column="USE_AT" columnIndex="9"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="10"/>
+		<result property="ctgryNm" column="CTGRY_NM" columnIndex="11"/>
+		<result property="commentCount" column="COMMENT_COUNT" columnIndex="12"/>
+		<result property="scoreSum" column="SCORE_SUM" columnIndex="13"/>
+		<result property="atchFileNm" column="ATCH_FILE_NM" columnIndex="14"/>
+		
+		<result property="processSttusCode" column="PROCESS_STTUS_CODE" columnIndex="15"/>
+		<result property="processSttusNm" column="PROCESS_STTUS_NM" columnIndex="16"/>
+		<result property="tmp01" column="TMP_01" columnIndex="17"/>
+		<result property="tmp02" column="TMP_02" columnIndex="18"/>
+		<result property="tmp03" column="TMP_03" columnIndex="19"/>
+	</resultMap>
+	
+	<resultMap id="boardDetail" class="egovframework.com.cop.bbs.service.BoardVO">
+		<result property="nttNo" column="NTT_NO" columnIndex="1"/>
+		<result property="bbsId" column="BBS_ID" columnIndex="2"/>
+		<result property="ctgryId" column="CTGRY_ID" columnIndex="3"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="4"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="5"/>
+		<result property="nttCn" column="NTT_CN" columnIndex="6"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="7"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="8"/>
+		<result property="recomendCo" column="RECOMEND_CO" columnIndex="9"/>
+		<result property="creatIp" column="CREAT_IP" columnIndex="10"/>
+		<result property="noticeAt" column="NOTICE_AT" columnIndex="11"/>
+		<result property="othbcAt" column="OTHBC_AT" columnIndex="12"/>
+		<result property="useAt" column="USE_AT" columnIndex="13"/>
+		<result property="tmp01" column="TMP_01" columnIndex="14"/>
+		<result property="tmp02" column="TMP_02" columnIndex="15"/>
+		<result property="tmp03" column="TMP_03" columnIndex="16"/>
+		<result property="upperNttNo" column="UPPER_NTT_NO" columnIndex="17"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="18"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="19"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="20"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="21"/>
+		<result property="ctgryNm" column="CTGRY_NM" columnIndex="22"/>
+		<result property="ctgryPathById" column="CTGRY_PATH_BY_ID" columnIndex="23"/>		
+		<result property="scoreSum" column="SCORE_SUM" columnIndex="24"/>
+		
+		<result property="processSttusCode" column="PROCESS_STTUS_CODE" columnIndex="25"/>
+		<result property="processSttusNm" column="PROCESS_STTUS_NM" columnIndex="26"/>
+		<result property="estnAtchFileId" column="ESTN_ATCH_FILE_ID" columnIndex="27"/>
+		<result property="estnData" column="ESTN_DATA" columnIndex="28"/>
+		<result property="lastAnswrrPnttm" column="LAST_ANSWRR_PNTTM" columnIndex="29"/>
+		<result property="lastAnswrrId" column="LAST_ANSWRR_ID" columnIndex="30"/>
+		<result property="lastAnswrrNm" column="LAST_ANSWRR_NM" columnIndex="31"/>
+	</resultMap>
+	
+	<resultMap id="searchList" class="egovframework.com.cop.bbs.service.BoardVO">
+		<result property="nttNo" column="NTT_NO" columnIndex="1"/>
+		<result property="bbsId" column="BBS_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>
+		<result property="nttCn" column="NTT_CN" columnIndex="4"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="7"/>
+		<result property="menuId" column="MENU_ID" columnIndex="8"/>
+		<result property="siteNm" 	column="SITE_NM" columnIndex="9"/>
+		<result property="siteUrl" 	column="SITE_URL" columnIndex="10"/>
+	</resultMap>
+	
+	<insert id="BBSManageDAO.insertBoardArticle" parameterClass="BoardVO">
+		INSERT INTO COMTNBBS 
+				( NTT_NO
+				  , BBS_ID
+				  <isNotEmpty property="ctgryId">
+				  , CTGRY_ID
+				  </isNotEmpty>
+				  , ATCH_FILE_ID
+				  , NTT_SJ
+				  , NTT_CN
+				  , NTCR_NM
+				  , INQIRE_CO
+				  , RECOMEND_CO
+				  , CREAT_IP
+				  , NOTICE_AT
+				  , OTHBC_AT
+				  , USE_AT
+				  , TMP_01
+				  , TMP_02
+				  , TMP_03
+				  , UPPER_NTT_NO
+				  , FRST_REGISTER_PNTTM
+				  , FRST_REGISTER_ID				  
+				  , PROCESS_STTUS_CODE
+				  , ESTN_ATCH_FILE_ID
+				  , ESTN_DATA
+				  , LAST_UPDUSR_PNTTM
+				  , LAST_UPDUSR_ID
+				  )
+			VALUES ( #nttNo#
+				  , #bbsId#
+				  <isNotEmpty property="ctgryId">
+				  , #ctgryId#
+				  </isNotEmpty>
+				  , #atchFileId#
+				  , #nttSj#
+				  , #nttCn#
+				  , #ntcrNm#
+				  , #inqireCo#
+				  , #recomendCo#
+				  , #creatIp#
+				  , #noticeAt#
+				  , #othbcAt#
+				  , #useAt#
+				  , #tmp01#
+				  , #tmp02#
+				  , #tmp03#
+				  , #upperNttNo#
+				  <isEmpty property="frstRegisterPnttm">
+				  , SYSDATE()
+				  </isEmpty>
+				  <isNotEmpty property="frstRegisterPnttm">
+				  , #frstRegisterPnttm#
+				  </isNotEmpty>
+				  , #frstRegisterId#
+				  <isEqual property="bbsAttrbCode" compareValue="BBSA11">
+				  , IFNULL(#bbsAttrbCode#, 'QA01')
+				  </isEqual>
+				  <isNotEqual property="bbsAttrbCode" compareValue="BBSA11">
+				  , NULL
+				  </isNotEqual>
+				  , #estnAtchFileId#
+				  , #estnData#
+				  , #lastUpdusrPnttm#
+				  , #lastUpdusrId#
+				  )
+	</insert>
+
+	<insert id="BBSManageDAO.replyBoardArticle" parameterClass="BoardVO" >
+		<!-- 
+		<selectKey resultClass="String" keyProperty="genOrdrCode">
+		<![CDATA[
+			SELECT MIN(ORDR_CODE) FROM COMTNBBS 
+			WHERE ORDR_CODE LIKE SUBSTR(#ordrCode#, 0, 15) || '%' AND ORDR_CODE < #ordrCode# AND ORDR_CODE_DP = #ordrCodeDp#
+		]]>
+	    </selectKey>
+	     -->
+		INSERT INTO COMTNBBS 
+				( NTT_NO
+				  , BBS_ID
+				  , CTGRY_ID
+				  , ATCH_FILE_ID
+				  , NTT_SJ
+				  , NTT_CN
+				  , NTCR_NM
+				  , INQIRE_CO
+				  , RECOMEND_CO
+				  , CREAT_IP
+				  , NOTICE_AT
+				  , OTHBC_AT
+				  , USE_AT
+				  , TMP_01
+				  , TMP_02
+				  , TMP_03
+				  , ORDR_CODE
+				  , ORDR_CODE_DP
+				  , FRST_REGISTER_PNTTM
+				  , FRST_REGISTER_ID
+				  , LAST_UPDUSR_PNTTM
+				  , LAST_UPDUSR_ID
+				  )
+			VALUES ( #nttNo#
+				  , #bbsId#
+				  , #ctgryId#
+				  , #atchFileId#
+				  , #nttSj#
+				  , #nttCn#
+				  , #ntcrNm#
+				  , #inqireCo#
+				  , #recomendCo#
+				  , #creatIp#
+				  , #noticeAt#
+				  , #othbcAt#
+				  , #useAt#
+				  , #tmp01#
+				  , #tmp02#
+				  , #tmp03#
+				  <!-- , FN_CREATE_NEXT_SEQ_ID(#ordrCode#, #ordrCodeDp#, #genOrdrCode#) -->
+				  <!-- , #ordrCodeDp# -->
+				  <isEmpty property="frstRegisterPnttm">
+				  	, SYSDATE()
+				  </isEmpty>
+				  <isNotEmpty property="frstRegisterPnttm">
+				  , #frstRegisterPnttm#
+				  </isNotEmpty>
+				  , #frstRegisterId#
+				  , #lastUpdusrPnttm#
+				  , #lastUpdusrId#
+				  )
+	</insert>	
+
+	
+	<select id="BBSManageDAO.selectBoardArticleList" parameterClass="BoardVO" resultMap="boardList">
+		SELECT
+				a.NTT_NO, a.BBS_ID, a.NTT_SJ, a.FRST_REGISTER_ID, NTCR_NM,
+				a.FRST_REGISTER_PNTTM, a.INQIRE_CO, a.UPPER_NTT_NO, a.OTHBC_AT, 
+				<!-- a.ORDR_CODE_DP, --> 
+				a.USE_AT, a.ATCH_FILE_ID, a.TMP_01, a.TMP_02, a.TMP_03,
+				<!-- SUBSTR(CTGRY_NM, INSTR(CTGRY_NM, '/') + 1) AS CTGRY_NM, -->
+				X.CTGRY_NM, 
+				
+				<isEqual property="commentUseAt" compareValue="Y">
+					(SELECT COUNT(*) FROM COMTNCOMMENT WHERE NTT_NO = X.NTT_NO AND USE_AT = 'Y') AS COMMENT_COUNT,
+					(SELECT NVL(SUM(SCORE), 0) FROM COMTNCOMMENT WHERE NTT_NO = X.NTT_NO AND USE_AT = 'Y') AS SCORE_SUM,
+				</isEqual>
+				<isNotEqual property="commentUseAt" compareValue="Y">
+					0 AS COMMENT_COUNT,
+					0 AS SCORE_SUM,
+				</isNotEqual>
+                <isEqual property="bbsAttrbCode" compareValue="BBSA02">
+                	(SELECT SUBSTR(MIN(LPAD(FILE_SN, 10, '0') || STRE_FILE_NM || '.' || FILE_EXTSN), 11) FROM COMTNFILE A, COMTNFILEDETAIL B WHERE A.ATCH_FILE_ID = B.ATCH_FILE_ID AND X.ATCH_FILE_ID = A.ATCH_FILE_ID AND UPPER(B.FILE_EXTSN) IN ('GIF','JPG','BMP','PNG')) ATCH_FILE_NM,
+                </isEqual>
+                <isNotEqual property="bbsAttrbCode" compareValue="BBSA02">
+                	NULL AS ATCH_FILE_NM,
+                </isNotEqual>
+				
+				a.PROCESS_STTUS_CODE, Q.CODE_NM AS PROCESS_STTUS_NM
+			FROM
+				COMTNBBS a
+			LEFT OUTER JOIN 
+			(
+				<isNotEmpty property="ctgrymasterId">
+					SELECT
+		                CTGRY_ID
+		                , SUBSTR(SYS_CONNECT_BY_PATH(CTGRY_NM, '/'), 2) AS CTGRY_NM
+		            FROM COMTNBBSCTGRY
+		            WHERE CTGRYMASTER_ID = #ctgrymasterId#
+		                AND USE_AT = 'Y'
+		            START WITH UPPER_CTGRY_ID IS NULL
+		            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+				</isNotEmpty>
+				<isEmpty property="ctgrymasterId">
+					SELECT NULL AS CTGRY_ID, NULL AS CTGRY_NM FROM DUAL
+				</isEmpty>
+			) X ON X.CTGRY_ID = a.CTGRY_ID
+			LEFT OUTER JOIN 
+			(
+				<isEqual property="bbsAttrbCode" compareValue="BBSA11">
+					SELECT CODE, CODE_NM 
+					FROM COMTCCMMNDETAILCODE
+					WHERE CODE_ID ='COM108'
+				</isEqual>
+				<isNotEqual property="bbsAttrbCode" compareValue="BBSA11">
+					SELECT NULL AS CODE, NULL AS CODE_NM FROM DUAL
+				</isNotEqual>
+			) Q ON  Q.CODE = a.PROCESS_STTUS_CODE
+			WHERE
+				a.BBS_ID = #bbsId#
+			<isEqual prepend="AND" property="adminAt" compareValue="N">
+				<![CDATA[	a.USE_AT = 'Y'	]]>
+			</isEqual>
+			
+			 <isNotEmpty property="searchCnd">
+				<isNotEmpty property="searchWrd">
+					<isEqual prepend="AND" property="searchCnd" compareValue="0">
+						<![CDATA[	a.NTT_SJ LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>
+					<isEqual prepend="AND" property="searchCnd" compareValue="1">
+						<![CDATA[	a.NTT_CN LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>	
+					<isEqual prepend="AND" property="searchCnd" compareValue="2">
+						<![CDATA[	a.NTCR_NM LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>	
+				</isNotEmpty>
+			</isNotEmpty>	
+			<isNotEmpty property="ctgrymasterId">
+				<isNotEmpty prepend="AND a.CTGRY_ID IN" open=" (" close=") " property="searchCateList" >
+					SELECT
+		                CTGRY_ID
+		            FROM COMTNBBSCTGRY
+		            WHERE CTGRYMASTER_ID = #ctgrymasterId#
+		                AND USE_AT = 'Y'
+			            START WITH CTGRY_ID = 
+		                (
+		                    SELECT SUBSTR(MAX(LPAD(LVL, 10, '0') || CTGRY_ID), 11)
+		                    FROM
+		                    (
+		                            SELECT  CTGRY_ID, LEVEL LVL
+		                            FROM COMTNBBSCTGRY
+		                            WHERE CTGRYMASTER_ID =#ctgrymasterId#
+		                                AND USE_AT = 'Y'
+		                            START WITH UPPER_CTGRY_ID IS NULL
+		                            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+		                     ) A 
+		                     WHERE CTGRY_ID IN 
+		                     <iterate property="searchCateList" open=" (" close=") " conjunction=",">
+		                     	#searchCateList[]#
+		                     </iterate>
+		                )
+		            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEqual prepend="AND" property="searchNoticeAt" compareValue="Y">
+				<![CDATA[	a.NOTICE_AT = 'Y'		]]>
+			</isEqual>
+			
+			<isNotEmpty prepend="AND" property="searchSttus">
+				PROCESS_STTUS_CODE = #searchSttus#
+			</isNotEmpty>
+			
+			<!-- ORDER BY a.ORDR_CODE DESC -->
+			ORDER BY a.NTT_NO DESC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	
+		<!-- 
+		SELECT 
+			NTT_NO, BBS_ID, NTT_SJ, FRST_REGISTER_ID, NTCR_NM,
+				FRST_REGISTER_PNTTM, INQIRE_CO, OTHBC_AT, ORDR_CODE_DP, USE_AT, ATCH_FILE_ID, TMP_01, TMP_02, TMP_03,
+				SUBSTR(CTGRY_NM, INSTR(CTGRY_NM, '/') + 1) AS CTGRY_NM,
+				<isEqual property="commentUseAt" compareValue="Y">
+					(SELECT COUNT(*) FROM COMTNCOMMENT WHERE NTT_NO = X.NTT_NO AND USE_AT = 'Y') AS COMMENT_COUNT,
+					(SELECT NVL(SUM(SCORE), 0) FROM COMTNCOMMENT WHERE NTT_NO = X.NTT_NO AND USE_AT = 'Y') AS SCORE_SUM,
+				</isEqual>
+				<isNotEqual property="commentUseAt" compareValue="Y">
+					0 AS COMMENT_COUNT,
+					0 AS SCORE_SUM,
+				</isNotEqual>
+                <isEqual property="bbsAttrbCode" compareValue="BBSA02">
+                	(SELECT SUBSTR(MIN(LPAD(FILE_SN, 10, '0') || STRE_FILE_NM || '.' || FILE_EXTSN), 11) FROM COMTNFILE A, COMTNFILEDETAIL B WHERE A.ATCH_FILE_ID = B.ATCH_FILE_ID AND X.ATCH_FILE_ID = A.ATCH_FILE_ID AND UPPER(B.FILE_EXTSN) IN ('GIF','JPG','BMP','PNG')) ATCH_FILE_NM,
+                </isEqual>
+                <isNotEqual property="bbsAttrbCode" compareValue="BBSA02">
+                	NULL AS ATCH_FILE_NM,
+                </isNotEqual>
+                PROCESS_STTUS_CODE, PROCESS_STTUS_NM
+		FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT
+				a.NTT_NO, a.BBS_ID, a.NTT_SJ, a.FRST_REGISTER_ID, NTCR_NM,
+				a.FRST_REGISTER_PNTTM, a.INQIRE_CO, a.OTHBC_AT, a.ORDR_CODE_DP, a.USE_AT, a.ATCH_FILE_ID, a.TMP_01, a.TMP_02, a.TMP_03,
+				X.CTGRY_NM,
+				a.PROCESS_STTUS_CODE, Q.CODE_NM AS PROCESS_STTUS_NM
+			FROM
+				COMTNBBS a
+			LEFT OUTER JOIN 
+			(
+				<isNotEmpty property="ctgrymasterId">
+					SELECT
+		                CTGRY_ID
+		                , SUBSTR(SYS_CONNECT_BY_PATH(CTGRY_NM, '/'), 2) AS CTGRY_NM
+		            FROM COMTNBBSCTGRY
+		            WHERE CTGRYMASTER_ID = #ctgrymasterId#
+		                AND USE_AT = 'Y'
+		            START WITH UPPER_CTGRY_ID IS NULL
+		            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+				</isNotEmpty>
+				<isEmpty property="ctgrymasterId">
+					SELECT NULL AS CTGRY_ID, NULL AS CTGRY_NM FROM DUAL
+				</isEmpty>
+			) X ON X.CTGRY_ID = a.CTGRY_ID
+			LEFT OUTER JOIN 
+			(
+				<isEqual property="bbsAttrbCode" compareValue="BBSA11">
+					SELECT CODE, CODE_NM 
+					FROM COMTCCMMNDETAILCODE
+					WHERE CODE_ID ='COM108'
+				</isEqual>
+				<isNotEqual property="bbsAttrbCode" compareValue="BBSA11">
+					SELECT NULL AS CODE, NULL AS CODE_NM FROM DUAL
+				</isNotEqual>
+			) Q ON  Q.CODE = a.PROCESS_STTUS_CODE
+			WHERE
+				a.BBS_ID = #bbsId#
+			<isEqual prepend="AND" property="adminAt" compareValue="N">
+				<![CDATA[	a.USE_AT = 'Y'	]]>
+			</isEqual>
+			
+			 <isNotEmpty property="searchCnd">
+				<isNotEmpty property="searchWrd">
+					<isEqual prepend="AND" property="searchCnd" compareValue="0">
+						<![CDATA[	a.NTT_SJ LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>
+					<isEqual prepend="AND" property="searchCnd" compareValue="1">
+						<![CDATA[	a.NTT_CN LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>	
+					<isEqual prepend="AND" property="searchCnd" compareValue="2">
+						<![CDATA[	a.NTCR_NM LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>	
+				</isNotEmpty>
+			</isNotEmpty>	
+			<isNotEmpty property="ctgrymasterId">
+				<isNotEmpty prepend="AND a.CTGRY_ID IN" open=" (" close=") " property="searchCateList" >
+					SELECT
+		                CTGRY_ID
+		            FROM COMTNBBSCTGRY
+		            WHERE CTGRYMASTER_ID = #ctgrymasterId#
+		                AND USE_AT = 'Y'
+			            START WITH CTGRY_ID = 
+		                (
+		                    SELECT SUBSTR(MAX(LPAD(LVL, 10, '0') || CTGRY_ID), 11)
+		                    FROM
+		                    (
+		                            SELECT  CTGRY_ID, LEVEL LVL
+		                            FROM COMTNBBSCTGRY
+		                            WHERE CTGRYMASTER_ID =#ctgrymasterId#
+		                                AND USE_AT = 'Y'
+		                            START WITH UPPER_CTGRY_ID IS NULL
+		                            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+		                     ) A 
+		                     WHERE CTGRY_ID IN 
+		                     <iterate property="searchCateList" open=" (" close=") " conjunction=",">
+		                     	#searchCateList[]#
+		                     </iterate>
+		                )
+		            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+				</isNotEmpty>
+			</isNotEmpty>
+			<isEqual prepend="AND" property="searchNoticeAt" compareValue="Y">
+				<![CDATA[	a.NOTICE_AT = 'Y'		]]>
+			</isEqual>
+			
+			<isNotEmpty prepend="AND" property="searchSttus">
+				PROCESS_STTUS_CODE = #searchSttus#
+			</isNotEmpty>
+			
+			ORDER BY a.ORDR_CODE DESC
+			
+			) TB ) X WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+ 			-->
+	</select>	
+	
+	<select id="BBSManageDAO.selectBoardArticleListCnt" parameterClass="BoardVO" resultClass="java.lang.Integer" >
+		
+			SELECT
+				COUNT(*)
+			FROM
+				COMTNBBS a
+			WHERE
+				a.BBS_ID = #bbsId#
+			<isEqual prepend="AND" property="adminAt" compareValue="N">
+				<![CDATA[	a.USE_AT = 'Y'	]]>
+			</isEqual>
+			 <isNotEmpty property="searchCnd">
+				<isNotEmpty property="searchWrd">
+					<isEqual prepend="AND" property="searchCnd" compareValue="0">
+						<![CDATA[	a.NTT_SJ LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>
+					<isEqual prepend="AND" property="searchCnd" compareValue="1">
+						<![CDATA[	a.NTT_CN LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>	
+					<isEqual prepend="AND" property="searchCnd" compareValue="2">
+						<![CDATA[	a.NTCR_NM LIKE '%' || #searchWrd# || '%' 		]]>
+					</isEqual>	
+				</isNotEmpty>
+			</isNotEmpty>	
+			<isNotEmpty property="ctgrymasterId">
+				<isNotEmpty prepend="AND a.CTGRY_ID IN" open=" (" close=") " property="searchCateList" >
+					SELECT
+		                CTGRY_ID
+		            FROM COMTNBBSCTGRY
+		            WHERE CTGRYMASTER_ID = #ctgrymasterId#
+		                AND USE_AT = 'Y'
+			            START WITH CTGRY_ID = 
+		                (
+		                    SELECT SUBSTR(MAX(LPAD(LVL, 10, '0') || CTGRY_ID), 11)
+		                    FROM
+		                    (
+		                            SELECT  CTGRY_ID, LEVEL LVL
+		                            FROM COMTNBBSCTGRY
+		                            WHERE CTGRYMASTER_ID =#ctgrymasterId#
+		                                AND USE_AT = 'Y'
+		                            START WITH UPPER_CTGRY_ID IS NULL
+		                            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+		                     ) A 
+		                     WHERE CTGRY_ID IN 
+		                     <iterate property="searchCateList" open=" (" close=") " conjunction=",">
+		                     	#searchCateList[]#
+		                     </iterate>
+		                )
+		            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+				</isNotEmpty>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="searchSttus">
+				PROCESS_STTUS_CODE = #searchSttus#
+			</isNotEmpty>
+	</select>	
+ 
+	<select id="BBSManageDAO.selectBoardArticle" parameterClass="BoardVO" resultMap="boardDetail" >
+			SELECT
+				NTT_NO
+				, BBS_ID
+				, a.CTGRY_ID
+				, ATCH_FILE_ID
+				, NTT_SJ
+				, NTT_CN
+				, NTCR_NM
+				, INQIRE_CO
+				, RECOMEND_CO
+				, CREAT_IP
+				, NOTICE_AT
+				, OTHBC_AT
+				, a.USE_AT
+				, TMP_01
+				, TMP_02
+				, TMP_03
+				, TMP_03
+				, UPPER_NTT_NO
+				<!-- 
+				, a.ORDR_CODE
+				, a.ORDR_CODE_DP
+				 -->
+				, a.FRST_REGISTER_PNTTM
+				, a.FRST_REGISTER_ID
+				, a.LAST_UPDUSR_PNTTM
+				, a.LAST_UPDUSR_ID
+				, SUBSTR(CTGRY_NM, INSTR(CTGRY_NM, '/') + 1) AS CTGRY_NM
+				, SUBSTR(CTGRY_PATH_BY_ID, INSTR(CTGRY_PATH_BY_ID, ',') + 1) AS CTGRY_PATH_BY_ID
+				, (SELECT NVL(SUM(SCORE), 0) FROM COMTNCOMMENT WHERE NTT_NO = a.NTT_NO AND USE_AT = 'Y') AS SCORE_SUM
+				
+				, PROCESS_STTUS_CODE
+				, Q.CODE_NM AS PROCESS_STTUS_NM
+				, ESTN_ATCH_FILE_ID
+				, ESTN_DATA
+				, LAST_ANSWRR_PNTTM
+				, LAST_ANSWRR_ID
+				, LAST_ANSWRR_NM
+			FROM
+				COMTNBBS a
+			LEFT OUTER JOIN 
+			(
+				<isNotEmpty property="ctgrymasterId">
+					SELECT
+		                CTGRY_ID
+		                , SUBSTR(SYS_CONNECT_BY_PATH(CTGRY_NM, '/'), 2) AS CTGRY_NM
+		                , SUBSTR(SYS_CONNECT_BY_PATH(CTGRY_ID, ','), 2) AS CTGRY_PATH_BY_ID
+		            FROM COMTNBBSCTGRY
+		            WHERE CTGRYMASTER_ID = #ctgrymasterId#
+		                AND USE_AT = 'Y'
+		            START WITH UPPER_CTGRY_ID IS NULL
+		            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+				</isNotEmpty>
+				<isEmpty property="ctgrymasterId">
+					SELECT NULL AS CTGRY_ID, NULL AS CTGRY_NM, NULL AS CTGRY_PATH_BY_ID FROM DUAL
+				</isEmpty>
+			) X
+			ON X.CTGRY_ID = a.CTGRY_ID
+			LEFT OUTER JOIN 
+			(
+				<isEqual property="bbsAttrbCode" compareValue="BBSA11">
+					SELECT CODE, CODE_NM 
+					FROM COMTCCMMNDETAILCODE
+					WHERE CODE_ID ='COM108'
+				</isEqual>
+				<isNotEqual property="bbsAttrbCode" compareValue="BBSA11">
+					SELECT NULL AS CODE, NULL AS CODE_NM FROM DUAL
+				</isNotEqual>
+			) Q ON  Q.CODE = a.PROCESS_STTUS_CODE
+			WHERE
+				a.BBS_ID = #bbsId#	
+				AND a.NTT_NO = #nttNo#			
+			<isEqual prepend="AND" property="adminAt" compareValue="N">
+				<![CDATA[	(a.OTHBC_AT = 'Y' OR a.FRST_REGISTER_ID = #frstRegisterId#)	AND a.USE_AT = 'Y'	]]>
+			</isEqual>
+
+	</select> 
+ 
+ 	<!-- 
+ 	<update id="BBSManageDAO.updateBoardArticle" parameterClass="BoardVO">
+ 		<isNotEqual property="bbsAttrbCode" compareValue="BBSA11">
+			UPDATE COMTNBBS
+			SET 
+				CTGRY_ID = #ctgryId#
+				, ATCH_FILE_ID = #atchFileId#
+				, NTT_SJ = #nttSj#
+				, NTT_CN = #nttCn#
+				, NOTICE_AT = #noticeAt#
+				, OTHBC_AT = #othbcAt#
+				, TMP_01 = #tmp01#
+				, TMP_02 = #tmp02#
+				, TMP_03 = #tmp03#
+				, LAST_UPDUSR_PNTTM = SYSDATE()
+				, LAST_UPDUSR_ID = #lastUpdusrId#
+								
+				, ESTN_DATA = #estnData#
+				
+			WHERE BBS_ID = #bbsId# 
+				AND NTT_NO = #nttNo#
+				<isEqual prepend="AND" property="adminAt" compareValue="N">
+					FRST_REGISTER_ID = #lastUpdusrId#
+				</isEqual>
+ 		</isNotEqual>
+ 		<isEqual property="bbsAttrbCode" compareValue="BBSA11">
+ 			<isEmpty property="processSttusCode">
+	 			UPDATE COMTNBBS
+				SET 
+					CTGRY_ID = #ctgryId#
+					, ATCH_FILE_ID = #atchFileId#
+					, NTT_SJ = #nttSj#
+					, NTT_CN = #nttCn#
+					, NOTICE_AT = #noticeAt#
+					, OTHBC_AT = #othbcAt#
+					, TMP_01 = #tmp01#
+					, TMP_02 = #tmp02#
+					, TMP_03 = #tmp03#
+					, LAST_UPDUSR_PNTTM = SYSDATE()
+					, LAST_UPDUSR_ID = #lastUpdusrId#
+				WHERE BBS_ID = #bbsId# 
+					AND NTT_NO = #nttNo#
+					<isEqual prepend="AND" property="adminAt" compareValue="N">
+						FRST_REGISTER_ID = #lastUpdusrId#
+					</isEqual>
+			</isEmpty>
+			<isNotEmpty property="processSttusCode">
+	 			UPDATE COMTNBBS
+				SET 
+					ESTN_ATCH_FILE_ID = #estnAtchFileId#
+					, ESTN_DATA = #estnData#
+					, PROCESS_STTUS_CODE = #processSttusCode#
+					, LAST_ANSWRR_PNTTM = SYSDATE()
+					, LAST_ANSWRR_ID = #lastAnswrrId#
+					, LAST_ANSWRR_NM = #lastAnswrrNm#
+				WHERE BBS_ID = #bbsId# 
+					AND NTT_NO = #nttNo#
+					<isEqual prepend="AND" property="adminAt" compareValue="N">
+						FRST_REGISTER_ID = #lastUpdusrId#
+					</isEqual>
+			</isNotEmpty>
+ 		</isEqual>
+ 	</update>
+	 -->
+	 
+	 <update id="BBSManageDAO.updateBoardArticleByNormal" parameterClass="BoardVO">
+	 	UPDATE COMTNBBS
+		SET 
+			CTGRY_ID = ?
+			, ATCH_FILE_ID = ?
+			, NTT_SJ = ?
+			, NTT_CN = ?
+			, NOTICE_AT = ?
+			, OTHBC_AT = ?
+			, TMP_01 = ?
+			, TMP_02 = ?
+			, TMP_03 = ?
+			, LAST_UPDUSR_PNTTM = SYSDATE()
+			, LAST_UPDUSR_ID = ?
+							
+			, ESTN_DATA = ?
+			
+		WHERE BBS_ID = ?
+			AND NTT_NO = ?
+			AND 1 = (CASE WHEN ? = 'N' THEN CASE WHEN FRST_REGISTER_ID = ? THEN 1 ELSE 0 END ELSE 1 END)
+	 </update>
+	 
+	 <update id="BBSManageDAO.updateBoardArticleByEmptyProcessSttusCode" parameterClass="BoardVO">
+	 	UPDATE COMTNBBS
+		SET 
+			CTGRY_ID = ?
+			, ATCH_FILE_ID = ?
+			, NTT_SJ = ?
+			, NTT_CN = ?
+			, NOTICE_AT = ?
+			, OTHBC_AT = ?
+			, TMP_01 = ?
+			, TMP_02 = ?
+			, TMP_03 = ?
+			, LAST_UPDUSR_PNTTM = SYSDATE()
+			, LAST_UPDUSR_ID = ?
+		WHERE BBS_ID = ?
+			AND NTT_NO = ?
+			AND 1 = (CASE WHEN ? = 'N' THEN CASE WHEN FRST_REGISTER_ID = ? THEN 1 ELSE 0 END ELSE 1 END)
+	 </update>
+	 
+	 <update id="BBSManageDAO.updateBoardArticleByProcessSttusCode" parameterClass="BoardVO">
+	 	UPDATE COMTNBBS
+		SET 
+			ESTN_ATCH_FILE_ID = ?
+			, ESTN_DATA = ?
+			, PROCESS_STTUS_CODE = ?
+			, LAST_ANSWRR_PNTTM = SYSDATE()
+			, LAST_ANSWRR_ID = ?
+			, LAST_ANSWRR_NM = ?
+		WHERE BBS_ID = ?
+			AND NTT_NO = ?
+			AND 1 = (CASE WHEN ? = 'N' THEN CASE WHEN FRST_REGISTER_ID = ? THEN 1 ELSE 0 END ELSE 1 END)
+	 </update>
+ 	
+ 	<update id="BBSManageDAO.deleteBoardArticle" parameterClass="BoardVO">
+ 		
+			UPDATE COMTNBBS SET
+				USE_AT = 'N',
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDUSR_PNTTM = SYSDATE()
+			WHERE BBS_ID = #bbsId#
+				AND ORDR_CODE LIKE (SELECT SUBSTR(ORDR_CODE, 0, 15 + (5*ORDR_CODE_DP)) FROM COMTNBBS WHERE NTT_NO=#nttNo#) || '%'
+				<isEqual prepend="AND" property="adminAt" compareValue="N">
+					FRST_REGISTER_ID = #lastUpdusrId#
+				</isEqual>				
+			<!-- 
+			AND NTT_NO=#nttNo#
+			 -->
+ 		
+ 	</update>
+
+ 	<update id="BBSManageDAO.updateInqireCo" parameterClass="BoardVO">
+ 		
+			UPDATE COMTNBBS SET 
+				INQIRE_CO = NVL(INQIRE_CO, 0) + 1
+			WHERE BBS_ID = #bbsId#
+			AND NTT_NO=#nttNo#
+ 		
+ 	</update>
+		
+	<select id="BBSManageDAO.selectSearchBoardArticleList" parameterClass="BoardVO" resultMap="searchList">
+		
+		   SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+            SELECT
+                a.NTT_NO, a.BBS_ID, a.NTT_SJ, NULL as NTT_CN, NTCR_NM,
+                a.FRST_REGISTER_PNTTM, a.INQIRE_CO, m.MENU_ID,
+                s.SITE_NM, s.SITE_URL
+            FROM
+                COMTNBBS a, COMTNBBSMASTER b, COMTNBBSUSE c, COMTNSITEMNU m, COMTNSITEINFO s
+            
+            WHERE 
+            	a.BBS_ID = b.BBS_ID
+            	AND  b.BBS_ID = c.BBS_ID
+				AND b.SITE_ID = m.SITE_ID
+				AND m.SITE_ID = s.SITE_ID
+				<isNotEmpty property="siteId">AND s.SITE_ID = #siteId#</isNotEmpty>
+				<isNotEmpty property="searchWrd">
+                	AND (a.NTT_SJ LIKE '%' || #searchWrd# || '%' OR a.NTT_CN LIKE '%' || #searchWrd# || '%')
+                </isNotEmpty>
+                <![CDATA[ AND b.INQIRE_AUTHOR <= NVL(#searchAuth#, '01')]]>
+                AND c.TRGET_ID = 'SYSTEM_DEFAULT_BOARD'
+                AND a.USE_AT = 'Y' AND b.USE_AT = 'Y' AND c.USE_AT = 'Y'
+                AND b.BBS_ID = m.PROGRM_ID
+                AND m.USE_AT = 'Y' AND m.EXPSR_USE_AT = 'Y'
+                AND s.USE_AT = 'Y' AND s.ACTVTY_AT = 'Y' 
+            ORDER BY a.ORDR_CODE DESC
+            ) TB ) X WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+    	
+	</select>	
+	
+	<select id="BBSManageDAO.selectSearchBoardArticleListCnt" parameterClass="BoardVO" resultClass="java.lang.Integer" >
+		
+			SELECT
+				COUNT(*)
+			FROM
+				COMTNBBS a, COMTNBBSMASTER b, COMTNBBSUSE c, COMTNSITEMNU m, COMTNSITEINFO s
+			WHERE
+				a.BBS_ID = b.BBS_ID
+            	AND  b.BBS_ID = c.BBS_ID
+				AND b.SITE_ID = m.SITE_ID
+				AND m.SITE_ID = s.SITE_ID
+				<isNotEmpty property="siteId">AND s.SITE_ID = #siteId#</isNotEmpty>
+				<isNotEmpty property="searchWrd">
+                	AND (a.NTT_SJ LIKE '%' || #searchWrd# || '%' OR a.NTT_CN LIKE '%' || #searchWrd# || '%')
+                </isNotEmpty>
+                <![CDATA[ AND b.INQIRE_AUTHOR <= NVL(#searchAuth#, '01')]]>
+                AND c.TRGET_ID = 'SYSTEM_DEFAULT_BOARD'
+                AND a.USE_AT = 'Y' AND b.USE_AT = 'Y' AND c.USE_AT = 'Y'
+                AND b.BBS_ID = m.PROGRM_ID
+                AND m.USE_AT = 'Y' AND m.EXPSR_USE_AT = 'Y'
+                AND s.USE_AT = 'Y' AND s.ACTVTY_AT = 'Y' 
+	</select>	
+	
+	<update id="BBSManageDAO.updateBoardArticlesManageMove" parameterClass="BoardVO">
+		UPDATE COMTNBBS
+		SET BBS_ID = #trgetId#
+			, CTGRY_ID = #ctgryId#
+		WHERE NTT_NO IN
+			<iterate property="nttNoArr" open=" (" close=") " conjunction=",">
+				#nttNoArr[]#
+			</iterate>
+	</update>
+	
+	<update id="BBSManageDAO.updateBoardArticlesManageHide" parameterClass="BoardVO">
+		UPDATE COMTNBBS
+		SET USE_AT = 'N'
+			, LAST_UPDUSR_ID = #lastUpdusrId#
+			, LAST_UPDUSR_PNTTM = SYSDATE()
+		WHERE BBS_ID = #bbsId#
+			AND NTT_NO IN
+			<iterate property="nttNoArr" open=" (" close=") " conjunction=",">
+				#nttNoArr[]#
+			</iterate>
+	</update>
+	
+	<delete id="BBSManageDAO.deleteCompleteBoardArticle" parameterClass="BoardVO">
+		DELETE FROM COMTNBBS
+		WHERE BBS_ID = #bbsId#
+			AND NTT_NO IN
+			<iterate property="nttNoArr" open=" (" close=") " conjunction=",">
+				#nttNoArr[]#
+            </iterate>
+ 	</delete>
+ 	
+ 	<update id="BBSManageDAO.repairBoardArticle" parameterClass="BoardVO">
+ 		
+		UPDATE COMTNBBS SET
+			USE_AT = 'Y'
+			, LAST_UPDUSR_ID = #lastUpdusrId#
+			, LAST_UPDUSR_PNTTM = SYSDATE()
+		WHERE BBS_ID = #bbsId#
+			AND NTT_NO IN
+			<iterate property="nttNoArr" open=" (" close=") " conjunction=",">
+				#nttNoArr[]#
+            </iterate>
+ 	</update>
+	
+	<select id="BBSManageDAO.selectBoardArticlesManageSimpleList" parameterClass="BoardVO" resultMap="boardManageSimpleList">
+ 		SELECT
+ 			NTT_NO
+ 			, BBS_ID
+ 			, ATCH_FILE_ID
+ 		FROM COMTNBBS
+		WHERE BBS_ID = #bbsId#
+			AND NTT_NO IN
+			<iterate property="nttNoArr" open=" (" close=") " conjunction=",">
+				#nttNoArr[]#
+			</iterate>
+		ORDER BY ORDR_CODE ASC
+ 	</select>
+	
+	<select id="BBSManageDAO.selectBoardArticlesManageCopyList" parameterClass="BoardVO" resultMap="boardDetail">
+		SELECT
+			NTT_NO
+			, BBS_ID
+			, a.CTGRY_ID
+			, ATCH_FILE_ID
+			, NTT_SJ
+			, NTT_CN
+			, NTCR_NM
+			, INQIRE_CO
+			, RECOMEND_CO
+			, CREAT_IP
+			, NOTICE_AT
+			, OTHBC_AT
+			, a.USE_AT
+			, TMP_01
+			, TMP_02
+			, TMP_03
+			, a.ORDR_CODE
+			, a.ORDR_CODE_DP
+			, a.FRST_REGISTER_PNTTM
+			, a.FRST_REGISTER_ID
+			, a.LAST_UPDUSR_PNTTM
+			, a.LAST_UPDUSR_ID
+			, NULL AS CTGRY_NM
+			, NULL AS CTGRY_PATH_BY_ID
+			, 0 AS SCORE_SUM			
+			, PROCESS_STTUS_CODE
+			, NULL AS PROCESS_STTUS_NM
+			, ESTN_ATCH_FILE_ID
+			, ESTN_DATA
+			, LAST_ANSWRR_PNTTM
+			, LAST_ANSWRR_ID
+			, LAST_ANSWRR_NM
+		FROM
+			COMTNBBS a
+		WHERE BBS_ID = #bbsId#
+			AND NTT_NO IN
+			<iterate property="nttNoArr" open=" (" close=") " conjunction=",">
+				#nttNoArr[]#
+			</iterate>
+		ORDER BY a.ORDR_CODE ASC
+	</select>
+	
+</sqlMap>

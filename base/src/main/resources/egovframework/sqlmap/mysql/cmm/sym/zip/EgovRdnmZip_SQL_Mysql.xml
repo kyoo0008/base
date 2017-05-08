@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="RdnmZip">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="rdnmZipSerarchVO" type="egovframework.com.sym.ccm.zip.service.RdnmZipVO"/>
+	
+	<resultMap id="rdnmZipList" class="egovframework.com.sym.ccm.zip.service.RdnmZipVO">		
+		<result property="zip" column="ZIP" columnIndex="1"/>
+		<result property="ctprvnNm" column="CTPRVN_NM" columnIndex="2"/>
+		<result property="signguNm" column="SIGNGU_NM" columnIndex="3"/>
+		<result property="rdmn" column="RDMN" columnIndex="4"/>		
+		<result property="bdnbrMnno" column="BDNBR_MNNO" columnIndex="5"/>
+		<result property="bdnbrSlno" column="BDNBR_SLNO" columnIndex="6"/>
+		
+		<result property="legalEmdNm" column="LEGAL_EMD_NM" columnIndex="7"/>
+		<result property="legalLeeNm" column="LEGAL_LEE_NM" columnIndex="8"/>
+		<result property="lnbrMnno" column="LNBR_MNNO" columnIndex="9"/>
+		<result property="lnbrSlno" column="LNBR_SLNO" columnIndex="10"/>		
+		<result property="muchDlvrplcNm" column="MUCH_DLVRPLC_NM" columnIndex="11"/>
+	</resultMap>
+	
+	<resultMap id="rdnmZip" class="egovframework.com.sym.ccm.zip.service.RdnmZipVO">
+		<result property="legalDongCode" column="LEGAL_DONG_CODE" columnIndex="1"/>
+		<result property="ctprvnNm" column="CTPRVN_NM" columnIndex="2"/>
+		<result property="signguNm" column="SIGNGU_NM" columnIndex="3"/>
+		<result property="legalEmdNm" column="LEGAL_EMD_NM" columnIndex="4"/>
+		<result property="legalLeeNm" column="LEGAL_LEE_NM" columnIndex="5"/>
+		<result property="mntnAt" column="MNTN_AT" columnIndex="6"/>
+		<result property="lnbrMnno" column="LNBR_MNNO" columnIndex="7"/>
+		<result property="lnbrSlno" column="LNBR_SLNO" columnIndex="8"/>
+		<result property="rdmnCode" column="RDMN_CODE" columnIndex="9"/>
+		<result property="rdmn" column="RDMN" columnIndex="10"/>
+		<result property="undgrndAt" column="UNDGRND_AT" columnIndex="11"/>
+		<result property="bdnbrSlno" column="BDNBR_SLNO" columnIndex="12"/>
+		<result property="bdnbrMnno" column="BDNBR_MNNO" columnIndex="13"/>
+		<result property="buldNm" column="BULD_NM" columnIndex="14"/>
+		<result property="detailBuldNm" column="DETAIL_BULD_NM" columnIndex="15"/>
+		<result property="buldManageNo" column="BULD_MANAGE_NO" columnIndex="16"/>
+		<result property="emdNo" column="EMD_NO" columnIndex="17"/>
+		<result property="adstrdDongCode" column="ADSTRD_DONG_CODE" columnIndex="18"/>
+		<result property="adstrdDongNm" column="ADSTRD_DONG_NM" columnIndex="19"/>
+		<result property="zip" column="ZIP" columnIndex="20"/>
+		<result property="zipNo" column="ZIP_NO" columnIndex="21"/>
+		<result property="muchDlvrplcNm" column="MUCH_DLVRPLC_NM" columnIndex="22"/>
+		<result property="mvmnResnCode" column="MVMN_RESN_CODE" columnIndex="23"/>
+		<result property="changeDt" column="CHANGE_DT" columnIndex="24"/>
+		<result property="bfchgRdmnAdres" column="BFCHG_RDMN_ADRES" columnIndex="25"/>
+		<result property="signguprBuldNm" column="SIGNGUPR_BULD_NM" columnIndex="26"/>
+		<result property="aphusAt" column="APHUS_AT" columnIndex="27"/>
+	</resultMap>
+	
+	<insert id="rdnmZipDAO.insertRdnmZip">
+		<![CDATA[
+			INSERT INTO COMTNRDNMADRZIP 
+				( LEGAL_DONG_CODE
+				  , CTPRVN_NM
+				  , SIGNGU_NM
+				  , LEGAL_EMD_NM
+				  , LEGAL_LEE_NM
+				  , MNTN_AT
+				  , LNBR_MNNO
+				  , LNBR_SLNO
+				  , RDMN_CODE
+				  , RDMN
+				  , UNDGRND_AT
+				  , BDNBR_SLNO
+				  , BDNBR_MNNO
+				  , BULD_NM
+				  , DETAIL_BULD_NM
+				  , BULD_MANAGE_NO
+				  , EMD_NO
+				  , ADSTRD_DONG_CODE
+				  , ADSTRD_DONG_NM
+				  , ZIP
+				  , ZIP_NO
+				  , MUCH_DLVRPLC_NM
+				  , MVMN_RESN_CODE
+				  , CHANGE_DT
+				  , BFCHG_RDMN_ADRES
+				  , SIGNGUPR_BULD_NM
+				  , APHUS_AT )
+			VALUES ( #legalDongCode#
+				  , #ctprvnNm#
+				  , #signguNm#
+				  , #legalEmdNm#
+				  , #legalLeeNm#
+				  , #mntnAt#
+				  , #lnbrMnno#
+				  , #lnbrSlno#
+				  , #rdmnCode#
+				  , #rdmn#
+				  , #undgrndAt#
+				  , #bdnbrSlno#
+				  , #bdnbrMnno#
+				  , #buldNm#
+				  , #detailBuldNm#
+				  , #buldManageNo#
+				  , #emdNo#
+				  , #adstrdDongCode#
+				  , #adstrdDongNm#
+				  , #zip#
+				  , #zipNo#
+				  , #muchDlvrplcNm#
+				  , #mvmnResnCode#
+				  , #changeDt#
+				  , #bfchgRdmnAdres#
+				  , #signguprBuldNm#
+				  , #aphusAt# )
+		]]>
+	</insert>
+	
+	<update id="rdnmZipDAO.updateRdnmZip">
+		<![CDATA[
+			UPDATE COMTNRDNMADRZIP
+			SET LEGAL_DONG_CODE=#legalDongCode#
+				, CTPRVN_NM=#ctprvnNm#
+				, SIGNGU_NM=#signguNm#
+				, LEGAL_EMD_NM=#legalEmdNm#
+				, LEGAL_LEE_NM=#legalLeeNm#
+				, MNTN_AT=#mntnAt#
+				, LNBR_MNNO=#lnbrMnno#
+				, LNBR_SLNO=#lnbrSlno#
+				, RDMN_CODE=#rdmnCode#
+				, RDMN=#rdmn#
+				, UNDGRND_AT=#undgrndAt#
+				, BDNBR_SLNO=#bdnbrSlno#
+				, BDNBR_MNNO=#bdnbrMnno#
+				, BULD_NM=#buldNm#
+				, DETAIL_BULD_NM=#detailBuldNm#
+				, BULD_MANAGE_NO=#buldManageNo#
+				, EMD_NO=#emdNo#
+				, ADSTRD_DONG_CODE=#adstrdDongCode#
+				, ADSTRD_DONG_NM=#adstrdDongNm#
+				, ZIP=#zip#
+				, ZIP_NO=#zipNo#
+				, MUCH_DLVRPLC_NM=#muchDlvrplcNm#
+				, MVMN_RESN_CODE=#mvmnResnCode#
+				, CHANGE_DT=#changeDt#
+				, BFCHG_RDMN_ADRES=#bfchgRdmnAdres#
+				, SIGNGUPR_BULD_NM=#signguprBuldNm#
+				, APHUS_AT=#aphusAt#
+			WHERE RDMN_CODE=#rdmnCode#
+				AND UNDGRND_AT=#undgrndAt#
+				AND BDNBR_SLNO=#bdnbrSlno#
+				AND BDNBR_MNNO=#bdnbrMnno#
+				AND BULD_MANAGE_NO=#buldManageNo#
+				AND EMD_NO=#emdNo#
+		]]>
+	</update>
+	
+	<delete id="rdnmZipDAO.deleteRdnmZip">
+		<![CDATA[
+			DELETE FROM COMTNRDNMADRZIP 
+			WHERE RDMN_CODE=#rdmnCode#
+				AND UNDGRND_AT=#undgrndAt#
+				AND BDNBR_SLNO=#bdnbrSlno#
+				AND BDNBR_MNNO=#bdnbrMnno#
+				AND BULD_MANAGE_NO=#buldManageNo#
+				AND EMD_NO=#emdNo#
+		]]>
+	</delete>
+	
+	<select id="rdnmZipDAO.selectCtprvnNm" resultClass="String">
+		<![CDATA[
+			SELECT
+				DISTINCT CTPRVN_NM
+			FROM COMTNRDNMADRZIP
+			ORDER BY CTPRVN_NM ASC
+		]]>
+	</select>
+	
+	<select id="rdnmZipDAO.selectSignguNm" resultClass="String">
+		<![CDATA[
+			SELECT
+				DISTINCT SIGNGU_NM
+			FROM COMTNRDNMADRZIP
+			WHERE CTPRVN_NM=#searchCtprvnNm#
+			ORDER BY SIGNGU_NM ASC
+		]]>
+	</select>
+	
+	<select id="rdnmZipDAO.selectRdnmZip" resultMap="rdnmZip">
+		<![CDATA[
+			SELECT
+				LEGAL_DONG_CODE
+				, CTPRVN_NM
+				, SIGNGU_NM
+				, LEGAL_EMD_NM
+				, LEGAL_LEE_NM
+				, MNTN_AT
+				, LNBR_MNNO
+				, LNBR_SLNO
+				, RDMN_CODE
+				, RDMN
+				, UNDGRND_AT
+				, BDNBR_SLNO
+				, BDNBR_MNNO
+				, BULD_NM
+				, DETAIL_BULD_NM
+				, BULD_MANAGE_NO
+				, EMD_NO
+				, ADSTRD_DONG_CODE
+				, ADSTRD_DONG_NM
+				, ZIP
+				, ZIP_NO
+				, MUCH_DLVRPLC_NM
+				, MVMN_RESN_CODE
+				, CHANGE_DT
+				, BFCHG_RDMN_ADRES
+				, SIGNGUPR_BULD_NM
+				, APHUS_AT
+			FROM COMTNRDNMADRZIP
+			WHERE RDMN_CODE=#rdmnCode#
+				AND UNDGRND_AT=#undgrndAt#
+				AND BDNBR_SLNO=#bdnbrSlno#
+				AND BDNBR_MNNO=#bdnbrMnno#
+				AND BULD_MANAGE_NO=#buldManageNo#
+				AND EMD_NO=#emdNo#
+		]]>
+	</select>
+	
+	<select id="rdnmZipDAO.selectRdnmZipList" parameterClass="rdnmZipSerarchVO" resultMap="rdnmZipList">
+	       SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+				SELECT
+					ZIP
+					, CTPRVN_NM
+					, SIGNGU_NM
+					, RDMN
+					, BDNBR_MNNO
+					, BDNBR_SLNO
+					, LEGAL_EMD_NM
+					, LEGAL_LEE_NM
+					, LNBR_MNNO
+					, LNBR_SLNO
+					, MUCH_DLVRPLC_NM
+				FROM COMTNRDNMADRZIP
+				WHERE CTPRVN_NM = #searchCtprvnNm#
+					AND SIGNGU_NM = #searchSignguNm#
+					<isEqual property="searchCondition" prepend="AND" compareValue="0">
+							RDMN || BDNBR_MNNO || BDNBR_SLNO = REPLACE(REPLACE(#searchKeyword#, ' ', ''), '-','') || DECODE(INSTR(#searchKeyword#, '-'), 0, '0')
+					</isEqual>
+					<isEqual property="searchCondition" prepend="AND" compareValue="1">
+							LEGAL_EMD_NM || LNBR_MNNO || LNBR_SLNO = REPLACE(REPLACE(#searchKeyword#, ' ', ''), '-','') || DECODE(INSTR(#searchKeyword#, '-'), 0, '0')
+					</isEqual>
+					<isEqual property="searchCondition" prepend="AND" compareValue="2">
+							MUCH_DLVRPLC_NM LIKE '%' || #searchKeyword# || '%'
+					</isEqual>
+					ORDER BY 
+							RDMN_CODE ASC
+							, UNDGRND_AT ASC
+							, BDNBR_MNNO ASC
+							, BDNBR_SLNO ASC							
+							, BULD_MANAGE_NO ASC
+							, EMD_NO ASC
+			) TB ) X WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+	</select>	
+	<select id="rdnmZipDAO.selectRdnmZipListTotCnt" parameterClass="rdnmZipSerarchVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTNRDNMADRZIP
+			WHERE CTPRVN_NM = #searchCtprvnNm#
+					AND SIGNGU_NM = #searchSignguNm#
+					<isEqual property="searchCondition" prepend="AND" compareValue="0">
+							RDMN || BDNBR_MNNO || BDNBR_SLNO = REPLACE(REPLACE(#searchKeyword#, ' ', ''), '-','') || DECODE(INSTR(#searchKeyword#, '-'), 0, '0')
+					</isEqual>
+					<isEqual property="searchCondition" prepend="AND" compareValue="1">
+							LEGAL_EMD_NM || LNBR_MNNO || LNBR_SLNO = REPLACE(REPLACE(#searchKeyword#, ' ', ''), '-','') || DECODE(INSTR(#searchKeyword#, '-'), 0, '0')
+					</isEqual>
+					<isEqual property="searchCondition" prepend="AND" compareValue="2">
+							MUCH_DLVRPLC_NM LIKE '%' || #searchKeyword# || '%'
+					</isEqual>
+	</select>
+
+</sqlMap>

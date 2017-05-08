@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="RssTagService">
+
+	<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="comDefaultVO" type="egovframework.com.cmm.ComDefaultVO" />
+
+	<!-- RSS서비스::해당RSS서비스 조회 --> 
+	<!-- SELECT *
+		FROM (
+			SELECT * FROM $TRGET_SVC_TABLE$ ORDER BY FRST_REGISTER_PNTTM DESC
+		) WHERE ROWNUM <= $TRGET_SVC_LIST_CO$ AND BBS_ID = 'BBSMSTR_000000000001'
+		ORDER BY FRST_REGISTER_PNTTM DESC -->
+	<select id="RssTagService.selectRssTagServiceTable" parameterClass="java.util.Map" resultClass="java.util.HashMap" remapResults="true">
+	<![CDATA[	
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT
+				TO_CHAR(a.NTT_ID) AS NTT_ID, a.NTT_SJ, TO_CHAR(a.NTT_CN) AS NTT_CN, 
+				TO_CHAR(A.FRST_REGISTER_PNTTM, 'yyyy-MM-dd hh24:mi:ss') AS FRST_REGISTER_PNTTM,
+				NVL(b.USER_NAME, a.NTCR_NM) as FRST_REGISTER_NM,  
+				X.CODE_NM as BBS_CTGRY_NM
+			FROM
+				COMTNBBS a
+			LEFT 	OUTER JOIN EDUUP.EC_PERSON b ON 	a.FRST_REGISTER_ID = b.USER_ID 
+			LEFT 	OUTER JOIN COMTCCMMNDETAILCODE X ON		X.CODE_ID IN('COM110', 'COM111', 'COM112') AND X.CODE = a.BBS_CTGRY_CODE        
+			WHERE
+				a.BBS_ID = #BBS_ID#
+				AND a.USE_AT = 'Y' AND a.OTHBC_AT = 'Y'
+		ORDER BY a.SORT_ORDR DESC, NTT_NO ASC
+		) TB ) WHERE rn BETWEEN 1 AND 30
+	]]>
+	</select> 
+
+	<!-- RSS서비스::목록조회 게시물정보 -->
+	<select id="RssTagService.selectRssTagService" resultClass="egovMap">
+	<![CDATA[	
+	SELECT *
+	FROM (
+	SELECT T0.*, ROWNUM RNUM
+		FROM (
+	]]>
+	 <![CDATA[
+		SELECT
+			A.RSS_ID,
+			A.RSS_BBS_ID,
+			A.TRGET_SVC_NM,
+			A.TRGET_SVC_TABLE,
+			A.HDER_TITLE,
+			A.HDER_LINK,
+			A.HDER_DESCRIPTION,
+			A.HDER_TAG,
+			A.HDER_ETC,
+			A.BDT_TITLE,
+			A.BDT_LINK,
+			A.BDT_DESCRIPTION,
+			A.BDT_TAG,
+			A.BDT_ETC,
+		A.FRST_REGISTER_ID,
+		TO_CHAR(A.FRST_REGISTER_PNTTM,'YYYY-MM-DD') FRST_REGISTER_PNTTM,
+		(SELECT EMPLYR_NM FROM COMTNEMPLYRINFO WHERE UNIQ_ID = A.FRST_REGISTER_ID) FRST_REGISTER_NM 
+		FROM COMTNRSS A
+		WHERE 1=1
+	 ]]>
+		<isNotEmpty property="searchKeyword">
+			<isNotEqual property="searchKeyword" compareValue="">
+				<isEqual property="searchCondition" compareValue="A.TRGET_SVC_NM">
+				AND A.TRGET_SVC_NM LIKE '%' || #searchKeyword# || '%'
+				</isEqual>
+				<isEqual property="searchCondition" compareValue="A.TRGET_SVC_TABLE">
+				AND A.TRGET_SVC_TABLE LIKE '%' || #searchKeyword# || '%'
+				</isEqual>
+	 		</isNotEqual>
+	 	</isNotEmpty>
+	 <![CDATA[
+		ORDER BY A.FRST_REGISTER_PNTTM DESC
+	]]>
+	<![CDATA[	
+		) T0
+	) 
+	WHERE ROWNUM BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+	]]>
+	</select>
+	<!-- RSS서비스::목록조회_게시물 총갯수  -->
+	<select id="RssTagService.selectRssTagServiceCnt" parameterClass="comDefaultVO" resultClass="int">
+		SELECT 
+		COUNT(*) totcnt
+		FROM COMTNRSS A
+		WHERE 1=1
+		<isNotEmpty property="searchKeyword">
+			<isNotEqual property="searchKeyword" compareValue="">
+				<isEqual property="searchCondition" compareValue="A.TRGET_SVC_NM">
+				AND A.TRGET_SVC_NM LIKE CONCAT('%', #searchKeyword#, '%')
+				</isEqual>
+				<isEqual property="searchCondition" compareValue="A.TRGET_SVC_TABLE">
+				AND A.TRGET_SVC_TABLE LIKE CONCAT('%', #searchKeyword#, '%')
+				</isEqual>
+	 		</isNotEqual>
+	 	</isNotEmpty>
+	</select>
+	
+	
+	<!-- RSS서비스::상세보기 -->
+	<select id="RssTagService.selectRssTagServiceDetail" resultClass="java.util.HashMap">
+		SELECT 
+			BBS_ID, 
+			BBS_NM 
+		FROM COMTNBBSMASTER
+		WHERE 1=1
+		AND BBS_ID=#bbsId#
+		AND SYS_TY_CODE='SYS02'
+		AND USE_AT = 'Y'
+	</select>
+
+
+
+</sqlMap>

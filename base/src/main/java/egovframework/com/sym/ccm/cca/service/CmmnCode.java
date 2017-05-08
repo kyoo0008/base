@@ -1,0 +1,232 @@
+package egovframework.com.sym.ccm.cca.service;
+
+import java.io.Serializable;
+
+/**
+ * 공통코드 모델 클래스
+ * @author 공통서비스 개발팀 이중호
+ * @since 2009.04.01
+ * @version 1.0
+ * @see
+ *
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *   
+ *   수정일      수정자           수정내용
+ *  -------    --------    ---------------------------
+ *   2009.04.01  이중호          최초 생성
+ *
+ * </pre>
+ */
+public class CmmnCode implements Serializable {
+
+	/*
+	 * 코드ID
+	 */
+	/**
+	 * @uml.property  name="codeId"
+	 */
+	private String codeId = "";
+	
+	/*
+	 * 코드ID명
+	 */
+	/**
+	 * @uml.property  name="codeIdNm"
+	 */
+	private String codeIdNm = "";
+	
+	/*
+	 * 코드ID설명
+	 */
+	/**
+	 * @uml.property  name="codeIdDc"
+	 */
+	private String codeIdDc = "";
+	
+	/*
+	 * 분류코드
+	 */
+	/**
+	 * @uml.property  name="clCode"
+	 */
+	private String clCode = "";
+	
+	/*
+	 * 분류코드명
+	 */
+	/**
+	 * @uml.property  name="clCodeNm"
+	 */
+	private String clCodeNm = "";
+	
+	/*
+	 * 사용여부
+	 */
+    /**
+	 * @uml.property  name="useAt"
+	 */
+    private String useAt = "";
+
+    /*
+     * 최초등록자ID
+     */
+    /**
+	 * @uml.property  name="frstRegisterId"
+	 */
+    private String frstRegisterId = "";
+    
+    /*
+     * 최종수정자ID
+     */
+    /**
+	 * @uml.property  name="lastUpdusrId"
+	 */
+    private String lastUpdusrId   = "";
+
+	/**
+	 * codeId attribute 를 리턴한다.
+	 * @return  String
+	 * @uml.property  name="codeId"
+	 */
+	public String getCodeId() {
+		return codeId;
+	}
+
+	/**
+	 * codeId attribute 값을 설정한다.
+	 * @param codeId  String
+	 * @uml.property  name="codeId"
+	 */
+	public void setCodeId(String codeId) {
+		this.codeId = codeId;
+	}
+
+	/**
+	 * codeIdNm attribute 를 리턴한다.
+	 * @return  String
+	 * @uml.property  name="codeIdNm"
+	 */
+	public String getCodeIdNm() {
+		return codeIdNm;
+	}
+
+	/**
+	 * codeIdNm attribute 값을 설정한다.
+	 * @param codeIdNm  String
+	 * @uml.property  name="codeIdNm"
+	 */
+	public void setCodeIdNm(String codeIdNm) {
+		this.codeIdNm = codeIdNm;
+	}
+
+	/**
+	 * codeIdDc attribute 를 리턴한다.
+	 * @return  String
+	 * @uml.property  name="codeIdDc"
+	 */
+	public String getCodeIdDc() {
+		return codeIdDc;
+	}
+
+	/**
+	 * codeIdDc attribute 값을 설정한다.
+	 * @param codeIdDc  String
+	 * @uml.property  name="codeIdDc"
+	 */
+	public void setCodeIdDc(String codeIdDc) {
+		this.codeIdDc = codeIdDc;
+	}
+
+	/**
+	 * clCode attribute 를 리턴한다.
+	 * @return  String
+	 * @uml.property  name="clCode"
+	 */
+	public String getClCode() {
+		return clCode;
+	}
+
+	/**
+	 * clCode attribute 값을 설정한다.
+	 * @param clCode  String
+	 * @uml.property  name="clCode"
+	 */
+	public void setClCode(String clCode) {
+		this.clCode = clCode;
+	}
+
+	/**
+	 * clCodeNm attribute 를 리턴한다.
+	 * @return  String
+	 * @uml.property  name="clCodeNm"
+	 */
+	public String getClCodeNm() {
+		return clCodeNm;
+	}
+
+	/**
+	 * clCodeNm attribute 값을 설정한다.
+	 * @param clCodeNm  String
+	 * @uml.property  name="clCodeNm"
+	 */
+	public void setClCodeNm(String clCodeNm) {
+		this.clCodeNm = clCodeNm;
+	}
+
+	/**
+	 * useAt attribute 를 리턴한다.
+	 * @return  String
+	 * @uml.property  name="useAt"
+	 */
+	public String getUseAt() {
+		return useAt;
+	}
+
+	/**
+	 * useAt attribute 값을 설정한다.
+	 * @param useAt  String
+	 * @uml.property  name="useAt"
+	 */
+	public void setUseAt(String useAt) {
+		this.useAt = useAt;
+	}
+
+	/**
+	 * frstRegisterId attribute 를 리턴한다.
+	 * @return  String
+	 * @uml.property  name="frstRegisterId"
+	 */
+	public String getFrstRegisterId() {
+		return frstRegisterId;
+	}
+
+	/**
+	 * frstRegisterId attribute 값을 설정한다.
+	 * @param frstRegisterId  String
+	 * @uml.property  name="frstRegisterId"
+	 */
+	public void setFrstRegisterId(String frstRegisterId) {
+		this.frstRegisterId = frstRegisterId;
+	}
+
+	/**
+	 * lastUpdusrId attribute 를 리턴한다.
+	 * @return  String
+	 * @uml.property  name="lastUpdusrId"
+	 */
+	public String getLastUpdusrId() {
+		return lastUpdusrId;
+	}
+
+	/**
+	 * lastUpdusrId attribute 값을 설정한다.
+	 * @param lastUpdusrId  String
+	 * @uml.property  name="lastUpdusrId"
+	 */
+	public void setLastUpdusrId(String lastUpdusrId) {
+		this.lastUpdusrId = lastUpdusrId;
+	}
+
+
+}

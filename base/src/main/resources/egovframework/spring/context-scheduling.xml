@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+
+	<!-- ref.) annotation config - egovLogManageScheduling -->
+	<!-- 시스템 로그 요약  -->
+	<!-- 
+	<bean id="sysLogging"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="egovLogManageScheduling" />
+		<property name="targetMethod" value="sysLogSummary" />
+		<property name="concurrent" value="false" />
+	</bean>
+	 -->
+	<!-- 시스템 로그 요약  트리거  
+		(startDelay)시작하고 1분후에 실행한다. (milisecond)
+		(repeatInterval)매 1시간마다 실행한다. (milisecond)
+	-->
+	<!-- 
+	<bean id="sysLogTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="sysLogging" />
+		<property name="startDelay" value="60000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+ 	-->
+	<!-- 웹 로그 요약  -->
+	<!-- 
+	<bean id="webLogging"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="egovLogManageScheduling" />
+		<property name="targetMethod" value="webLogSummary" />
+		<property name="concurrent" value="false" />
+	</bean>
+	-->
+	<!-- 웹 로그 요약  트리거-->
+	<!-- 
+	<bean id="webLogTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="webLogging" />
+		<property name="startDelay" value="60000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+	-->
+	<!-- 송수신 로그 요약  -->
+	<!-- 
+	<bean id="trsmrcvLogging"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="egovLogManageScheduling" />
+		<property name="targetMethod" value="trsmrcvLogSummary" />
+		<property name="concurrent" value="false" />
+	</bean>
+	-->
+	<!-- 송수신 로그 요약  트리거-->
+	<!-- 
+	<bean id="trsmrcvLogTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="trsmrcvLogging" />
+		<property name="startDelay" value="60000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+-->
+	<!-- 사용자 로그 생성  -->
+	<!-- 
+	<bean id="userLogging"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="egovLogManageScheduling" />
+		<property name="targetMethod" value="userLogInsert" />
+		<property name="concurrent" value="false" />
+	</bean>
+	-->
+	<!-- 사용자 로그 생성  트리거-->
+	<!-- 
+	<bean id="userLogTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="userLogging" />
+		<property name="startDelay" value="60000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+	-->
+	<!-- 스케쥴러 등록-->
+	<!--
+	<bean id="logSummaryScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="sysLogTrigger" />
+				<ref bean="webLogTrigger" />
+				<ref bean="trsmrcvLogTrigger" />
+				<ref bean="userLogTrigger" />
+			</list>
+		</property>
+	</bean>
+-->
+	<!-- 통계 집계 스케줄링 -->
+	<!--
+	<bean id="userStats"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="egovUserStatsScheduling" />
+		<property name="targetMethod" value="summaryUserStats" />
+		<property name="concurrent" value="false" />
+	</bean>
+	-->
+	
+	<!-- 시작하고 2분후에 실행한다. (milisecond) -->
+	<!-- 매 12시간마다 실행한다. (milisecond) -->
+	<!--
+	<bean id="userStatsTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="userStats" />
+		<property name="startDelay" value="120000" />
+		<property name="repeatInterval" value="43200000" />
+	</bean>
+	-->
+	
+    <!-- 기관코드수신 처리 -->
+<!--
+    <bean id="insttCodeReceiver"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="InsttCodeRecptnService" />
+        <property name="targetMethod" value="insertInsttCodeRecptn" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="insttCodeReceiverTrigger"
+        class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="insttCodeReceiver" />
+        <property name="startDelay" value="60000" />
+        <property name="repeatInterval" value="60000" />
+    </bean>
+
+    <bean id="insttCodeReceiverScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="insttCodeReceiverTrigger" />
+            </list>
+        </property>
+    </bean>
+-->
+    
+    <!-- 법정동코드수신 처리 -->
+<!-- 
+    <bean id="administCodeReceiver"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="AdministCodeRecptnService" />
+        <property name="targetMethod" value="insertAdministCodeRecptn" />
+        <property name="concurrent" value="false" />
+    </bean>
+
+    <bean id="administCodeReceiverTrigger"
+        class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="administCodeReceiver" />
+        <property name="startDelay" value="60000" />
+        <property name="repeatInterval" value="60000" />
+    </bean>
+
+    <bean id="administCodeReceiverScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="administCodeReceiverTrigger" />
+            </list>
+        </property>
+    </bean>
+-->	
+	<!-- 배포용인 경우 제외 SMS 서비스 제외 -->
+	<!--
+	<bean id="smsInfoReceiverScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="smsInfoReceiverTrigger" />
+			</list>
+		</property>
+	</bean>
+	-->
+	
+	<!-- 
+	<bean id="logSummaryScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="triggers">
+	        <list>
+	            <ref bean="webLogTrigger" />
+	        </list>
+	    </property>
+	</bean>
+	-->
+
+	<!-- 
+	<bean id="symSiteBindingUpdateing" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="bindingServiceScheduling" />
+	    <property name="targetMethod" value="symSiteUpdate" />
+	    <property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="symSiteBindingTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	    <property name="jobDetail" ref="symSiteBindingUpdateing" />
+	    <property name="startDelay" value="3600000" />
+	    <property name="repeatInterval" value="3600000" />
+	</bean>
+		
+	<bean id="symMpmBindingUpdateing" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="bindingServiceScheduling" />
+	    <property name="targetMethod" value="symMpmUpdate" />
+	    <property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="symMpmBindingTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	    <property name="jobDetail" ref="symMpmBindingUpdateing" />
+	    <property name="startDelay" value="10000" />
+	    <property name="repeatInterval" value="10000" />
+	</bean>
+	
+	<bean id="symUiScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="triggers">
+	        <list>
+	        	<ref bean="symSiteBindingTrigger"/>
+	            <ref bean="symMpmBindingTrigger" />
+	        </list>
+	    </property>
+	</bean>
+	 -->
+	 
+	 <bean id="webLogging" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="egovLogManageScheduling" />
+	    <property name="targetMethod" value="webLogSummary" />
+	    <property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="webLogTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	    <property name="jobDetail" ref="webLogging" />
+	    <property name="startDelay" value="120000" />
+	    <property name="repeatInterval" value="43200000" />
+	</bean>
+	
+	 <bean id="bbsStats"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="egovLogManageScheduling" />
+		<property name="targetMethod" value="logInsertBbsSummary" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="bbsStatsTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="bbsStats" />
+		<property name="startDelay" value="240000" />
+		<property name="repeatInterval" value="43200000" />
+	</bean>
+	<!-- 
+ 	<bean id="mlgLogging" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="egovLogManageScheduling" />
+	    <property name="targetMethod" value="logInsertMlgLogSummary" />
+	    <property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="mlgLogTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	    <property name="jobDetail" ref="mlgLogging" />
+	    <property name="startDelay" value="360000" />
+	    <property name="repeatInterval" value="43200000" />
+	</bean>
+	 -->
+	 
+	 <bean id="ssoLoginfoScanner" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="egovLogininfoScanner" />
+	    <property name="targetMethod" value="ssoLogininfoRemover" />
+	    <property name="concurrent" value="false" />
+	</bean>
+	<bean id="ssoLoginfoScannerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	    <property name="jobDetail" ref="ssoLoginfoScanner" />
+	    <property name="startDelay" value="480000" />
+	    <property name="repeatInterval" value="21600000" />
+	</bean>
+	
+	<bean id="logSummaryScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="triggers">
+	        <list>
+	        	<ref bean="webLogTrigger" />
+	            <!-- <ref bean="mlgLogTrigger" /> -->
+	            <ref bean="bbsStatsTrigger" />
+	            <ref bean="ssoLoginfoScannerTrigger" />
+	        </list>
+	    </property>
+	</bean>
+</beans>

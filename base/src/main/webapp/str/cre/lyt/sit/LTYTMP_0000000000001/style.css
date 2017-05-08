@@ -1,0 +1,17 @@
+@charset "utf-8";
+/*--------------------------------------------------
+
+title: styles.css
+
+version: 0.1
+2012.01.11
+onmakers
+
+---------------------------------------------------*/
+
+@import url(../css/default.css);
+@import url(../css/layout.css);
+@import url(../css/common.css);
+@import url(../css/contents.css);
+@import url(../css/board.css);
+@import url(../css/contents2.css);

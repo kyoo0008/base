@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean name="propertiesService" class="egovframework.rte.fdl.property.impl.EgovPropertyServiceImpl" destroy-method="destroy">
+      <property name="properties">
+		 <map>
+		 	
+         	<entry key="Globals.isDevelopmentMode" value="true"/>
+         	
+         	<entry key="baseSiteId" value="SITE_000000000000001"/>
+         	<entry key="baseOrgCd" value="Q100700001"/>
+         	<entry key="baseBlngEduInstCd" value="13"/>
+         	
+         	<entry key="publish.mnu.fileStorePathByWebFile" value="${Globals.File}/str/mnu"/>
+         	<entry key="publish.mnu.fileStorePathByJspFile" value="${Globals.File}/WEB-INF/jsp/egovframework/str/mnu"/>
+         	<entry key="publish.mnu.fileStoreWebPathByWebFile" value="/str/mnu/"/>
+         	<entry key="publish.mnu.fileStoreWebPathByJspFile" value="/str/mnu/"/>
+         	
+         	
+         	<entry key="publish.tmplat.lyt.fileStorePathByWebFile" value="${Globals.File}/str/cre/lyt/tmplat"/>
+         	<entry key="publish.tmplat.lyt.fileStorePathByPreFile" value="${Globals.File}/str/cre/lyt/tmplat/pre"/>
+         	<entry key="publish.tmplat.lyt.fileStoreWebPathByWebFile" value="/str/cre/lyt/tmplat/"/>
+         	<entry key="publish.tmplat.lyt.fileStoreWebPathByPreFile" value="/str/cre/lyt/tmplat/pre/"/>
+         	
+         	<entry key="publish.sourc.lyt.fileStorePathByJspFile" value="${Globals.File}/WEB-INF/jsp/egovframework/str/cre/lyt/sourc"/>
+         	<entry key="publish.sourc.lyt.fileStorePathByPreFile" value="${Globals.File}/str/cre/lyt/sourc/pre"/>
+         	<entry key="publish.sourc.lyt.fileStoreWebPathByJspFile" value="/str/cre/lyt/sourc/"/>
+         	<entry key="publish.sourc.lyt.fileStoreWebPathByPreFile" value="/str/cre/lyt/sourc/pre/"/>         	
+         	<entry key="publish.sourc.lyt.ori.fileStorePathByJspFile" value="${Globals.File}/WEB-INF/jsp/egovframework/str/ori/lyt"/>
+         	
+         	<entry key="publish.tmplat.bbs.fileStorePathByWebFile" value="${Globals.File}/str/cre/bbs/tmplat"/>
+         	<entry key="publish.tmplat.bbs.fileStorePathByPreFile" value="${Globals.File}/str/cre/bbs/tmplat/pre"/>
+         	<entry key="publish.tmplat.bbs.fileStoreWebPathByWebFile" value="/str/cre/bbs/tmplat/"/>
+         	<entry key="publish.tmplat.bbs.fileStoreWebPathByPreFile" value="/str/cre/bbs/tmplat/pre/"/>
+         	
+         	<entry key="publish.sourc.bbs.fileStorePathByJspFile" value="${Globals.File}/WEB-INF/jsp/egovframework/str/cre/bbs/sourc"/>
+         	<entry key="publish.sourc.bbs.fileStorePathByPreFile" value="${Globals.File}/str/cre/bbs/sourc/pre"/>
+         	<entry key="publish.sourc.bbs.fileStoreWebPathByJspFile" value="/str/cre/bbs/sourc/"/>
+         	<entry key="publish.sourc.bbs.fileStoreWebPathByPreFile" value="/str/cre/bbs/sourc/pre/"/>         	
+         	<entry key="publish.sourc.bbs.ori.fileStorePathByJspFile" value="${Globals.File}/WEB-INF/jsp/egovframework/str/ori/bbs"/>
+         	
+         	<entry key="sitLogChangeFileName" 		value="_SIT_LOG_CHANGE"/>
+         	<entry key="mpmLogChangeFileName" 		value="_MPM_LOG_CHANGE"/>
+         	<entry key="lstLogChangeFileName" 		value="_LST_LOG_CHANGE"/>
+         	<entry key="banLogChangeFileName" 		value="_BAN_LOG_CHANGE"/>
+         	<entry key="popLogChangeFileName" 		value="_POP_LOG_CHANGE"/>
+         	
+            <entry key="pageUnit" value="10"/>
+            <entry key="pageSize" value="10"/>
+            
+            <entry key="photoPageUnit" value="6"/>
+            <entry key="photoPageSize" value="10"/>
+            <entry key="photoThumbWidth" value="200"/>
+            <entry key="photoThumbHeight" value="200"/>
+                        
+           
+            <entry key="fixedUrlMenuIdList">
+	        	<value>
+	        		  99999999990000000000 | /
+	        		, 99999999990000000000 | /index.do
+	        		, 99999999990000000001 | /uat/uia/egovLoginUsr.do
+	        		, 99999999990000000001 | /uat/uia/actionLogin.do
+	        		, 88888888880000000000 | /msi/siteMap.do
+	        		, 88888888880000000001 | /msi/indvdlInfoPolicy.do
+	        		, 88888888880000000002 | /msi/useStplat.do
+	        		, 88888888880000000003 | /msi/emailColctPolicy.do
+	        		, 88888888880000000004 | /msi/cpyrhtSttemntSvc.do	        		
+	        		
+	        		, 88888888880000000010 | /uss/umt/cmm/EgovSelectMber.do
+	        		, 88888888880000000011 | /uss/umt/cmm/EgovStplatCnfirmMber.do
+	        		, 88888888880000000012 | /sec/rnc/EgovRlnmCnfirm.do
+	        		, 88888888880000000013 | /uss/umt/user/EgovUserInsertView.do
+	        		, 88888888880000000014 | /uss/umt/user/EgovUserInsert.do
+	        		
+	        		, 88888888880000000020 | /uat/uia/egovIdPasswordSearch.do
+	        		, 88888888880000000020 | /uat/uia/egovIdPassword.do
+	        	</value>
+         	</entry>
+         	
+            
+            <!-- 사이트설정파일 물리경로 -->	<entry key="Site.fileStorePath" 	value="${Globals.File}/attachfiles/site"/>
+            <!-- 메뉴파일 물리경로 -->		<entry key="Menu.fileStorePath" 	value="${Globals.File}/attachfiles/menu"/>
+            <!-- 개인파일 물리경로 -->		<entry key="Members.fileStorePath" 	value="${Globals.File}/attachfiles/member"/>
+            <!-- 캘린더파일 물리경로 -->		<entry key="Event.fileStorePath"	value="${Globals.File}/attachfiles/event"/>
+            
+            <!-- 단순링크파일 물리경로 -->	<entry key="Link.fileStorePath"	value="${Globals.File}/attachfiles/link"/>
+            
+            <!-- 배너파일 물리경로-->		<entry key="Banner.fileStorePath" 		value="${Globals.File}/attachfiles/banner"/>
+            <!-- 팝업파일 물리경로-->		<entry key="Popup.fileStorePath" 		value="${Globals.File}/attachfiles/popup"/>
+            <!-- 배경파일 물리경로-->		<entry key="Background.fileStorePath" 	value="${Globals.File}/attachfiles/background"/>
+            
+            <!-- 커뮤니티 물리경로 -->		<entry key="Cmmnty.fileStorePath" 	value="${Globals.File}/attachfiles/cmy"/>
+            <!-- 기본업로드파일 물리경로 -->	<entry key="Globals.fileStorePath" 		value="${Globals.File}/attachfiles/upload"/>
+            <!-- 게시판파일 물리경로 -->		<entry key="Board.fileStorePath" 		value="${Globals.File}/attachfiles/upload/board"/>
+            <!-- 자료요청파일 물리경로 -->	<entry key="DtaReq.fileStorePath" 			value="${Globals.File}/attachfiles/upload/dtareq"/>
+            
+            
+            <!-- 사이트설정파일 웹경로-->	<entry key="Site.fileStoreWebPath" 			value="/attachfiles/site/"/>
+            <!-- 메뉴아이콘파일 웹경로-->	<entry key="Menu.fileStoreWebPath" 			value="/attachfiles/menu/"/>
+            <!-- 배너파일 웹경로-->			<entry key="Banner.fileStoreWebPath" 		value="/attachfiles/banner/"/>
+            <!-- 배경파일 웹경로-->			<entry key="Background.fileStoreWebPath" 	value="/attachfiles/background/"/>
+          	<!-- 캘린더파일 웹경로-->		<entry key="Event.fileStoreWebPath" 		value="/attachfiles/event/"/>
+          	<!-- 개인파일 웹경로-->			<entry key="Members.fileStoreWebPath" 		value="/attachfiles/member/"/>  
+          	<!-- 커뮤니티 웹경로-->			<entry key="Cmmnty.fileStoreWebPath" 		value="/attachfiles/cmy/"/>
+          	
+          	
+          	<entry key="mmaPageUnit" value="10"/>
+            <entry key="mmaPageSize" value="10"/>
+          	<!-- 
+          	<entry key="mediaMovieWebUrl" value="http://115.92.195.228:8090/MovieServiceHost"/>
+            <entry key="mediaMovieImageWebUrl" value="http://115.92.195.228:8090/Image"/>
+            <entry key="mediaMovieUploderHandlerUrl" value="http://115.92.195.228:8090/Uploader/HttpUploadHandler.ashx"/>
+            <entry key="mediaMovieServiceWebUrl" value="http://115.92.195.228:1935/vod/_definst_/mp4:daegu_dip"/>
+            -->
+            <entry key="qrCodeWidth" value="200"/>
+            <entry key="qrCodeHeight" value="200"/>
+         </map>
+		 
+      </property>
+	</bean>
+	
+</beans>	

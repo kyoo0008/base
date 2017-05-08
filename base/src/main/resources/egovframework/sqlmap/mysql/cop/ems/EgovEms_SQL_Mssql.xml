@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Ems">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="mailMessageVO" type="egovframework.com.ems.service.MailMessageVO"/>
+
+	<resultMap id="mailMessage" class="egovframework.com.ems.service.MailMessageVO">
+		<result property="receptorEmail" column="EMAIL_ADRES" columnIndex="1"/>
+	</resultMap>
+		
+		
+	<select id="EmsDAO.selectEmsMberList" resultMap="mailMessage">
+
+	    SELECT
+	    	EMAIL_ADRES
+	    FROM    COMTNMBER 
+	        WHERE 
+	        	DELETE_AT != 'Y' AND CONFM_AT = 'Y'  and EMAIL_RECPTN_AT = 'Y'
+			<isNotEmpty property="sendSe" prepend="AND">
+			USER_SE_CODE = #sendSe#
+			</isNotEmpty>
+
+	</select>	
+
+	
+</sqlMap>

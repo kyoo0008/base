@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="LytSourcDAO">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="LytSourcVO" type="egovframework.com.cop.com.service.LytSourcVO"/>
+	
+	<resultMap id="lytSourc" class="egovframework.com.cop.com.service.LytSourc">
+		<result property="lytSourcId" column="LYT_SOURC_ID" columnIndex="1"/>
+		<result property="sourcSeCode" column="SOURC_SE_CODE" columnIndex="2"/>
+		<result property="sourcNm" column="SOURC_NM" columnIndex="3"/>
+		<result property="upendSourc" column="UPEND_SOURC" columnIndex="4"/>
+		<result property="lptSourc" column="LPT_SOURC" columnIndex="5"/>
+		<result property="mobileUpendSourc" column="MOBILE_UPEND_SOURC" columnIndex="6"/>
+		<result property="mobileLptSourc" column="MOBILE_LPT_SOURC" columnIndex="7"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="8"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="9"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="10"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="11"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="12"/>
+	</resultMap>
+	
+	<resultMap id="lytSourcList" class="egovframework.com.cop.com.service.LytSourc">
+		<result property="lytSourcId" column="LYT_SOURC_ID" columnIndex="1"/>
+		<result property="sourcSeCode" column="SOURC_SE_CODE" columnIndex="2"/>
+		<result property="sourcSeCodeNm" column="SOURC_SE_CODE_NM" columnIndex="3"/>
+		<result property="sourcNm" column="SOURC_NM" columnIndex="4"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="5"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="6"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="7"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="8"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="9"/>
+	</resultMap>
+	
+	<parameterMap id="paramInsert" class="egovframework.com.cop.com.service.LytSourc">
+		<parameter property="lytSourcId"/>
+		<parameter property="sourcSeCode"/>
+		<parameter property="sourcNm"/>
+		<parameter property="upendSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="lptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileUpendSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileLptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="frstRegisterId"/>
+	</parameterMap>
+	
+	<parameterMap id="paramUpdate" class="egovframework.com.cop.com.service.LytSourc">
+		<parameter property="sourcSeCode"/>
+		<parameter property="sourcNm"/>
+		<parameter property="upendSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="lptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileUpendSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileLptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="lastUpdusrId"/>
+		<parameter property="lytSourcId"/>
+	</parameterMap>
+
+	<insert id="LytSourcDAO.insertLytSourc">
+		<![CDATA[
+			INSERT INTO COMTNLYTSOURC 
+				( LYT_SOURC_ID
+				  , SOURC_SE_CODE
+				  , SOURC_NM
+				  , UPEND_SOURC
+				  , LPT_SOURC
+				  , MOBILE_UPEND_SOURC
+				  , MOBILE_LPT_SOURC
+				  , PREVEW_FILE_NM
+				  , USE_AT
+				  , FRST_REGISTER_ID
+				  , FRST_REGISTER_PNTTM
+				  )
+			VALUES ( #lytSourcId#
+				  , #sourcSeCode#
+				  , #sourcNm#
+				  , #upendSourc#
+				  , #lptSourc#
+				  , #mobileUpendSourc#
+				  , #mobileLptSourc#
+				  , #prevewFileNm#
+				  , 'Y'
+				  , #frstRegisterId#
+				  , SYSDATE()
+				  )
+		]]>
+	</insert>
+
+	<update id="LytSourcDAO.updateLytSourc">
+		
+			UPDATE COMTNLYTSOURC
+			SET LYT_SOURC_ID=#lytSourcId#
+				, SOURC_SE_CODE=#sourcSeCode#
+				<isNotEmpty property="sourcNm">, SOURC_NM=#sourcNm#</isNotEmpty>
+				, UPEND_SOURC=#upendSourc#
+				, LPT_SOURC=#lptSourc#
+				, MOBILE_UPEND_SOURC=#mobileUpendSourc#
+				, MOBILE_LPT_SOURC=#mobileLptSourc#
+				<isNotEmpty property="prevewFileNm">, PREVEW_FILE_NM = #prevewFileNm#</isNotEmpty>
+				, LAST_UPDUSR_ID=#lastUpdusrId#
+				, LAST_UPDUSR_PNTTM=SYSDATE()
+			WHERE LYT_SOURC_ID=#lytSourcId#
+		
+	</update>
+
+	
+	<delete id="LytSourcDAO.deleteLytSourc">
+		<![CDATA[
+			UPDATE COMTNLYTSOURC 
+			SET	USE_AT = 'N'
+				, LAST_UPDUSR_ID=#lastUpdusrId#
+				, LAST_UPDUSR_PNTTM=SYSDATE()
+			WHERE LYT_SOURC_ID=#lytSourcId#
+		]]>
+	</delete>
+	
+	<select id="LytSourcDAO.selectLytSourc" resultMap="lytSourc">
+		<![CDATA[
+			SELECT
+				LYT_SOURC_ID
+				, SOURC_SE_CODE
+				, SOURC_NM
+				, UPEND_SOURC
+				, LPT_SOURC
+				, MOBILE_UPEND_SOURC
+				, MOBILE_LPT_SOURC
+				, PREVEW_FILE_NM
+				, FRST_REGISTER_ID
+				, FRST_REGISTER_PNTTM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+			FROM COMTNLYTSOURC
+			WHERE LYT_SOURC_ID=#lytSourcId#
+				AND USE_AT = 'Y'
+		]]>
+	</select>
+	
+	<select id="LytSourcDAO.selectLytSourcList" parameterClass="LytSourcVO" resultMap="lytSourcList">
+				SELECT
+					LYT_SOURC_ID
+					, SOURC_SE_CODE
+					, c.CODE_NM AS SOURC_SE_CODE_NM
+					, SOURC_NM
+					, PREVEW_FILE_NM
+					, FRST_REGISTER_ID
+					, FRST_REGISTER_PNTTM
+					, LAST_UPDUSR_ID
+					, LAST_UPDUSR_PNTTM
+				FROM COMTNLYTSOURC a
+				LEFT OUTER JOIN (SELECT CODE_ID, CODE, CODE_NM FROM 
+					COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM916' AND USE_AT='Y') c
+				ON a.SOURC_SE_CODE = c.CODE
+				WHERE USE_AT = 'Y'
+					<isNotEmpty prepend="AND" property="searchSourcSeCode">
+						SOURC_SE_CODE = #searchSourcSeCode#
+					</isNotEmpty>
+					<isNotEmpty property="searchCnd">
+						<isNotEmpty property="searchWrd">
+							<isEqual prepend="AND" property="searchCnd" compareValue="0" >
+								SOURC_NM LIKE '%' || #searchWrd# || '%'
+							</isEqual>
+						</isNotEmpty>
+					</isNotEmpty>
+				ORDER BY LYT_SOURC_ID DESC
+				LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	<select id="LytSourcDAO.selectLytSourcListCnt" parameterClass="LytSourcVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTNLYTSOURC a
+			WHERE USE_AT = 'Y'
+				<isNotEmpty prepend="AND" property="searchSourcSeCode">
+						SOURC_SE_CODE = #searchSourcSeCode#
+					</isNotEmpty>
+				<isNotEmpty property="searchCnd">
+					<isNotEmpty property="searchWrd">
+						<isEqual prepend="AND" property="searchCnd" compareValue="0">
+							SOURC_NM LIKE '%' || #searchWrd# || '%'
+						</isEqual>
+					</isNotEmpty>
+				</isNotEmpty>
+	</select>
+
+</sqlMap>

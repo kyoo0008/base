@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="UnityLink">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="comDefaultVO" type="egovframework.com.cmm.ComDefaultVO"/>
+	<typeAlias  alias="PopupManageVO" type="egovframework.com.uss.ion.pwm.service.PopupManageVO" />
+	
+	<resultMap id="PopupManageList" class="egovframework.com.uss.ion.pwm.service.PopupManageVO">
+		<result property="popupId" 				column="POPUP_ID" 				columnIndex="3"/>
+		<result property="popupTitleNm" 		column="POPUP_TITLE_NM" 		columnIndex="4"/>
+		<result property="fileUrl" 				column="FILE_URL" 				columnIndex="5"/>
+		<result property="popupHlc" 			column="POPUP_HLC" 				columnIndex="6"/>
+		<result property="popupWlc" 			column="POPUP_WLC" 				columnIndex="7"/>
+		<result property="popupHSize" 			column="POPUP_HSIZE" 			columnIndex="8"/>
+		<result property="popupWSize" 			column="POPUP_WSIZE" 			columnIndex="9"/>
+		<result property="ntceBgnde" 			column="NTCE_BGNDE" 			columnIndex="10"/>
+		<result property="ntceEndde" 			column="NTCE_ENDDE" 			columnIndex="11"/>
+		<result property="stopVewAt" 			column="STOP_VEW_AT" 			columnIndex="12"/>
+		<result property="ntceAt" 				column="NTCE_AT" 				columnIndex="13"/>			
+		<result property="popupListAt" 			column="POPUP_LIST_AT"			columnIndex="14"/>
+		<result property="frstRegisterPnttm" 	column="FRST_REGISTER_PNTTM" 	columnIndex="15"/>
+	</resultMap>
+	
+	<resultMap id="PopupManageVOs" class="egovframework.com.uss.ion.pwm.service.PopupManageVO">
+		<result property="siteId" 				column="SITE_ID" 				columnIndex="1"/>
+    	<result property="sysTyCode" 			column="SYS_TY_CODE" 			columnIndex="2"/>
+		<result property="popupId" 				column="POPUP_ID" 				columnIndex="3"/>
+		<result property="popupTitleNm" 		column="POPUP_TITLE_NM" 		columnIndex="4"/>
+		<result property="fileUrl" 				column="FILE_URL" 				columnIndex="5"/>
+		<result property="popupHlc" 			column="POPUP_HLC" 				columnIndex="6"/>
+		<result property="popupWlc" 			column="POPUP_WLC" 				columnIndex="7"/>
+		<result property="popupHSize" 			column="POPUP_HSIZE" 			columnIndex="8"/>
+		<result property="popupWSize" 			column="POPUP_WSIZE" 			columnIndex="9"/>
+		<result property="ntceBgnde" 			column="NTCE_BGNDE" 			columnIndex="10"/>
+		<result property="ntceEndde" 			column="NTCE_ENDDE" 			columnIndex="11"/>
+		<result property="stopVewAt" 			column="STOP_VEW_AT" 			columnIndex="12"/>
+		<result property="ntceAt" 				column="NTCE_AT" 				columnIndex="13"/>
+		<result property="frstRegisterPnttm" 	column="FRST_REGISTER_PNTTM" 	columnIndex="14"/>
+		<result property="frstRegisterId" 		column="FRST_REGISTER_ID" 		columnIndex="15"/>
+		<result property="lastUpdusrPnttm" 		column="LAST_UPDUSR_PNTTM" 		columnIndex="16"/>
+		<result property="lastUpdusrId" 		column="LAST_UPDUSR_ID" 		columnIndex="17"/>
+		<result property="popupCn" 				column="POPUP_CN" 				columnIndex="18"/>				
+		<result property="popupListAt" 			column="POPUP_LIST_AT"			columnIndex="19"/>
+		<result property="atchFileId" 			column="ATCH_FILE_ID"			columnIndex="20"/>
+	</resultMap>
+	
+	<resultMap id="servicePopup" class="egovframework.com.uss.ion.pwm.service.PopupManageVO">
+		<result property="siteId" 				column="SITE_ID" 				columnIndex="1"/>
+    	<result property="sysTyCode" 			column="SYS_TY_CODE" 			columnIndex="2"/>
+		<result property="popupId" 				column="POPUP_ID" 				columnIndex="3"/>
+		<result property="popupTitleNm" 		column="POPUP_TITLE_NM" 		columnIndex="4"/>
+		<result property="fileUrl" 				column="FILE_URL" 				columnIndex="5"/>
+		<result property="popupHlc" 			column="POPUP_HLC" 				columnIndex="6"/>
+		<result property="popupWlc" 			column="POPUP_WLC" 				columnIndex="7"/>
+		<result property="popupHSize" 			column="POPUP_HSIZE" 			columnIndex="8"/>
+		<result property="popupWSize" 			column="POPUP_WSIZE" 			columnIndex="9"/>
+		<result property="ntceBgnde" 			column="NTCE_BGNDE" 			columnIndex="10"/>
+		<result property="ntceEndde" 			column="NTCE_ENDDE" 			columnIndex="11"/>
+		<result property="stopVewAt" 			column="STOP_VEW_AT" 			columnIndex="12"/>
+		<result property="ntceAt" 				column="NTCE_AT" 				columnIndex="13"/>
+		<result property="popupCn" 				column="POPUP_CN" 				columnIndex="14"/> 				
+		<result property="popupListAt" 			column="POPUP_LIST_AT"			columnIndex="15"/>
+	</resultMap>
+		
+	<parameterMap id="paramInsert" class="egovframework.com.uss.ion.pwm.service.PopupManageVO">
+		<parameter property="popupId"/>
+		<parameter property="popupTitleNm"/>
+		<parameter property="fileUrl" />
+		<parameter property="popupHlc"/>
+		<parameter property="popupWlc" />
+		<parameter property="popupHSize" />
+		<parameter property="popupWSize" />
+		<parameter property="ntceBgnde" />
+		<parameter property="ntceEndde"/>
+		<parameter property="stopVewAt" />
+		<parameter property="ntceAt"/>
+		<parameter property="frstRegisterId" />
+		<parameter property="sysTyCode"/>
+		<parameter property="popupCn" jdbcType="CLOB" javaType="java.lang.String"/>				
+		<parameter property="siteId" />
+		<parameter property="popupListAt" />
+		<parameter property="atchFileId" />
+	</parameterMap>
+	
+	<parameterMap id="paramUpdate" class="egovframework.com.uss.ion.pwm.service.PopupManageVO">	
+		<parameter property="popupTitleNm"/>
+		<parameter property="fileUrl" />
+		<parameter property="popupHlc"/>
+		<parameter property="popupWlc" />
+		<parameter property="popupHSize" />
+		<parameter property="popupWSize" />
+		<parameter property="ntceBgnde" />
+		<parameter property="ntceEndde"/>
+		<parameter property="stopVewAt" />
+		<parameter property="ntceAt"/>
+		<parameter property="lastUpdusrId" />
+		<parameter property="popupCn" jdbcType="CLOB" javaType="java.lang.String"/>				
+		<parameter property="popupListAt" />
+		<parameter property="atchFileId" />
+		<parameter property="popupId"/>
+		<parameter property="siteId" />
+		<parameter property="sysTyCode"/>
+	</parameterMap>
+	
+	
+	<!-- 팝업창관리::목록조회 게시물정보 -->
+	<select id="PopupManage.selectPopupManage" resultMap="PopupManageList">
+	 <![CDATA[
+		SELECT
+        A.POPUP_ID,
+        A.POPUP_TITLE_NM,
+        A.FILE_URL,
+        A.POPUP_HLC,
+        A.POPUP_WLC,
+        A.POPUP_HSIZE,
+        A.POPUP_WSIZE,
+        A.NTCE_BGNDE,
+        A.NTCE_ENDDE,
+        A.STOP_VEW_AT,
+        A.NTCE_AT,
+        A.FRST_REGISTER_PNTTM,
+        A.POPUP_LIST_AT
+        FROM COMTNPOPUPMANAGE A
+		WHERE 
+			SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') 
+			AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')		
+			AND USE_AT = 'Y'
+	 ]]>
+	 <isNotEmpty property="searchKeyword">
+	 	<isNotEmpty property="searchCondition">
+	 		<isEqual property="searchCondition" prepend="AND" compareValue="1">
+	 			POPUP_TITLE_NM LIKE '%' || #searchKeyword# || '%'
+	 		</isEqual>
+	 	</isNotEmpty>
+	 </isNotEmpty>
+	 <![CDATA[
+		ORDER BY POPUP_ID DESC
+	]]>
+	LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>
+	<!-- 팝업창관리::목록조회_게시물 총갯수  -->
+	<select id="PopupManage.selectPopupManageCnt" resultClass="int">
+		SELECT 
+		COUNT(*)
+		FROM COMTNPOPUPMANAGE
+		WHERE 
+			SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') 
+			AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')	
+			AND USE_AT = 'Y'
+	 <isNotEmpty property="searchKeyword">
+	 	<isNotEmpty property="searchCondition">
+	 		<isEqual property="searchCondition" prepend="AND" compareValue="1">
+	 			POPUP_TITLE_NM LIKE '%' || #searchKeyword# || '%'
+	 		</isEqual>
+	 	</isNotEmpty>
+	 </isNotEmpty>
+	</select>
+	
+    <!-- 팝업창관리::삭제  -->
+	<delete id="PopupManage.deletePopupManage">
+		<![CDATA[
+		UPDATE COMTNPOPUPMANAGE
+           SET USE_AT = 'N'
+          		, LAST_UPDUSR_ID = #lastUpdusrId#
+             	, LAST_UPDUSR_PNTTM = SYSDATE()
+             WHERE POPUP_ID=#popupId#
+             	AND USE_AT = 'Y'
+             	AND SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+		]]>
+	</delete>
+
+	<!-- 팝업창관리::수정  -->
+
+	<update id="PopupManage.updatePopupManage">
+		 <![CDATA[
+		UPDATE COMTNPOPUPMANAGE 
+		SET
+			POPUP_TITLE_NM=#popupTitleNm#,
+			FILE_URL=#fileUrl#,
+			POPUP_HLC=#popupHlc#,
+			POPUP_WLC=#popupWlc#,
+			POPUP_HSIZE=#popupHSize#,
+			POPUP_WSIZE=#popupWSize#,
+			NTCE_BGNDE=#ntceBgnde#,
+			NTCE_ENDDE=#ntceEndde#,
+			STOP_VEW_AT=#stopVewAt#,
+			NTCE_AT=#ntceAt#,
+			LAST_UPDUSR_PNTTM=SYSDATE(),
+			LAST_UPDUSR_ID=#lastUpdusrId#,
+			POPUP_CN = #popupCn#,
+			POPUP_LIST_AT = #popupListAt#,
+			ATCH_FILE_ID = #atchFileId#
+		WHERE POPUP_ID=#popupId#
+			AND USE_AT = 'Y'
+            AND SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+		 ]]>
+	</update>
+
+	
+	<!-- 팝업창관리::상세보기 -->
+	<select id="PopupManage.selectPopupManageDetail" resultMap="PopupManageVOs">
+		SELECT
+			A.SITE_ID,
+            A.SYS_TY_CODE, 
+			A.POPUP_ID,
+			A.POPUP_TITLE_NM,
+			A.FILE_URL,
+			A.POPUP_HLC,
+			A.POPUP_WLC,
+			A.POPUP_HSIZE,
+			A.POPUP_WSIZE,
+			A.NTCE_BGNDE,
+			A.NTCE_ENDDE,
+			A.STOP_VEW_AT,
+			A.NTCE_AT,
+			A.FRST_REGISTER_PNTTM,
+			A.FRST_REGISTER_ID,
+			A.LAST_UPDUSR_PNTTM,
+			A.LAST_UPDUSR_ID,
+			A.POPUP_CN,
+			A.POPUP_LIST_AT,
+			A.ATCH_FILE_ID
+		FROM COMTNPOPUPMANAGE A
+		WHERE A.POPUP_ID=#popupId#
+	</select>
+
+	<!-- 팝업창관리::입력  -->
+	<insert id="PopupManage.insertPopupManage">	     
+	 <![CDATA[
+	
+		INSERT INTO COMTNPOPUPMANAGE ( 
+			POPUP_ID,
+			POPUP_TITLE_NM,
+			FILE_URL,
+			POPUP_HLC,
+			POPUP_WLC,
+			POPUP_HSIZE,
+			POPUP_WSIZE,
+			NTCE_BGNDE,
+			NTCE_ENDDE,
+			STOP_VEW_AT,
+			NTCE_AT,
+			FRST_REGISTER_PNTTM,
+			FRST_REGISTER_ID,
+			SYS_TY_CODE,
+			POPUP_CN,
+			SITE_ID,
+			USE_AT,
+			POPUP_LIST_AT,
+			ATCH_FILE_ID
+		)VALUES( 
+			#popupId#,
+			#popupTitleNm#,
+			#fileUrl#,
+			#popupHlc#,
+			#popupWlc#,
+			#popupHSize#,
+			#popupWSize#,
+			#ntceBgnde#,
+			#ntceEndde#,
+			#stopVewAt#,
+			#ntceAt#, 
+			SYSDATE(),
+			#frstRegisterId#,
+			IFNULL(#sysTyCode#, 'SYS01'),
+			#popupCn#,
+			IFNULL(#siteId#, 'SITE_000000000000001'),
+			'Y',
+			#popupListAt#,
+			#atchFileId#
+		)
+	 ]]>
+	</insert>
+
+
+	<!-- 팝업창관리:: 메인 팝업리스트 -->
+	<select id="PopupManage.selectPopupServiceList" resultMap="servicePopup">
+	 
+		SELECT
+			A.SITE_ID,
+            A.SYS_TY_CODE, 
+			A.POPUP_ID,
+			A.POPUP_TITLE_NM,
+			A.FILE_URL,
+			A.POPUP_HLC,
+			A.POPUP_WLC,
+			A.POPUP_HSIZE,
+			A.POPUP_WSIZE,
+			A.NTCE_BGNDE,
+			A.NTCE_ENDDE,
+			A.STOP_VEW_AT,
+			A.NTCE_AT,
+			A.POPUP_CN,
+			A.POPUP_LIST_AT
+		FROM COMTNPOPUPMANAGE A
+		WHERE 
+			A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') 
+			AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+			AND A.USE_AT = 'Y'
+			AND A.NTCE_AT = 'Y'
+			<!-- 
+			AND TO_CHAR(SYSDATE(),'YYYYMMDDHH24MI') >= A.NTCE_BGNDE
+			AND TO_CHAR(SYSDATE(),'YYYYMMDDHH24MI') <=  A.NTCE_ENDDE
+			 -->
+		ORDER BY A.POPUP_ID DESC
+	
+	</select>
+
+</sqlMap>

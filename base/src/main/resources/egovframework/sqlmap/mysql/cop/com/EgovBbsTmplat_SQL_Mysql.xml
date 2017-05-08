@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BbsTmplatDAO">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="BbstmplatVO" type="egovframework.com.cop.com.service.BbsTmplatVO"/>
+	
+	<resultMap id="bbstmplat" class="egovframework.com.cop.com.service.BbsTmplat">
+		<result property="bbsTmplatId" column="BBS_TMPLAT_ID" columnIndex="1"/>
+		<result property="tmplatSeCode" column="TMPLAT_SE_CODE" columnIndex="2"/>
+		<result property="tmplatNm" column="TMPLAT_NM" columnIndex="3"/>
+		<result property="cssSourc" column="CSS_SOURC" columnIndex="4"/>
+		<result property="scriptSourc" column="SCRIPT_SOURC" columnIndex="5"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="6"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="7"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="8"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="9"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="10"/>
+	</resultMap>
+	
+	<resultMap id="bbstmplatList" class="egovframework.com.cop.com.service.BbsTmplat">
+		<result property="bbsTmplatId" column="BBS_TMPLAT_ID" columnIndex="1"/>
+		<result property="tmplatSeCode" column="TMPLAT_SE_CODE" columnIndex="2"/>
+		<result property="tmplatSeCodeNm" column="TMPLAT_SE_CODE_NM" columnIndex="3"/>
+		<result property="tmplatNm" column="TMPLAT_NM" columnIndex="4"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="5"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="6"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="7"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="8"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="9"/>
+	</resultMap>
+	
+	<parameterMap id="paramInsert" class="egovframework.com.cop.com.service.BbsTmplat">
+		<parameter property="bbsTmplatId"/>
+		<parameter property="tmplatSeCode"/>
+		<parameter property="tmplatNm"/>
+		<parameter property="cssSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="scriptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="frstRegisterId"/>
+	</parameterMap>
+	
+	<parameterMap id="paramUpdate" class="egovframework.com.cop.com.service.BbsTmplat">
+		<parameter property="tmplatSeCode"/>
+		<parameter property="tmplatNm"/>
+		<parameter property="cssSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="scriptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="lastUpdusrId"/>
+		<parameter property="bbsTmplatId"/>
+	</parameterMap>
+
+	<insert id="BbsTmplatDAO.insertBbsTmplat">
+		<![CDATA[
+			INSERT INTO COMTNBBSTMPLAT 
+				( BBS_TMPLAT_ID
+				  , TMPLAT_SE_CODE
+				  , TMPLAT_NM
+				  , CSS_SOURC
+				  , SCRIPT_SOURC
+				  , PREVEW_FILE_NM
+				  , USE_AT
+				  , FRST_REGISTER_ID
+				  , FRST_REGISTER_PNTTM
+				  )
+			VALUES ( #bbsTmplatId#
+				  , #tmplatSeCode#
+				  , #tmplatNm#
+				  , #cssSourc#
+				  , #scriptSourc#
+				  , #prevewFileNm#
+				  , 'Y'
+				  , #frstRegisterId#
+				  , SYSDATE()
+				  )
+		]]>
+	</insert>
+
+	<update id="BbsTmplatDAO.updateBbsTmplat">
+		
+			UPDATE COMTNBBSTMPLAT
+			SET BBS_TMPLAT_ID=#bbsTmplatId#
+				<isNotEmpty property="tmplatSeCode">, TMPLAT_SE_CODE=#tmplatSeCode#</isNotEmpty>
+				<isNotEmpty property="tmplatNm">, TMPLAT_NM=#tmplatNm#</isNotEmpty>
+				, CSS_SOURC=#cssSourc#
+				, SCRIPT_SOURC=#scriptSourc#
+				<isNotEmpty property="prevewFileNm">, PREVEW_FILE_NM = #prevewFileNm#</isNotEmpty>
+				, LAST_UPDUSR_ID=#lastUpdusrId#
+				, LAST_UPDUSR_PNTTM=SYSDATE()
+			WHERE BBS_TMPLAT_ID=#bbsTmplatId#
+		
+	</update>
+
+	
+	<delete id="BbsTmplatDAO.deleteBbsTmplat">
+		<![CDATA[
+			UPDATE COMTNBBSTMPLAT 
+			SET	USE_AT = 'N'
+				, LAST_UPDUSR_ID=#lastUpdusrId#
+				, LAST_UPDUSR_PNTTM=SYSDATE()
+			WHERE BBS_TMPLAT_ID=#bbsTmplatId#
+		]]>
+	</delete>
+	
+	<select id="BbsTmplatDAO.selectBbsTmplat" resultMap="bbstmplat">
+		<![CDATA[
+			SELECT
+				BBS_TMPLAT_ID
+				, TMPLAT_SE_CODE
+				, TMPLAT_NM
+				, CSS_SOURC
+				, SCRIPT_SOURC
+				, PREVEW_FILE_NM
+				, FRST_REGISTER_ID
+				, FRST_REGISTER_PNTTM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+			FROM COMTNBBSTMPLAT
+			WHERE BBS_TMPLAT_ID=#bbsTmplatId#
+				AND USE_AT = 'Y'
+		]]>
+	</select>
+	
+	<select id="BbsTmplatDAO.selectBbsTmplatList" parameterClass="BbstmplatVO" resultMap="bbstmplatList">
+			SELECT
+				BBS_TMPLAT_ID
+				, TMPLAT_SE_CODE
+				, c.CODE_NM AS TMPLAT_SE_CODE_NM
+				, TMPLAT_NM
+				, PREVEW_FILE_NM
+				, FRST_REGISTER_ID
+				, FRST_REGISTER_PNTTM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+			FROM COMTNBBSTMPLAT a
+			LEFT OUTER JOIN (SELECT CODE_ID, CODE, CODE_NM FROM 
+				COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM919' AND USE_AT='Y') c
+			ON a.TMPLAT_SE_CODE = c.CODE
+			WHERE USE_AT = 'Y'
+				<isNotEmpty prepend="AND" property="searchTmplatSeCode">
+					TMPLAT_SE_CODE = #searchTmplatSeCode#
+				</isNotEmpty>
+				<isNotEmpty property="searchCnd">
+					<isNotEmpty property="searchWrd">
+						<isEqual prepend="AND" property="searchCnd" compareValue="0">
+							TMPLAT_NM LIKE '%' || #searchWrd# || '%'
+						</isEqual>
+					</isNotEmpty>
+				</isNotEmpty>
+			ORDER BY BBS_TMPLAT_ID DESC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	<select id="BbsTmplatDAO.selectBbsTmplatListCnt" parameterClass="BbstmplatVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTNBBSTMPLAT
+			WHERE USE_AT = 'Y'
+				<isNotEmpty prepend="AND" property="searchTmplatSeCode">
+					TMPLAT_SE_CODE = #searchTmplatSeCode#
+				</isNotEmpty>
+				<isNotEmpty property="searchCnd">
+					<isNotEmpty property="searchWrd">
+						<isEqual prepend="AND" property="searchCnd" compareValue="0">
+							TMPLAT_NM LIKE '%' || #searchWrd# || '%'
+						</isEqual>
+					</isNotEmpty>
+				</isNotEmpty>
+	</select>
+
+</sqlMap>

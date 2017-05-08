@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="LinkSiteManage">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="LinkSiteManageVO" type="egovframework.com.uss.ion.sit.service.LinkSiteManageVO"/>	
+
+	<resultMap id="LinkSiteManage" class="egovframework.com.uss.ion.sit.service.LinkSiteManageVO">
+		<result property="siteId"		column="SITE_ID" 		columnIndex="1"/>
+    	<result property="sysTyCode"	column="SYS_TY_CODE" 	columnIndex="2"/>
+		<result property="linkSiteId" 	column="LINK_SITE_ID" 	columnIndex="3"/>
+		<result property="linkSiteUrl" 	column="LINK_SITE_URL" 	columnIndex="4"/>
+		<result property="linkSiteNm" 	column="LINK_SITE_NM" 	columnIndex="5"/>
+		<result property="linkSiteDc" 	column="LINK_SITE_DC" 	columnIndex="6"/>
+		<result property="siteThemaClCode" 	column="SITE_THEMA_CL_CODE" 	columnIndex="7"/>
+		<result property="siteThemaClNm" 	column="SITE_THEMA_CL_NM" 		columnIndex="8"/>				
+		<result property="actvtyAt" 		column="ACTVTY_AT" 				columnIndex="9"/>		
+		<result property="frstRegisterPnttm" 	column="FRST_REGISTER_PNTTM" 	columnIndex="10"/>
+		<result property="frstRegisterId" 		column="FRST_REGISTER_ID" 		columnIndex="11"/>		
+	</resultMap>
+	
+	<resultMap id="LinkSiteService" class="egovframework.com.uss.ion.sit.service.LinkSiteManageVO">
+		<result property="linkSiteUrl" 	column="LINK_SITE_URL" 	columnIndex="1"/>
+		<result property="linkSiteNm" 	column="LINK_SITE_NM" 	columnIndex="2"/>
+		<result property="siteThemaClCode" 	column="SITE_THEMA_CL_CODE" 	columnIndex="3"/>
+		<result property="siteThemaClNm" 	column="SITE_THEMA_CL_NM" 		columnIndex="4"/>		
+	</resultMap>
+	
+	<select id="LinkSiteManageDAO.selectSiteDetail" resultMap="LinkSiteManage">
+		<![CDATA[				
+			SELECT 	SITE_ID, SYS_TY_CODE, LINK_SITE_URL, LINK_SITE_ID, LINK_SITE_NM, LINK_SITE_DC, SITE_THEMA_CL_CODE, B.CODE_NM AS SITE_THEMA_CL_NM,
+					A.ACTVTY_AT,											
+					A.FRST_REGISTER_PNTTM   , A.FRST_REGISTER_ID		 			  			 			 
+			FROM 	COMTNLINKSITELIST A
+			LEFT 	OUTER JOIN COMTCCMMNDETAILCODE B	 ON		B.CODE_ID ='COM023' AND A.SITE_THEMA_CL_CODE = B.CODE  
+			WHERE	A.USE_AT = 'Y' AND LINK_SITE_ID=#linkSiteId#	
+				AND A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')						
+		]]>
+	</select>
+	
+	<select id="LinkSiteManageDAO.selectSiteList" parameterClass="LinkSiteManageVO" resultMap="LinkSiteManage">
+   		   SELECT  SITE_ID, SYS_TY_CODE, LINK_SITE_URL, LINK_SITE_ID, LINK_SITE_NM, LINK_SITE_DC, SITE_THEMA_CL_CODE, B.CODE_NM AS SITE_THEMA_CL_NM,
+		   		   A.ACTVTY_AT,										
+				   A.FRST_REGISTER_PNTTM , A.FRST_REGISTER_ID	
+		   FROM 	COMTNLINKSITELIST A
+		   LEFT 	OUTER JOIN COMTCCMMNDETAILCODE B	 ON		B.CODE_ID ='COM023' AND A.SITE_THEMA_CL_CODE = B.CODE		   
+		   WHERE   A.USE_AT = 'Y' AND A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+	      	<isNotEmpty prepend="AND" property="searchCate">
+	      		A.SITE_THEMA_CL_CODE = #searchCate#
+	      	</isNotEmpty>  	
+			<isEqual prepend="AND" property="searchCondition" compareValue="1">
+				LINK_SITE_NM   LIKE '%' || #searchKeyword# || '%'
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="2">
+				LINK_SITE_URL  LIKE '%' || #searchKeyword# || '%'
+			</isEqual>							    
+			<isNotEmpty prepend="AND" property="searchActvtyAt">
+				A.ACTVTY_AT = #searchActvtyAt#
+			</isNotEmpty>		
+			ORDER BY A.SITE_THEMA_CL_CODE ASC, A.LINK_SITE_ID ASC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>
+	
+	<select id="LinkSiteManageDAO.selectSiteListTotCnt" parameterClass="LinkSiteManageVO" resultClass="int">
+		
+			SELECT 	COUNT(*)
+			FROM 	COMTNLINKSITELIST A
+			WHERE	A.USE_AT = 'Y' AND A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+			<isNotEmpty prepend="AND" property="searchCate">
+	      		A.SITE_THEMA_CL_CODE = #searchCate#
+	      	</isNotEmpty>    
+			<isEqual prepend="AND" property="searchCondition" compareValue="1">
+				LINK_SITE_NM   LIKE '%' || #searchKeyword# || '%'
+			</isEqual>
+			<isEqual prepend="AND" property="searchCondition" compareValue="2">
+				LINK_SITE_URL  LIKE '%' || #searchKeyword# || '%'
+			</isEqual>	
+			<isNotEmpty prepend="AND" property="searchActvtyAt">
+				A.ACTVTY_AT = #searchActvtyAt#
+			</isNotEmpty>	
+	</select>
+	
+	<insert id="LinkSiteManageDAO.insertSiteInfo">	
+		<![CDATA[		
+			INSERT INTO COMTNLINKSITELIST
+				  (
+				  SITE_ID
+				  , SYS_TY_CODE
+				  , LINK_SITE_ID
+				  , LINK_SITE_URL 
+ 				  , LINK_SITE_NM 
+				  , LINK_SITE_DC
+				  , SITE_THEMA_CL_CODE 
+				  , ACTVTY_AT 
+				  , USE_AT
+				  , FRST_REGISTER_PNTTM 
+				  , FRST_REGISTER_ID 
+				  ) 
+			VALUES (
+					IFNULL(#siteId#, 'SITE_000000000000001')
+				  , IFNULL(#sysTyCode#, 'SYS01')
+				  , #linkSiteId#
+				  , #linkSiteUrl#
+				  , #linkSiteNm#
+				  , #linkSiteDc#
+				  , #siteThemaClCode#
+				  , #actvtyAt#
+				  , 'Y'
+				  , SYSDATE()
+				  , #frstRegisterId#
+				  )
+		]]>
+	</insert>
+	
+	<update id="LinkSiteManageDAO.updateSiteInfo">
+		<![CDATA[
+			UPDATE	COMTNLINKSITELIST	SET
+				   LINK_SITE_URL=#linkSiteUrl# 
+ 				  , LINK_SITE_NM=#linkSiteNm#
+				  , LINK_SITE_DC=#linkSiteDc#
+				  , SITE_THEMA_CL_CODE=#siteThemaClCode# 
+				  , ACTVTY_AT=#actvtyAt#
+				  , LAST_UPDUSR_PNTTM=SYSDATE()
+				  , LAST_UPDUSR_ID=#lastUpdusrId#
+ 			WHERE  LINK_SITE_ID=#linkSiteId#
+		]]>
+	</update>
+	
+	<delete id="LinkSiteManageDAO.deleteSiteInfo">
+		<![CDATA[
+			UPDATE	COMTNLINKSITELIST	SET
+				  USE_AT='N'
+				  , LAST_UPDUSR_PNTTM=SYSDATE()
+				  , LAST_UPDUSR_ID=#lastUpdusrId#
+ 			WHERE  LINK_SITE_ID=#linkSiteId#
+		]]>
+	</delete>
+	
+	<select id="LinkSiteManageDAO.selectSiteServiceList" parameterClass="LinkSiteManageVO" resultMap="LinkSiteService">
+	
+		   SELECT  LINK_SITE_URL, LINK_SITE_NM, SITE_THEMA_CL_CODE, B.CODE_NM AS SITE_THEMA_CL_NM
+		   FROM 	COMTNLINKSITELIST A
+		   LEFT 	OUTER JOIN COMTCCMMNDETAILCODE B	 ON		B.CODE_ID ='COM023' AND A.SITE_THEMA_CL_CODE = B.CODE		   
+		   WHERE   A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+		   	AND A.USE_AT = 'Y' AND A.ACTVTY_AT = 'Y' 
+	      	<isNotEmpty prepend="AND" property="searchCate">
+	      		A.SITE_THEMA_CL_CODE = #searchCate#
+	      	</isNotEmpty>		
+			ORDER BY A.SITE_THEMA_CL_CODE ASC, A.LINK_SITE_ID ASC	
+			
+	</select>
+	
+</sqlMap>

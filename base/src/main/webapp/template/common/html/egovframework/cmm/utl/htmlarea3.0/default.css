@@ -1,0 +1,76 @@
+
+
+body {font-size:12px; font-family:"돋움"; background:white; color:#333333;border: 0px;}
+body, h1, h2, h3, h4, h5, h6, ol, ul, li, form, fieldset, input, textarea, p, th, td, dt, dd, dl { margin:0; padding:0;line-height:18px;}
+h1, h2, h3, h4, h5, h6,table {font-size:12px;}
+em, i, address {font-style:normal;}
+hr {display:none;}
+a { color:#5d5d5d; text-decoration:none;}
+a:hover {color:#f96958;}
+li {list-style:none;}
+img,fieldset {border:0;}
+input.radio {_width:13px;_height:13px; _vertical-align:middle;}
+input.inp_txt{height:19px;border-top:1px solid #b5b5b5;border-left:1px solid #b5b5b5;border-right:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;vertical-align:middle;}
+
+/* block hidden */
+.hdn {font-size:0; height:0; overflow:hidden; position:absolute; visibility:hidden; width:0; line-height:0;}
+
+/* block */
+.cR {clear:both;}
+.fL {float:left;}
+.fR {float:right;}
+
+/* btn align */
+.vMid {vertical-align:middle;}
+	
+	
+/* Text align */
+.alC {text-align:center;}
+.alL {text-align:left;}
+.alR {text-align:right;}
+
+
+/* Text Color */
+.red {color: red;}
+.blue {color: blue;}
+.blue2 {color:#4c8cd4;}
+.yellow {color:yellow;}
+.green {color:green;}
+.black {color:black;}
+.white {color:white;}
+.orange {color:orange;}
+.blueviolet {color:blueviolet;}
+
+
+/* Text effect */
+.strong {font-weight:bold;}
+
+
+
+/* input, select effect */
+.inp {padding:2px; font-size:12px; border:1px solid #dfdfdf; vertical-align:middle;}
+
+
+/* 디자인단에서 추가한 디폴트 스타일 */
+
+
+/* dot 라인 */
+
+/*.dot {border-bottom:1px dotted #c4c4c4;}*/ /* 게시판 클래스하고 겹침*/
+.dot2 {width:600px; border-bottom:1px dotted #c4c4c4; margin-bottom:10px;}
+.dotline1{ border-bottom:1px dotted #c4c4c4; margin-bottom:5px; width:620px;}
+
+
+/* 폰트 */
+.fs15			{ font-size:15px; }
+.nfs			{ font-style:normal; }
+.bfs			{ font-weight:bold; }
+.c_top          { font-style:normal;  font-size:8px; font-weight:normal; }
+
+.blue3  {color:#7193b2;}
+
+
+.inline {display:inline;}
+
+
+

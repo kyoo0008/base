@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BbsSourcHistoryDAO">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="BbssourcVO" type="egovframework.com.cop.com.service.BbsSourcVO"/>
+	
+	<resultMap id="bbssourcHistory" class="egovframework.com.cop.com.service.BbsSourc">
+		<result property="bbsSourcHistId" column="BBS_SOURC_HIST_ID" columnIndex="1"/>
+		<result property="bbsSourcId" column="BBS_SOURC_ID" columnIndex="2"/>
+		<result property="listSourc" column="LIST_SOURC" columnIndex="3"/>
+		<result property="viewSourc" column="VIEW_SOURC" columnIndex="4"/>
+		<result property="formSourc" column="FORM_SOURC" columnIndex="5"/>
+		<result property="cmSourc" column="CM_SOURC" columnIndex="6"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="7"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="8"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="9"/>
+		<result property="sourcSeCode" column="SOURC_SE_CODE" columnIndex="10"/>
+	</resultMap>
+	
+	<resultMap id="bbssourcHistoryList" class="egovframework.com.cop.com.service.BbsSourc">
+		<result property="bbsSourcHistId" column="BBS_SOURC_HIST_ID" columnIndex="1"/>
+		<result property="bbsSourcId" column="BBS_SOURC_ID" columnIndex="2"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="3"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="4"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="5"/>
+	</resultMap>
+	
+	<insert id="BbsSourcHistoryDAO.insertBbsSourcHistory">
+		<![CDATA[
+			INSERT INTO COMTHBBSSOURCHISTORY 
+				( BBS_SOURC_HIST_ID
+				  , BBS_SOURC_ID
+				  , SOURC_SE_CODE
+				  , LIST_SOURC
+				  , VIEW_SOURC
+				  , FORM_SOURC
+				  , CM_SOURC
+				  , PREVEW_FILE_NM
+				  , LAST_UPDUSR_ID
+				  , LAST_UPDUSR_PNTTM )
+			VALUES ( #bbsSourcHistId#
+			 	  , #bbsSourcId#
+			 	  , #sourcSeCode#
+				  , #listSourc#
+				  , #viewSourc#
+				  , #formSourc#
+				  , #cmSourc#
+				  , #prevewFileNm#
+				  , #lastUpdusrId#
+				  , SYSDATE() )
+		]]>
+	</insert>
+
+	 
+	<delete id="BbsSourcHistoryDAO.deleteBbsSourcHistory">
+		<![CDATA[
+			DELETE FROM COMTHBBSSOURCHISTORY 
+			WHERE BBS_SOURC_HIST_ID=#bbsSourcHistId#
+		]]>
+	</delete>
+	
+	<select id="BbsSourcHistoryDAO.selectBbsSourcHistory" resultMap="bbssourcHistory">
+		<![CDATA[
+			SELECT
+				BBS_SOURC_HIST_ID
+				, BBS_SOURC_ID
+				, LIST_SOURC
+				, VIEW_SOURC
+				, FORM_SOURC
+				, CM_SOURC
+				, PREVEW_FILE_NM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+				, SOURC_SE_CODE
+			FROM COMTHBBSSOURCHISTORY
+			WHERE BBS_SOURC_HIST_ID=#bbsSourcHistId#
+		]]>
+	</select>
+	
+	<select id="BbsSourcHistoryDAO.selectBbsSourcHistoryList" parameterClass="BbssourcVO" resultMap="bbssourcHistoryList">
+			SELECT
+				BBS_SOURC_HIST_ID
+				, BBS_SOURC_ID
+				, PREVEW_FILE_NM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+			FROM COMTHBBSSOURCHISTORY
+			WHERE BBS_SOURC_ID = #bbsSourcId#
+			ORDER BY BBS_SOURC_HIST_ID DESC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	
+	<select id="BbsSourcHistoryDAO.selectBbsSourcHistoryListCnt" parameterClass="BbssourcVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTHBBSSOURCHISTORY
+			WHERE BBS_SOURC_ID = #bbsSourcId#
+	</select>
+
+</sqlMap>

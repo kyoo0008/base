@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SiteManage">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="SiteManageSearchVO" type="egovframework.com.sym.sit.service.SiteManageDefaultVO"/>	
+	
+	<resultMap id="SiteSimpleList" class="egovframework.com.sym.sit.service.SiteManageVO">
+		<result property="siteId" 	column="SITE_ID" 	columnIndex="1"/>
+		<result property="siteUrl" 	column="SITE_URL" 	columnIndex="2"/>
+		<result property="siteNm" 	column="SITE_NM" 	columnIndex="3"/>
+		<result property="insttCode" 	column="INSTT_CODE" 	columnIndex="4"/>
+	</resultMap>
+	
+	<resultMap id="SiteManage" class="egovframework.com.sym.sit.service.SiteManageVO">
+		<result property="siteId" 	column="SITE_ID" 	columnIndex="1"/>
+		<result property="siteUrl" 	column="SITE_URL" 	columnIndex="2"/>
+		<result property="siteNm" 	column="SITE_NM" 	columnIndex="3"/>
+		<result property="upendLogoFileNm" 		column="UPEND_LOGO_FILE_NM" 	columnIndex="4"/>
+		<result property="lptLogoFileNm" 		column="LPT_LOGO_FILE_NM" 		columnIndex="5"/>
+		<result property="adresFileNm" 			column="ADRES_FILE_NM" 			columnIndex="6"/>
+		<result property="adresReplcText" 		column="ADRES_REPLC_TEXT" 		columnIndex="7"/>		
+		<result property="indvdlInfoPolicy" 	column="INDVDLINFO_POLICY" 		columnIndex="8"/>
+		<result property="useStplat" 			column="USE_STPLAT" 			columnIndex="9"/>
+		<result property="emailColctPolicy" 	column="EMAIL_COLCT_POLICY" 	columnIndex="10"/>		
+		<result property="lytTmplatId" 			column="LYT_TMPLAT_ID" 			columnIndex="11"/>
+		<result property="cmyTmplatId" 			column="CMY_TMPLAT_ID" 			columnIndex="12"/>
+		<result property="mobileUseAt" 			column="MOBILE_USE_AT" 			columnIndex="13"/>
+		<result property="actvtyAt"				column="ACTVTY_AT" 				columnIndex="14"/>
+		<result property="useAt" 				column="USE_AT" 				columnIndex="15"/>		
+		<result property="frstRegisterPnttm" 	column="FRST_REGISTER_PNTTM" 	columnIndex="16"/>
+		<result property="frstRegisterId" 		column="FRST_REGISTER_ID" 		columnIndex="17"/>
+		<result property="lastUpdusrPnttm" 		column="LAST_UPDUSR_PNTTM" 		columnIndex="18"/>
+		<result property="lastUpdusrId" 		column="LAST_UPDUSR_ID" 		columnIndex="19"/>
+		
+		<result property="cpyrhtSttemntSvc" 	column="CPYRHT_STTEMNT_SVC" 		columnIndex="20"/>
+		<result property="brwsrSj" 				column="BRWSR_SJ" 		columnIndex="21"/>
+		<result property="tlphonNo" 			column="TLPHON_NO" 		columnIndex="22"/>
+		<result property="faxNo" 				column="FAX_NO" 		columnIndex="23"/>
+		<result property="adres" 				column="ADRES" 		columnIndex="24"/>
+		<result property="mouseScrtyApplcAt" 	column="MOUSE_SCRTY_APPLC_AT" 		columnIndex="25"/>
+		<result property="kybrdScrtyApplcAt" 	column="KYBRD_SCRTY_APPLC_AT" 		columnIndex="26"/>
+		<result property="dplctLoginPermAt" 	column="DPLCT_LOGIN_PERM_AT" 		columnIndex="27"/>
+		<result property="passwordMummLt" 		column="PASSWORD_MUMM_LT" 		columnIndex="28"/>
+		<result property="passwordMxmmLt" 		column="PASSWORD_MXMM_LT" 		columnIndex="29"/>
+		<result property="passwordNumberPolicyAt"		column="PASSWORD_NUMBER_POLICY_AT" 		columnIndex="30"/>
+		<result property="passwordChrctrPolicyAt" 		column="PASSWORD_CHRCTR_POLICY_AT" 		columnIndex="31"/>
+		<result property="passwordSpclchrctrPolicyAt" 	column="PASSWORD_SPCLCHRCTR_POLICY_AT" 		columnIndex="32"/>
+		<result property="passwordChangeCycle" 			column="PASSWORD_CHANGE_CYCLE" 		columnIndex="33"/>
+		<result property="insttCode" 			column="INSTT_CODE" 		columnIndex="34"/>
+		<result property="lytSourcId" 			column="LYT_SOURC_ID" 			columnIndex="35"/>
+		<result property="cmySourcId" 			column="CMY_SOURC_ID" 			columnIndex="36"/>		
+		<result property="peprsntImageFileNm" 	column="REPRSNT_IMAGE_FILE_NM" 	columnIndex="37"/>
+		<result property="sloganFileNm" 		column="SLOGAN_FILE_NM" 		columnIndex="38"/>		
+		<result property="sloganReplcText" 		column="SLOGAN_REPLC_TEXT" 		columnIndex="39"/>
+		<result property="mainContentsList" 	column="SITE_ID" 			select="SiteManageDAO.selectSiteMainContentsList" columnIndex="40" />
+		<result property="la" 					column="LA" 					columnIndex="41"/>
+		<result property="lo" 					column="LO" 					columnIndex="42"/>
+	</resultMap>
+	
+	<resultMap id="SiteList" class="egovframework.com.sym.sit.service.SiteManageVO">
+		<result property="siteId" 	column="SITE_ID" 	columnIndex="1"/>
+		<result property="siteUrl" 	column="SITE_URL" 	columnIndex="2"/>
+		<result property="siteNm" 	column="SITE_NM" 	columnIndex="3"/>
+		<result property="lytTmplatId" column="LYT_TMPLAT_ID" 	columnIndex="4"/>
+		<result property="cmyTmplatId" column="CMY_TMPLAT_ID" 	columnIndex="5"/>
+		<result property="mobileUseAt" column="MOBILE_USE_AT" columnIndex="6"/>
+		<result property="actvtyAt"	column="ACTVTY_AT" 	columnIndex="7"/>
+		<result property="useAt" 	column="USE_AT" 	columnIndex="8"/>
+		<result property="frstRegisterPnttm" 	column="FRST_REGISTER_PNTTM" 	columnIndex="9"/>
+		<result property="frstRegisterId" 		column="FRST_REGISTER_ID" 		columnIndex="10"/>
+		<result property="lastUpdusrPnttm" 		column="LAST_UPDUSR_PNTTM" 		columnIndex="11"/>
+		<result property="lastUpdusrId" 		column="LAST_UPDUSR_ID" 		columnIndex="12"/>
+	</resultMap>
+	
+	<resultMap id="ServiceSiteInfo" class="egovframework.com.sym.sit.service.SiteManageVO">
+		<result property="siteId" 	column="SITE_ID" 	columnIndex="1"/>
+		<result property="siteUrl" 	column="SITE_URL" 	columnIndex="2"/>
+		<result property="siteNm" 	column="SITE_NM" 	columnIndex="3"/>
+		<result property="upendLogoFileNm" 	column="UPEND_LOGO_FILE_NM" columnIndex="4"/>
+		<result property="lptLogoFileNm" 	column="LPT_LOGO_FILE_NM" 	columnIndex="5"/>
+		<result property="adresFileNm" 		column="ADRES_FILE_NM" 		columnIndex="6"/>
+		<result property="adresReplcText" 	column="ADRES_REPLC_TEXT" 	columnIndex="7"/>
+		<result property="lytTmplatId" 		column="LYT_TMPLAT_ID" 		columnIndex="8"/>
+		<result property="cmyTmplatId" 		column="CMY_TMPLAT_ID" 		columnIndex="9"/>
+		<result property="mobileUseAt" 		column="MOBILE_USE_AT" 		columnIndex="10"/>		
+		<result property="actvtyAt"			column="ACTVTY_AT" 			columnIndex="11"/>
+		<result property="useAt" 			column="USE_AT" 			columnIndex="12"/>
+		
+		<result property="brwsrSj" 				column="BRWSR_SJ" 		columnIndex="13"/>
+		<result property="tlphonNo" 			column="TLPHON_NO" 		columnIndex="14"/>
+		<result property="faxNo" 				column="FAX_NO" 		columnIndex="15"/>
+		<result property="adres" 				column="ADRES" 		columnIndex="16"/>
+		<result property="mouseScrtyApplcAt" 	column="MOUSE_SCRTY_APPLC_AT" 		columnIndex="17"/>
+		<result property="kybrdScrtyApplcAt" 	column="KYBRD_SCRTY_APPLC_AT" 		columnIndex="18"/>
+		<result property="dplctLoginPermAt" 	column="DPLCT_LOGIN_PERM_AT" 		columnIndex="19"/>
+		<result property="passwordMummLt" 		column="PASSWORD_MUMM_LT" 		columnIndex="20"/>
+		<result property="passwordMxmmLt" 		column="PASSWORD_MXMM_LT" 		columnIndex="21"/>
+		<result property="passwordNumberPolicyAt"		column="PASSWORD_NUMBER_POLICY_AT" 		columnIndex="22"/>
+		<result property="passwordChrctrPolicyAt" 		column="PASSWORD_CHRCTR_POLICY_AT" 		columnIndex="23"/>
+		<result property="passwordSpclchrctrPolicyAt" 	column="PASSWORD_SPCLCHRCTR_POLICY_AT" 		columnIndex="24"/>
+		<result property="passwordChangeCycle" 			column="PASSWORD_CHANGE_CYCLE" 		columnIndex="25"/>
+		<result property="insttCode" 			column="INSTT_CODE" 		columnIndex="26"/>
+		<result property="lytSourcId" 			column="LYT_SOURC_ID" 			columnIndex="27"/>
+		<result property="cmySourcId" 			column="CMY_SOURC_ID" 			columnIndex="28"/>
+		<result property="peprsntImageFileNm" 	column="REPRSNT_IMAGE_FILE_NM" 	columnIndex="29"/>
+		<result property="sloganFileNm" 		column="SLOGAN_FILE_NM" 			columnIndex="30"/>
+		<result property="sloganReplcText" 		column="SLOGAN_REPLC_TEXT" 		columnIndex="31"/>
+		<result property="mainContentsList" column="SITE_ID" 			select="SiteManageDAO.selectSiteMainContentsList" columnIndex="32" />
+		<result property="la" 					column="LA" 					columnIndex="33"/>
+		<result property="lo" 					column="LO" 					columnIndex="34"/>
+	</resultMap>
+	
+	<resultMap id="mainContents" class="egovframework.com.sym.sit.service.SiteMainContentsManageVO">
+		<result property="siteId" column="SITE_ID" columnIndex="1"/>
+		<result property="cntntsTyCode" column="CNTNTS_TY_CODE" columnIndex="2"/>
+		<result property="progrmId" column="PROGRM_ID" columnIndex="3"/>
+		<result property="progrmNm" column="PROGRM_NM" columnIndex="4"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="5"/>
+	</resultMap>
+	
+	<parameterMap id="paramInsert" class="egovframework.com.sym.sit.service.SiteManageVO">
+		<parameter property="siteId"/>
+		<parameter property="siteUrl"/>
+		<parameter property="siteNm"/>
+		<parameter property="upendLogoFileNm"/>
+		<parameter property="lptLogoFileNm"/>
+		<parameter property="adresFileNm"/>
+		<parameter property="adresReplcText"/>		
+		<parameter property="indvdlInfoPolicy" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="useStplat" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="emailColctPolicy" jdbcType="CLOB" javaType="java.lang.String"/>		
+		<parameter property="lytTmplatId"/>
+		<parameter property="cmyTmplatId"/>
+		<parameter property="mobileUseAt"/>
+		<parameter property="actvtyAt"/>
+		<parameter property="frstRegisterId"/>
+		
+		<parameter property="cpyrhtSttemntSvc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="brwsrSj"/>
+		<parameter property="tlphonNo"/>
+		<parameter property="faxNo"/>
+		<parameter property="adres"/>
+		<parameter property="mouseScrtyApplcAt"/>
+		<parameter property="kybrdScrtyApplcAt"/>
+		<parameter property="dplctLoginPermAt"/>
+		<parameter property="passwordMummLt"/>
+		<parameter property="passwordMxmmLt"/>
+		<parameter property="passwordNumberPolicyAt"/>
+		<parameter property="passwordChrctrPolicyAt"/>
+		<parameter property="passwordSpclchrctrPolicyAt"/>
+		<parameter property="passwordChangeCycle"/>
+		<parameter property="insttCode"/>
+		<parameter property="lytSourcId"/>
+		<parameter property="cmySourcId"/>		
+		<parameter property="peprsntImageFileNm"/>
+		<parameter property="sloganFileNm"/>		
+		<parameter property="sloganReplcText"/>
+		<parameter property="la"/>
+		<parameter property="lo"/>
+	</parameterMap>
+	
+	<parameterMap id="paramUpdate" class="egovframework.com.sym.sit.service.SiteManageVO">		
+		<parameter property="siteUrl"/>
+		<parameter property="siteNm"/>
+		<parameter property="upendLogoFileNm"/>
+		<parameter property="lptLogoFileNm"/>
+		<parameter property="adresFileNm"/>
+		<parameter property="adresReplcText"/>		
+		<parameter property="lytTmplatId"/>
+		<parameter property="cmyTmplatId"/>
+		<parameter property="lytSourcId"/>
+		<parameter property="cmySourcId"/>	
+		<parameter property="peprsntImageFileNm"/>
+		<parameter property="sloganFileNm"/>		
+		<parameter property="sloganReplcText"/>
+		<parameter property="indvdlInfoPolicy" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="useStplat" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="emailColctPolicy" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileUseAt"/>
+		<parameter property="actvtyAt"/>
+		<parameter property="lastUpdusrId"/>		
+		<parameter property="cpyrhtSttemntSvc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="brwsrSj"/>
+		<parameter property="tlphonNo"/>
+		<parameter property="faxNo"/>
+		<parameter property="adres"/>
+		<parameter property="mouseScrtyApplcAt"/>
+		<parameter property="kybrdScrtyApplcAt"/>
+		<parameter property="dplctLoginPermAt"/>
+		<parameter property="passwordMummLt"/>
+		<parameter property="passwordMxmmLt"/>
+		<parameter property="passwordNumberPolicyAt"/>
+		<parameter property="passwordChrctrPolicyAt"/>
+		<parameter property="passwordSpclchrctrPolicyAt"/>
+		<parameter property="passwordChangeCycle"/>
+		<parameter property="insttCode"/>
+		<parameter property="la"/>
+		<parameter property="lo"/>
+		<parameter property="siteId"/>
+	</parameterMap>
+	
+	<parameterMap id="paramUpdatePolicy" class="egovframework.com.sym.sit.service.SiteManageVO">	
+		<parameter property="indvdlInfoPolicy" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="useStplat" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="emailColctPolicy" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="cpyrhtSttemntSvc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="lastUpdusrId"/>
+	</parameterMap>
+	
+	<select id="SiteManageDAO.selectSiteSimpleInfo" resultMap="SiteSimpleList">
+		   SELECT  A.SITE_ID, A.SITE_URL, A.SITE_NM, A.INSTT_CODE
+		   FROM 	COMTNSITEINFO A
+		   WHERE A.SITE_ID = #siteId#
+	</select>
+	
+	<select id="SiteManageDAO.selectSiteSimpleList" resultMap="SiteSimpleList">
+		   SELECT  A.SITE_ID, A.SITE_URL, A.SITE_NM, A.INSTT_CODE
+		   FROM 	COMTNSITEINFO A
+		   WHERE A.USE_AT = 'Y'
+		   ORDER BY A.FRST_REGISTER_PNTTM DESC, A.SITE_ID ASC
+	</select>
+	
+	<!-- 
+	<select id="SiteManageDAO.selectSiteListForOrgCode" resultMap="SiteSimpleList">
+		   SELECT  A.SITE_ID, A.SITE_URL, A.SITE_NM, A.INSTT_CODE
+		   FROM 	COMTNSITEINFO A
+		   LEFT OUTER JOIN ORG_CODE B ON A.INSTT_CODE = B.ORG_CD
+		   WHERE A.USE_AT = 'Y'
+		   <isEqual prepend="AND" property="searchBlngEduInstCd" compareValue="ZZZZZZZZZZZZZZZZZZZZ">
+				A.INSTT_CODE IS NULL
+			</isEqual>
+			<isNotEqual property="searchBlngEduInstCd" compareValue="ZZZZZZZZZZZZZZZZZZZZ">
+			   	<isNotEmpty prepend="AND" property="searchBlngEduInstCd">
+					<![CDATA[ B.BLNG_EDU_INST_CD = #searchBlngEduInstCd# ]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="searchSchlGrdCd">
+					<![CDATA[ B.SCHL_GRD_CD = #searchSchlGrdCd# ]]>
+				</isNotEmpty>
+			</isNotEqual>
+		   ORDER BY B.ORG_CD ASC, A.SITE_NM ASC
+	</select>
+	 -->
+	<select id="SiteManageDAO.selectSiteListForOrgCode" resultMap="SiteSimpleList">
+		   SELECT  A.SITE_ID, A.SITE_URL, A.SITE_NM, A.INSTT_CODE
+		   FROM 	COMTNSITEINFO A
+		   WHERE A.USE_AT = 'Y'
+		   <isNotEmpty prepend="AND" property="searchSchlGrdCd">
+				A.INSTT_CODE = #searchSchlGrdCd#
+			</isNotEmpty>
+		   ORDER BY A.SITE_NM ASC
+	</select>
+	
+	<select id="SiteManageDAO.selectSiteDetail" resultMap="SiteManage">
+		
+			SELECT 	A.SITE_ID, A.SITE_URL, A.SITE_NM, A.UPEND_LOGO_FILE_NM, A.LPT_LOGO_FILE_NM, A.ADRES_FILE_NM, A.ADRES_REPLC_TEXT, 
+					A.INDVDLINFO_POLICY, A.USE_STPLAT, A.EMAIL_COLCT_POLICY,
+					A.LYT_TMPLAT_ID, A.CMY_TMPLAT_ID, A.MOBILE_USE_AT,
+					A.USE_AT, A.ACTVTY_AT,
+					A.FRST_REGISTER_PNTTM   , A.FRST_REGISTER_ID, 
+					A.LAST_UPDUSR_PNTTM	  , A.LAST_UPDUSR_ID,					
+					A.CPYRHT_STTEMNT_SVC, A.BRWSR_SJ, A.TLPHON_NO, A.FAX_NO, A.ADRES, A.MOUSE_SCRTY_APPLC_AT, A.KYBRD_SCRTY_APPLC_AT, A.DPLCT_LOGIN_PERM_AT,
+					A.PASSWORD_MUMM_LT, A.PASSWORD_MXMM_LT, A.PASSWORD_NUMBER_POLICY_AT, A.PASSWORD_CHRCTR_POLICY_AT, A.PASSWORD_SPCLCHRCTR_POLICY_AT, A.PASSWORD_CHANGE_CYCLE,
+					A.INSTT_CODE, A.LYT_SOURC_ID, A.CMY_SOURC_ID, A.REPRSNT_IMAGE_FILE_NM, A.SLOGAN_FILE_NM, A.SLOGAN_REPLC_TEXT,
+					A.LA, A.LO
+			FROM 	COMTNSITEINFO A
+			WHERE	A.USE_AT = 'Y' AND A.SITE_ID=#siteId#
+			LIMIT 1;
+		
+	</select>
+	
+	<select id="SiteManageDAO.selectSiteByDomain" resultMap="ServiceSiteInfo">
+		
+			SELECT 	A.SITE_ID, A.SITE_URL, A.SITE_NM, A.UPEND_LOGO_FILE_NM, A.LPT_LOGO_FILE_NM, A.ADRES_FILE_NM, A.ADRES_REPLC_TEXT, A.LYT_TMPLAT_ID, A.CMY_TMPLAT_ID,
+					A.MOBILE_USE_AT, A.USE_AT, A.ACTVTY_AT,					
+					A.BRWSR_SJ, A.TLPHON_NO, A.FAX_NO, A.ADRES, A.MOUSE_SCRTY_APPLC_AT, A.KYBRD_SCRTY_APPLC_AT, A.DPLCT_LOGIN_PERM_AT,
+					A.PASSWORD_MUMM_LT, A.PASSWORD_MXMM_LT, A.PASSWORD_NUMBER_POLICY_AT, A.PASSWORD_CHRCTR_POLICY_AT, A.PASSWORD_SPCLCHRCTR_POLICY_AT, A.PASSWORD_CHANGE_CYCLE,
+					A.INSTT_CODE, A.LYT_SOURC_ID, A.CMY_SOURC_ID, A.REPRSNT_IMAGE_FILE_NM, A.SLOGAN_FILE_NM, A.SLOGAN_REPLC_TEXT,
+					A.LA, A.LO
+			FROM 	COMTNSITEINFO A
+			WHERE	A.USE_AT = 'Y'
+				AND A.SITE_URL  LIKE '%' || #searchDomain# || '%'
+				LIMIT 1
+		
+	</select>
+	
+	<select id="SiteManageDAO.selectSiteList" parameterClass="SiteManageSearchVO" resultMap="SiteList">
+			SELECT  SITE_ID, SITE_URL, SITE_NM, LYT_TMPLAT_ID, CMY_TMPLAT_ID,
+					MOBILE_USE_AT, USE_AT, ACTVTY_AT,
+					FRST_REGISTER_PNTTM , FRST_REGISTER_ID, 
+					LAST_UPDUSR_PNTTM   , LAST_UPDUSR_ID
+			FROM COMTNSITEINFO
+            WHERE USE_AT = 'Y'
+            ORDER BY FRST_REGISTER_PNTTM DESC, SITE_ID ASC
+            LIMIT #firstIndex#,#recordCountPerPage#
+			<!-- 
+			SELECT  SITE_ID, SITE_URL, SITE_NM, LYT_TMPLAT_ID, CMY_TMPLAT_ID,
+					MOBILE_USE_AT, USE_AT, ACTVTY_AT,
+					FRST_REGISTER_PNTTM , FRST_REGISTER_ID, 
+					LAST_UPDUSR_PNTTM   , LAST_UPDUSR_ID
+			FROM
+				   (
+				   SELECT  ROWNUM RNUM,SITE.*
+				   FROM
+				   	   	  (
+				   		   SELECT  A.SITE_ID, A.SITE_URL, A.SITE_NM, A.LYT_TMPLAT_ID, A.CMY_TMPLAT_ID, 
+				   		   		   A.MOBILE_USE_AT, A.USE_AT, A.ACTVTY_AT,
+								   A.FRST_REGISTER_PNTTM , A.FRST_REGISTER_ID, 
+								   A.LAST_UPDUSR_PNTTM   , A.LAST_UPDUSR_ID
+						   FROM 	COMTNSITEINFO A
+						   WHERE A.USE_AT = 'Y'
+						    
+						    <isNotEmpty prepend="AND" property="siteId">
+								A.SITE_ID = #siteId#
+							</isNotEmpty>
+							
+							<isNotEmpty prepend="AND" property="searchSchlGrdCd">
+								A.INSTT_CODE = #searchSchlGrdCd#
+							</isNotEmpty>
+							<isNotEmpty prepend="AND" property="searchActvtyAt">
+								A.ACTVTY_AT = #searchActvtyAt#
+							</isNotEmpty>
+									
+							 <isNotEmpty property="searchCondition">
+								<isNotEmpty property="searchKeyword">
+									<isEqual prepend="AND" property="searchCondition" compareValue="siteNm">
+										A.SITE_NM   LIKE '%' || #searchKeyword# || '%'
+									</isEqual>
+									<isEqual prepend="AND" property="searchCondition" compareValue="siteUrl">
+										A.SITE_URL  LIKE '%' || #searchKeyword# || '%'
+									</isEqual>	
+								</isNotEmpty>
+							</isNotEmpty>	
+												
+							ORDER BY A.FRST_REGISTER_PNTTM DESC, A.SITE_ID ASC								   
+						  ) SITE
+				   ) 
+			<![CDATA[
+			WHERE ROWNUM <= #recordCountPerPage# and RNUM > #firstIndex#	
+			]]>		
+			 -->		
+	</select>
+	
+	<select id="SiteManageDAO.selectSiteListTotCnt" parameterClass="SiteManageSearchVO" resultClass="int">
+		
+			SELECT 	COUNT(*)
+			FROM 	COMTNSITEINFO A
+			WHERE	A.USE_AT = 'Y'
+			<isNotEmpty prepend="AND" property="siteId">
+				A.SITE_ID = #siteId#
+			</isNotEmpty>	
+			<isNotEmpty prepend="AND" property="searchSchlGrdCd">
+				A.INSTT_CODE = #searchSchlGrdCd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchActvtyAt">
+				A.ACTVTY_AT = #searchActvtyAt#
+			</isNotEmpty>
+			<isNotEmpty property="searchCondition">
+				<isNotEmpty property="searchKeyword">
+					<isEqual prepend="AND" property="searchCondition" compareValue="siteNm">
+						A.SITE_NM   LIKE '%' || #searchKeyword# || '%'
+					</isEqual>
+					<isEqual prepend="AND" property="searchCondition" compareValue="siteUrl">
+						A.SITE_URL  LIKE '%' || #searchKeyword# || '%'
+					</isEqual>	
+				</isNotEmpty>
+			</isNotEmpty>		
+	</select>
+	
+
+	<insert id="SiteManageDAO.insertSiteInfo">	
+		<![CDATA[		
+			INSERT INTO COMTNSITEINFO
+				  (SITE_ID
+				  , SITE_URL 
+ 				  , SITE_NM 
+ 				  , UPEND_LOGO_FILE_NM
+ 				  , LPT_LOGO_FILE_NM
+ 				  , ADRES_FILE_NM
+ 				  , ADRES_REPLC_TEXT
+ 				  , INDVDLINFO_POLICY
+ 				  , USE_STPLAT
+ 				  , EMAIL_COLCT_POLICY
+ 				  , LYT_TMPLAT_ID
+ 				  , CMY_TMPLAT_ID
+ 				  , MOBILE_USE_AT
+ 				  , ACTVTY_AT
+				  , USE_AT
+				  , FRST_REGISTER_PNTTM 
+				  , FRST_REGISTER_ID 				  
+				  , CPYRHT_STTEMNT_SVC
+				  , BRWSR_SJ
+				  , TLPHON_NO
+				  , FAX_NO
+				  , ADRES
+				  , MOUSE_SCRTY_APPLC_AT
+				  , KYBRD_SCRTY_APPLC_AT
+				  , DPLCT_LOGIN_PERM_AT
+				  , PASSWORD_MUMM_LT
+				  , PASSWORD_MXMM_LT
+				  , PASSWORD_NUMBER_POLICY_AT
+				  , PASSWORD_CHRCTR_POLICY_AT
+				  , PASSWORD_SPCLCHRCTR_POLICY_AT
+				  , PASSWORD_CHANGE_CYCLE
+				  , INSTT_CODE
+				  , LYT_SOURC_ID
+				  , CMY_SOURC_ID
+				  , REPRSNT_IMAGE_FILE_NM
+				  , SLOGAN_FILE_NM
+				  , SLOGAN_REPLC_TEXT
+				  , LA
+				  , LO
+				  ) 
+			VALUES ( #siteId#
+				  , #siteUrl#
+				  , #siteNm#
+				  , #upendLogoFileNm#
+				  , #lptLogoFileNm#
+				  , #adresFileNm#
+				  , #adresReplcText#
+				  , #indvdlInfoPolicy#
+				  , #useStplat#
+				  , #emailColctPolicy#
+				  , #lytTmplatId#
+				  , #cmyTmplatId#
+				  , #mobileUseAt#
+				  , #actvtyAt#
+				  , 'Y'
+				  , SYSDATE()
+				  , #frstRegisterId#				  
+				  , #cpyrhtSttemntSvc#
+				  , #brwsrSj#
+				  , #tlphonNo#
+				  , #faxNo#
+				  , #adres#
+				  , #mouseScrtyApplcAt#
+				  , #kybrdScrtyApplcAt#
+				  , #dplctLoginPermAt#
+				  , #passwordMummLt#
+				  , #passwordMxmmLt#
+				  , #passwordNumberPolicyAt#
+				  , #passwordChrctrPolicyAt#
+				  , #passwordSpclchrctrPolicyAt#
+				  , #passwordChangeCycle#
+				  , #insttCode#
+				  , #lytSourcId#
+				  , #cmySourcId#
+				  , #peprsntImageFileNm#
+				  , #sloganFileNm#
+				  , #sloganReplcText#
+				  , #la#
+				  , #lo#
+				  )
+		]]>
+	</insert>
+
+
+	<update id="SiteManageDAO.updateSiteInfo">
+			UPDATE	COMTNSITEINFO	SET
+				  SITE_URL=#siteUrl# 
+ 				  , SITE_NM=#siteNm#
+ 				  <isNotEmpty property="upendLogoFileNm" prepend=",">UPEND_LOGO_FILE_NM = #upendLogoFileNm#</isNotEmpty>
+ 				  <isNotEmpty property="lptLogoFileNm" prepend=",">LPT_LOGO_FILE_NM = #lptLogoFileNm#</isNotEmpty>
+ 				  <isNotEmpty property="adresFileNm" prepend=",">ADRES_FILE_NM = #adresFileNm#</isNotEmpty>
+ 				  <isNotEmpty property="adresReplcText" prepend=",">ADRES_REPLC_TEXT = #adresReplcText#</isNotEmpty>
+ 				  <isNotEmpty property="lytTmplatId" prepend=","> LYT_TMPLAT_ID = #lytTmplatId#</isNotEmpty>
+ 				  <isNotEmpty property="cmyTmplatId" prepend=","> CMY_TMPLAT_ID = #cmyTmplatId#</isNotEmpty>
+ 				  <isNotEmpty property="lytSourcId" prepend=","> LYT_SOURC_ID = #lytSourcId#</isNotEmpty>
+ 				  <isNotEmpty property="cmySourcId" prepend=","> CMY_SOURC_ID = #cmySourcId#</isNotEmpty>
+ 				  <isNotEmpty property="peprsntImageFileNm" prepend=","> REPRSNT_IMAGE_FILE_NM = #peprsntImageFileNm#</isNotEmpty>
+ 				  <isNotEmpty property="sloganFileNm" prepend=","> SLOGAN_FILE_NM = #sloganFileNm#</isNotEmpty>
+ 				  <isNotEmpty property="sloganReplcText" prepend=",">SLOGAN_REPLC_TEXT = #sloganReplcText#</isNotEmpty>
+ 				  , INDVDLINFO_POLICY = #indvdlInfoPolicy#
+ 				  , USE_STPLAT = #useStplat#
+ 				  , EMAIL_COLCT_POLICY = #emailColctPolicy#
+ 				  , MOBILE_USE_AT = #mobileUseAt#
+				  , ACTVTY_AT=#actvtyAt#
+				  , LAST_UPDUSR_PNTTM=SYSDATE()
+				  , LAST_UPDUSR_ID=#lastUpdusrId#
+				  , CPYRHT_STTEMNT_SVC = #cpyrhtSttemntSvc#
+				  , BRWSR_SJ = #brwsrSj#
+				  , TLPHON_NO = #tlphonNo#
+				  , FAX_NO = #faxNo#
+				  , ADRES = #adres#
+				  , MOUSE_SCRTY_APPLC_AT = #mouseScrtyApplcAt#
+				  , KYBRD_SCRTY_APPLC_AT = #kybrdScrtyApplcAt#
+				  , DPLCT_LOGIN_PERM_AT = #dplctLoginPermAt#
+				  , PASSWORD_MUMM_LT = #passwordMummLt#
+				  , PASSWORD_MXMM_LT = #passwordMxmmLt#
+				  , PASSWORD_NUMBER_POLICY_AT = #passwordNumberPolicyAt#
+				  , PASSWORD_CHRCTR_POLICY_AT = #passwordChrctrPolicyAt#
+				  , PASSWORD_SPCLCHRCTR_POLICY_AT = #passwordSpclchrctrPolicyAt#
+				  , PASSWORD_CHANGE_CYCLE = #passwordChangeCycle#
+				  , INSTT_CODE = #insttCode#
+				  , LA = #la#
+				  , LO = #lo#
+ 			WHERE  SITE_ID=#siteId#
+	</update>
+
+
+	 
+	<delete id="SiteManageDAO.deleteSiteInfo">
+		<![CDATA[
+			UPDATE	COMTNSITEINFO	SET
+				  ACTVTY_AT='N'
+				  , USE_AT='N'
+				  , LAST_UPDUSR_PNTTM=SYSDATE()
+				  , LAST_UPDUSR_ID=#lastUpdusrId#
+ 			WHERE  SITE_ID=#siteId#
+		]]>
+	</delete>
+	
+	
+	<update id="SiteManageDAO.updateBatchScrtySetup">
+			UPDATE	COMTNSITEINFO	SET
+				  MOUSE_SCRTY_APPLC_AT = #mouseScrtyApplcAt#
+				  , KYBRD_SCRTY_APPLC_AT = #kybrdScrtyApplcAt#
+				  , DPLCT_LOGIN_PERM_AT = #dplctLoginPermAt#
+				  , PASSWORD_MUMM_LT = #passwordMummLt#
+				  , PASSWORD_MXMM_LT = #passwordMxmmLt#
+				  , PASSWORD_NUMBER_POLICY_AT = #passwordNumberPolicyAt#
+				  , PASSWORD_CHRCTR_POLICY_AT = #passwordChrctrPolicyAt#
+				  , PASSWORD_SPCLCHRCTR_POLICY_AT = #passwordSpclchrctrPolicyAt#
+				  , PASSWORD_CHANGE_CYCLE = #passwordChangeCycle#
+				  , LAST_UPDUSR_PNTTM=SYSDATE()
+				  , LAST_UPDUSR_ID=#lastUpdusrId#
+	</update>
+
+	<update id="SiteManageDAO.updateBatchScrtyPolicy">
+			UPDATE	COMTNSITEINFO	SET
+				  INDVDLINFO_POLICY = #indvdlInfoPolicy#
+ 				  , USE_STPLAT = #useStplat#
+ 				  , EMAIL_COLCT_POLICY = #emailColctPolicy#
+ 				  , CPYRHT_STTEMNT_SVC = #cpyrhtSttemntSvc#
+				  , LAST_UPDUSR_PNTTM=SYSDATE()
+				  , LAST_UPDUSR_ID=#lastUpdusrId#
+	</update>
+
+	
+
+	
+	<insert id="SiteManageDAO.insertSiteMainContents">	
+		<![CDATA[		
+			INSERT INTO COMTNSITEMAINCNTNTS (
+			   SITE_ID, 
+			   CNTNTS_TY_CODE, 
+			   PROGRM_ID, 
+			   SORT_ORDR
+			) 
+			VALUES (
+				#siteId#,
+			 	#cntntsTyCode#,
+			 	#progrmId#,
+			 	#sortOrdr#
+			 )
+		]]>
+	</insert>
+	<delete id="SiteManageDAO.deleteSiteMainContents">
+		<![CDATA[
+			DELETE FROM COMTNSITEMAINCNTNTS
+ 			WHERE  SITE_ID=#siteId#
+		]]>
+	</delete>
+	<select id="SiteManageDAO.selectSiteMainContentsList" resultMap="mainContents">
+			SELECT 
+				A.SITE_ID, 
+				A.CNTNTS_TY_CODE, 
+				A.PROGRM_ID,
+				B.BBS_NM AS PROGRM_NM,
+				A.SORT_ORDR
+			FROM COMTNSITEMAINCNTNTS A
+			LEFT OUTER JOIN COMTNBBSMASTER B ON A.PROGRM_ID = B.BBS_ID 
+			WHERE A.SITE_ID=#siteId#
+			ORDER BY A.CNTNTS_TY_CODE ASC, A.SORT_ORDR ASC
+	</select>
+</sqlMap>

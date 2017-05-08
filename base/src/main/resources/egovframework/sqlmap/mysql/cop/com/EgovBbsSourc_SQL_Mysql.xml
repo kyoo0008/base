@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BbsSourcDAO">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="BbsSourcVO" type="egovframework.com.cop.com.service.BbsSourcVO"/>
+	
+	<resultMap id="bbsSourc" class="egovframework.com.cop.com.service.BbsSourc">
+		<result property="bbsSourcId" column="BBS_SOURC_ID" columnIndex="1"/>
+		<result property="sourcSeCode" column="SOURC_SE_CODE" columnIndex="2"/>
+		<result property="sourcNm" column="SOURC_NM" columnIndex="3"/>
+		<result property="listSourc" column="LIST_SOURC" columnIndex="4"/>
+		<result property="viewSourc" column="VIEW_SOURC" columnIndex="5"/>
+		<result property="formSourc" column="FORM_SOURC" columnIndex="6"/>
+		<result property="cmSourc" column="CM_SOURC" columnIndex="7"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="8"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="9"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="10"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="11"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="12"/>
+	</resultMap>
+	
+	<resultMap id="bbsSourcList" class="egovframework.com.cop.com.service.BbsSourc">
+		<result property="bbsSourcId" column="BBS_SOURC_ID" columnIndex="1"/>
+		<result property="sourcSeCode" column="SOURC_SE_CODE" columnIndex="2"/>
+		<result property="sourcSeCodeNm" column="SOURC_SE_CODE_NM" columnIndex="3"/>
+		<result property="sourcNm" column="SOURC_NM" columnIndex="4"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="5"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="6"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="7"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="8"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="9"/>
+	</resultMap>
+	
+	<parameterMap id="paramInsert" class="egovframework.com.cop.com.service.BbsSourc">
+		<parameter property="bbsSourcId"/>
+		<parameter property="sourcSeCode"/>
+		<parameter property="sourcNm"/>
+		<parameter property="listSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="viewSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="formSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="cmSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="frstRegisterId"/>
+	</parameterMap>
+	
+	<parameterMap id="paramUpdate" class="egovframework.com.cop.com.service.BbsSourc">
+		<parameter property="sourcSeCode"/>
+		<parameter property="sourcNm"/>
+		<parameter property="listSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="viewSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="formSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="cmSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="lastUpdusrId"/>
+		<parameter property="bbsSourcId"/>
+	</parameterMap>
+
+	<insert id="BbsSourcDAO.insertBbsSourc">
+		<![CDATA[
+			INSERT INTO COMTNBBSSOURC 
+				( BBS_SOURC_ID
+				  , SOURC_SE_CODE
+				  , SOURC_NM
+				  , LIST_SOURC
+				  , VIEW_SOURC
+				  , FORM_SOURC
+				  , CM_SOURC
+				  , PREVEW_FILE_NM
+				  , USE_AT
+				  , FRST_REGISTER_ID
+				  , FRST_REGISTER_PNTTM
+				  )
+			VALUES ( #bbsSourcId#
+				  , #sourcSeCode#
+				  , #sourcNm#
+				  , #listSourc#
+				  , #viewSourc#
+				  , #formSourc#
+				  , #cmSourc#
+				  , #prevewFileNm#
+				  , 'Y'
+				  , #frstRegisterId#
+				  , SYSDATE()
+				  )
+		]]>
+	</insert>
+
+	<update id="BbsSourcDAO.updateBbsSourc">
+		
+			UPDATE COMTNBBSSOURC
+			SET BBS_SOURC_ID=#bbsSourcId#
+				<isNotEmpty property="sourcSeCode">, SOURC_SE_CODE=#sourcSeCode#</isNotEmpty>
+				<isNotEmpty property="sourcNm">, SOURC_NM=#sourcNm#</isNotEmpty>
+				, LIST_SOURC=#listSourc#
+				, VIEW_SOURC=#viewSourc#
+				, FORM_SOURC=#formSourc#
+				, CM_SOURC=#cmSourc#
+				<isNotEmpty property="prevewFileNm">, PREVEW_FILE_NM = #prevewFileNm#</isNotEmpty>
+				, LAST_UPDUSR_ID=#lastUpdusrId#
+				, LAST_UPDUSR_PNTTM=SYSDATE()
+			WHERE BBS_SOURC_ID=#bbsSourcId#
+		
+	</update>
+
+	
+	<delete id="BbsSourcDAO.deleteBbsSourc">
+		<![CDATA[
+			UPDATE COMTNBBSSOURC 
+			SET	USE_AT = 'N'
+				, LAST_UPDUSR_ID=#lastUpdusrId#
+				, LAST_UPDUSR_PNTTM=SYSDATE()
+			WHERE BBS_SOURC_ID=#bbsSourcId#
+		]]>
+	</delete>
+	
+	<select id="BbsSourcDAO.selectBbsSourc" resultMap="bbsSourc">
+		<![CDATA[
+			SELECT
+				BBS_SOURC_ID
+				, SOURC_SE_CODE
+				, SOURC_NM
+				, LIST_SOURC
+				, VIEW_SOURC
+				, FORM_SOURC
+				, CM_SOURC
+				, PREVEW_FILE_NM
+				, FRST_REGISTER_ID
+				, FRST_REGISTER_PNTTM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+			FROM COMTNBBSSOURC
+			WHERE BBS_SOURC_ID=#bbsSourcId#
+				AND USE_AT = 'Y'
+		]]>
+	</select>
+	
+	<select id="BbsSourcDAO.selectBbsSourcList" parameterClass="BbssourcVO" resultMap="bbsSourcList">
+			SELECT
+				BBS_SOURC_ID
+				, SOURC_SE_CODE
+				, c.CODE_NM AS SOURC_SE_CODE_NM
+				, SOURC_NM
+				, PREVEW_FILE_NM
+				, FRST_REGISTER_ID
+				, FRST_REGISTER_PNTTM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+			FROM COMTNBBSSOURC a
+			LEFT OUTER JOIN (SELECT CODE_ID, CODE, CODE_NM FROM 
+				COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM918' AND USE_AT='Y') c
+			ON a.SOURC_SE_CODE = c.CODE
+			WHERE USE_AT = 'Y'
+				<isNotEmpty prepend="AND" property="searchSourcSeCode">
+					SOURC_SE_CODE = #searchSourcSeCode#
+				</isNotEmpty>
+				<isNotEmpty property="searchCnd">
+					<isNotEmpty property="searchWrd">
+						<isEqual prepend="AND" property="searchCnd" compareValue="0">
+							SOURC_NM LIKE '%' || #searchWrd# || '%'
+						</isEqual>
+					</isNotEmpty>
+				</isNotEmpty>
+			ORDER BY BBS_SOURC_ID DESC
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	<select id="BbsSourcDAO.selectBbsSourcListCnt" parameterClass="BbsSourcVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTNBBSSOURC
+			WHERE USE_AT = 'Y'
+				<isNotEmpty prepend="AND" property="searchSourcSeCode">
+					SOURC_SE_CODE = #searchSourcSeCode#
+				</isNotEmpty>
+				<isNotEmpty property="searchCnd">
+					<isNotEmpty property="searchWrd">
+						<isEqual prepend="AND" property="searchCnd" compareValue="0">
+							SOURC_NM LIKE '%' || #searchWrd# || '%'
+						</isEqual>
+					</isNotEmpty>
+				</isNotEmpty>
+	</select>
+
+</sqlMap>

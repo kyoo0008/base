@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BBSMaster">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="BoardMasterVO" type="egovframework.com.cop.bbs.service.BoardMasterVO"/>
+	<typeAlias  alias="BoardMaster" type="egovframework.com.cop.bbs.service.BoardMaster"/>
+	
+	<resultMap id="boardMasterList" class="egovframework.com.cop.bbs.service.BoardMasterVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsAttrbCode" column="BBS_ATTRB_CODE" columnIndex="2"/>
+		<result property="bbsAttrbCodeNm" column="BBS_ATTRB_CODE_NM" columnIndex="3"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="4"/>
+		<result property="tmplatId" column="TMPLAT_ID" columnIndex="5"/>
+		<result property="svcAt" column="SVC_AT" columnIndex="6"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="7"/>
+		<result property="commentUseAt" column="COMMENT_USE_AT" columnIndex="8"/>
+	</resultMap>
+
+	<resultMap id="boardMasterDetail" class="egovframework.com.cop.bbs.service.BoardMasterVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="2"/>
+		<result property="replyPosblAt" column="REPLY_POSBL_AT" columnIndex="3"/>
+		<result property="fileAtchPosblAt" column="FILE_ATCH_POSBL_AT" columnIndex="4"/>
+		<result property="posblAtchFileNumber" column="POSBL_ATCH_FILE_NUMBER" columnIndex="5"/>
+		<result property="posblAtchFileSize" column="POSBL_ATCH_FILE_SIZE" columnIndex="6"/>
+		<result property="tmplatId" column="TMPLAT_ID" columnIndex="7"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="8"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="9"/>
+		<result property="bbsAttrbCode" column="BBS_ATTRB_CODE" columnIndex="10"/>
+		<result property="bbsAttrbCodeNm" column="BBS_ATTRB_CODE_NM" columnIndex="11"/>
+		<result property="ctgrymasterId" column="CTGRYMASTER_ID" columnIndex="12"/>
+		<result property="commentUseAt" column="COMMENT_USE_AT" columnIndex="13"/>
+		<result property="othbcUseAt" column="OTHBC_USE_AT" columnIndex="14"/>
+		<result property="svcAt" column="SVC_AT" columnIndex="15"/>		
+	    <result property="inqireAuthor" column="INQIRE_AUTHOR" columnIndex="16"/>
+	    <result property="registAuthor" column="REGIST_AUTHOR" columnIndex="17"/>
+	    <result property="answerAuthor" column="ANSWER_AUTHOR" columnIndex="18"/>
+	    <result property="siteId" column="SITE_ID" columnIndex="19"/>
+	    <result property="sourcId" column="SOURC_ID" columnIndex="20"/>
+	    <result property="siteId" column="SITE_ID" columnIndex="21"/>
+	    <result property="trgetId" column="TRGET_ID" columnIndex="22"/>
+	</resultMap>
+
+	<resultMap id="boardMasterAll" class="egovframework.com.cop.bbs.service.BoardMasterVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="2"/>
+	</resultMap>
+	
+	<resultMap id="boardMasterAllManage" class="egovframework.com.cop.bbs.service.BoardMasterVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="2"/>
+		<result property="ctgrymasterId" column="CTGRYMASTER_ID" columnIndex="3"/>
+		<result property="ctgryList" column="CTGRYMASTER_ID" select="comtnbbsctgryDAO.selectComtnbbsctgryList" columnIndex="4"/>
+	</resultMap>
+
+	<insert id="BBSAttributeManageDAO.insertBBSMasterInf" parameterClass="BoardMaster" >
+		<![CDATA[
+			INSERT INTO COMTNBBSMASTER
+			(BBS_ID, BBS_ATTRB_CODE, BBS_NM, 
+			 REPLY_POSBL_AT, FILE_ATCH_POSBL_AT, POSBL_ATCH_FILE_NUMBER,
+			 POSBL_ATCH_FILE_SIZE, TMPLAT_ID, USE_AT,
+			 FRST_REGISTER_ID, FRST_REGISTER_PNTTM , 
+			 SYS_TY_CODE, SITE_ID, CTGRYMASTER_ID, COMMENT_USE_AT, SVC_AT, OTHBC_USE_AT,
+			 INQIRE_AUTHOR, REGIST_AUTHOR, ANSWER_AUTHOR, SOURC_ID
+			 )
+			VALUES
+			( #bbsId#, #bbsAttrbCode#, #bbsNm#, 
+			  #replyPosblAt#, #fileAtchPosblAt#, #posblAtchFileNumber#, 
+			  #posblAtchFileSize#, #tmplatId#, 'Y', #frstRegisterId#, SYSDATE(),
+			  IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#),
+			  IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#),
+			  IF(#ctgrymasterId# = '' OR #ctgrymasterId# = NULL, NULL, #ctgrymasterId#),
+			  #commentUseAt#, #svcAt#, #othbcUseAt#,
+			  #inqireAuthor#, #registAuthor#, #answerAuthor#, #sourcId#
+			 )
+		]]>
+	</insert>
+	
+	<select id="BBSAttributeManageDAO.selectBBSMasterInfs" parameterClass="BoardMasterVO" resultMap="boardMasterList" >
+		<![CDATA[
+			SELECT 
+				a.BBS_ID, 
+				a.BBS_ATTRB_CODE, c.CODE_NM as BBS_ATTRB_CODE_NM, a.BBS_NM, 
+				a.TMPLAT_ID, a.SVC_AT, 
+				DATE_FORMAT(now(), '%Y-%m-%d') as FRST_REGISTER_PNTTM,
+				a.COMMENT_USE_AT
+			FROM
+				COMTNBBSMASTER a
+			LEFT OUTER JOIN 
+				(SELECT CODE_ID, CODE, CODE_NM FROM 
+					COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM912' AND USE_AT='Y') c
+				ON a.BBS_ATTRB_CODE = c.CODE
+			WHERE 
+				A.SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND A.SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#) 
+				AND a.USE_AT = 'Y'
+				AND a.BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID =  IF(#trgetId# = '' OR #trgetId# = NULL, 'SYSTEM_DEFAULT_BOARD', #trgetId#))
+		]]>
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.BBS_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	c.CODE_NM LIKE '%' || #searchWrd# || '%'		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="svcAt">
+				<![CDATA[	a.SVC_AT = #searchWrd#		]]>
+			</isEqual>
+		<![CDATA[			
+			ORDER BY a.BBS_NM ASC 
+		]]>				
+	</select>	
+	
+	<select id="BBSAttributeManageDAO.selectBBSMasterInfsCnt" parameterClass="BoardMasterVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT 
+				COUNT(a.BBS_ID)
+			FROM
+				COMTNBBSMASTER a
+			LEFT OUTER JOIN 
+				(SELECT CODE_ID, CODE, CODE_NM FROM 
+					COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM912' AND USE_AT='Y') c
+				ON a.BBS_ATTRB_CODE = c.CODE
+			WHERE 
+				a.SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND a.SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#) 
+				AND a.USE_AT = 'Y'
+				AND a.BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID =  IF(#trgetId# = '' OR #trgetId# = NULL, 'SYSTEM_DEFAULT_BOARD', #trgetId#))
+		]]>
+			
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.BBS_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	c.CODE_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="svcAt">
+				<![CDATA[	a.SVC_AT = #searchWrd#		]]>
+			</isEqual>
+	</select>	
+ 
+	<select id="BBSAttributeManageDAO.selectBBSMasterInf" parameterClass="BoardMaster" resultMap="boardMasterDetail" >
+		<![CDATA[
+			SELECT 
+				a.BBS_ID, 
+				a.BBS_ATTRB_CODE, c.CODE_NM as BBS_ATTRB_CODE_NM, a.BBS_NM, 
+				a.TMPLAT_ID, a.FILE_ATCH_POSBL_AT, a.POSBL_ATCH_FILE_NUMBER,
+				a.POSBL_ATCH_FILE_SIZE, a.REPLY_POSBL_AT, a.FRST_REGISTER_ID, 
+				a.SVC_AT, 
+				DATE_FORMAT(a.FRST_REGISTER_PNTTM, '%Y-%m-%d') AS FRST_REGISTER_PNTTM,
+				a.SYS_TY_CODE, a.SITE_ID, a.CTGRYMASTER_ID, a.COMMENT_USE_AT, a.OTHBC_USE_AT,
+				a.INQIRE_AUTHOR, a.REGIST_AUTHOR, a.ANSWER_AUTHOR, a.SITE_ID, a.SOURC_ID, a.SITE_ID,
+				u.TRGET_ID
+			FROM
+				COMTNBBSMASTER a
+			LEFT OUTER JOIN 
+				(SELECT CODE_ID, CODE, CODE_NM FROM COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM912' AND USE_AT='Y') c
+				ON a.BBS_ATTRB_CODE = c.CODE
+			LEFT OUTER JOIN COMTNBBSUSE u
+				ON a.BBS_ID = u.BBS_ID
+			WHERE a.BBS_ID = #bbsId#
+				AND A.SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND A.SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#) 
+				AND a.USE_AT = 'Y'
+				AND a.BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID =  IF(#trgetId# = '' OR #trgetId# = NULL, 'SYSTEM_DEFAULT_BOARD', #trgetId#))
+		]]>				
+	</select> 
+ 
+   	<update id="BBSAttributeManageDAO.updateBBSMasterInf" parameterClass="BoardMaster">
+ 		<![CDATA[
+			UPDATE COMTNBBSMASTER SET 
+				SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#),
+				SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#),
+				BBS_NM = #bbsNm#,
+				FILE_ATCH_POSBL_AT = #fileAtchPosblAt#,
+				POSBL_ATCH_FILE_NUMBER = #posblAtchFileNumber#,
+				POSBL_ATCH_FILE_SIZE = #posblAtchFileSize#,
+				TMPLAT_ID = #tmplatId#,		
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDUSR_PNTTM = SYSDATE(),
+				CTGRYMASTER_ID = #ctgrymasterId#, 
+				REPLY_POSBL_AT = #replyPosblAt#,
+				COMMENT_USE_AT = #commentUseAt#,
+				BBS_ATTRB_CODE = #bbsAttrbCode#, 
+				OTHBC_USE_AT = #othbcUseAt#,
+				SVC_AT = #svcAt#,
+				INQIRE_AUTHOR = #inqireAuthor#,
+				REGIST_AUTHOR = #registAuthor#,
+				ANSWER_AUTHOR = #answerAuthor#,
+				SOURC_ID = #sourcId#
+			WHERE BBS_ID = #bbsId#
+				AND BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID =  IF(#trgetId# = '' OR #trgetId# = NULL, 'SYSTEM_DEFAULT_BOARD', #trgetId#))
+ 		]]>	
+ 	</update>
+
+ 	<update id="BBSAttributeManageDAO.deleteBBSMasterInf" parameterClass="BoardMaster">
+ 		<![CDATA[
+			UPDATE COMTNBBSMASTER SET 
+				USE_AT = 'N',
+				SVC_AT = 'N',
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDUSR_PNTTM = SYSDATE()
+			WHERE BBS_ID = #bbsId#
+				AND SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+				AND BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID =  IF(#trgetId# = '' OR #trgetId# = NULL, 'SYSTEM_DEFAULT_BOARD', #trgetId#))
+		]]>	
+ 	</update>
+
+	<select id="BBSAttributeManageDAO.selectAllBBSMaster" parameterClass="BoardMasterVO" resultMap="boardMasterAll" >
+		<![CDATA[
+			SELECT 
+				BBS_ID, BBS_NM
+			FROM
+				COMTNBBSMASTER 
+			WHERE USE_AT = 'Y'
+				AND SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+				AND BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID =  IF(#trgetId# = '' OR #trgetId# = NULL, 'SYSTEM_DEFAULT_BOARD', #trgetId#))
+			ORDER BY BBS_NM ASC 
+ 		]]>
+	</select>
+	
+	<select id="BBSAttributeManageDAO.selectAllBBSMasterManageInfs" parameterClass="BoardMasterVO" resultMap="boardMasterAllManage" >
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT 
+				BBS_ID, BBS_NM, CTGRYMASTER_ID
+			FROM
+				COMTNBBSMASTER 
+			WHERE USE_AT = 'Y'
+				<isNotEmpty property="siteId" prepend="AND">
+					AND SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+					AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+				</isNotEmpty>
+				AND BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID =  IF(#trgetId# = '' OR #trgetId# = NULL, 'SYSTEM_DEFAULT_BOARD', #trgetId#)
+				<isEqual prepend="AND" property="searchCnd" compareValue="0">
+					<![CDATA[	BBS_NM LIKE '%' || #searchWrd# || '%' 		]]>
+				</isEqual>
+			ORDER BY BBS_NM ASC 
+		) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+	</select>
+	
+	<select id="BBSAttributeManageDAO.selectAllBBSMasterManageInfsCnt" parameterClass="BoardMasterVO" resultClass="java.lang.Integer" >
+		SELECT 
+			COUNT(*)
+		FROM
+			COMTNBBSMASTER 
+		WHERE USE_AT = 'Y'
+			<isNotEmpty property="siteId" prepend="AND">
+				AND SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+				AND SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+			</isNotEmpty>
+			AND BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID =  IF(#trgetId# = '' OR #trgetId# = NULL, 'SYSTEM_DEFAULT_BOARD', #trgetId#)
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	BBS_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+	</select>	
+	
+
+
+</sqlMap>

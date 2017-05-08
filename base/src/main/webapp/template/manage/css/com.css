@@ -1,0 +1,90 @@
+@CHARSET "UTF-8";
+
+/* 관리자 레이아웃 시작 */
+#wrap {text-align:left; width:100%; height:100%;}
+#header {height:90px; background:url("../images/menu_bar.gif") repeat-x 0 0;   border-bottom:1px solid #8bb1f7; }
+#header .logo {float:left;}
+#topMenu {float:right; color:whtie;width:600px; text-align:right;}
+#topMenu .list {float:right;}
+#topMenu .list li {float:left; margin:0 4px;}
+#topMenu a {color:#bfbfbf; text-align:center;}
+#topMenu a:hover {color:white; text-decoration:underline;}
+#topMenu .nonBtn {padding:5px 0; display:block; margin:7px 0 0 0; color:#fff; }
+#topMenu .btn {background:url("../images/btn_lbg.gif") no-repeat; display:block; width:77px; height:20px; padding:5px 0;  margin:6px 0 0 0;}
+#mngSearchFrm {margin:10px 0 0 0;background:#A0A0A0; height:21px; width:150px;}
+#mngSearch { float:left; color:white; background:#585858; border:0; margin:2px 0 0 2px;height:17px; width:123px;}
+#header .topLc {width:100%; height:50px; overflow:hidden;}
+
+#mainMenu {width:100%; height:41px; overflow:hidden; }
+#mainMenu .list li {float:left; height:41px; overflow:hidden;}
+#mainMenu a {font-weight:bold; color:#555555; display:block; padding:11px 20px;}
+
+#mainMenu a:hover {background:#e1e1e1;}
+#mainMenu a.slt:hover {background:url("../images/tm_now.gif") repeat-x 0 0; filter:alpha(opacity=100);opacity:1.0;}
+#mainMenu a.slt {background:url("../images/tm_now.gif") repeat-x 0 0;color:#fff;}
+
+#container			{width:100%;float:left; height:auto; overflow:hidden; }
+#leftMenu			{float:left; width:200px; height:100%; }
+#leftMenu .list		{padding:15px 0 0 13px; overflow-x:hideen;}
+#leftMenu .list li.smnu {background:url("../images/lm_bg.gif") left 0px no-repeat;line-height:30px; padding-left:18px;margin:3px 0;}
+#leftMenu .list a	{display:block; margin:0; padding:0; width:155px; }
+#leftMenu .list a:hover {color:#4c78c9;}
+
+#leftMenu .slist li			{padding:8px 0 8px 5px; width:148px; line-height:16px; border-bottom:1px solid #e5e5e5;}
+#leftMenu .slist li:hover	{ background:#f2f7ff; font-weight:bold; list-style:circle;  border:1px solid #c5d9f7; color:#fff; }
+#leftMenu  a.slt				{font-weight:bold; color:#3268c8;}
+#leftMenu .slist li a.slt	{font-weight:bold; color:#5993e9;}
+
+#rightPage {margin-left:200px; width:auto; height:100%;  min-width:0px; min-height:400px; border-left:1px solid #cfcfcf;}
+#navi {height:40px; width:100%; background:#F6F7F8;word-break:break-all;}
+#navi .naviTit {height:30px;width:100%; padding:12px 0 0 10px; font:bold 14px/18px Dotum; color:#333; }
+#contents {padding:5px 5px 5px 5px; margin-top:10px;}
+
+#footer {float:left; width:100%; text-align:center; border-top:1px solid #bfbfbf;border-bottom:1px solid #cfcfcf;}
+#footer .copy {padding:5px 0;}
+/* 관리자 레이아웃 끝*/
+
+
+
+table.mngTb {width:100%; border-collapse:collapse; border-spacing:0;}
+table.mngTb th,
+table.mngTb td {border:1px solid #efefef; padding:2px;}
+table.mngTb th {background:#efefef;}
+table.mngTb .sbj {text-align:left;}
+
+table.form .co1 {width:120px;}
+
+/* 콘텐츠 리스트, 입력 관련 */
+#cntnts {}
+#cntnts .co1 {width:150px;}
+#cntnts .co2 {width:100px;}
+#cntnts .co4 {width:70px;}
+#cntnts .co5 {width:90px;}
+#cntnts .co6 {width:110px;}
+#cntnts .htmlEditorArea {width:100%;}
+
+
+/* htmlArea editor */
+.htmlarea table td {border:0; padding:0;}
+
+
+/* 기본 가로테이블  */
+.table100{}
+.table100 tbody th{background:#0080c0;}
+.table100 tbody td{background:#f8f8f8;}
+.table100 tbody td.editor {padding:0;}
+
+td.photoZoom {height:500px; padding:0;}
+td.mvpZoom {height:500px; padding:0;}
+
+/* 달력화면 */
+.calendarNew { position:relative; clear:both; width:300px; height:300px; margin:0; padding:10px; border-top:2px solid #8cb2f8; }
+.calendarDate { position:relative; width:100%; margin-top:2px; padding:0; text-align:center; font:bold 14px/18px Dotum; color:#2356b1; }
+.calendarDate img { margin:2px 3px; }
+.calendarDate span { display:inline-block; margin-left:10px; margin-right:10px; margin-bottom:5px; vertical-align:bottom;}
+table.calendarList { position:relative;  clear:both; width:100%; margin:10px 0; padding:0;  border-collapse:collapse; border-spacing:0; border:1px solid #c6e0fb; background:url("../../common/images/egovframework/cmm/sym/cal/cal_topbg.gif") repeat-x 0 0;}
+table.calendarList th { height:30px;  font:bold 12px/18px Dotum; color:#FFF; text-align:center; }
+table.calendarList td { padding:6px; font:bold 11px/14px Tahoma; color:#767676; text-align:center; border-right:1px solid #c6e0fb; border-bottom:1px solid #c6e0fb;  }
+table.calendarList .caltxtred { color:#e14141; }
+table.calendarList td a, table.calendarList td a:link {  font:bold 11px/14px Tahoma; color:#767676; }
+table.calendarList .caltxtred a,  table.calendarList .caltxtred a:link { color:#e14141; }

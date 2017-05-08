@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="EvtStats">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="statsVO" type="egovframework.com.sts.service.StatsVO"/>
+	<typeAlias  alias="userSearchVO" type="egovframework.com.uss.umt.service.UserDefaultVO"/>
+	
+	<!-- 이벤트 통계 -->
+	<select id="EvtStatsDAO.selectEvtStats" parameterClass="statsVO" resultClass="statsVO">
+		SELECT 
+		A.SCHDUL_ID statId,
+		A.SCHDUL_NM statsNm,
+		DECODE(A.SCHDUL_CL_CODE, '2', '참여이벤트', '3', '신청이벤트', A.SCHDUL_NM) statsKind, USE_AT useAt,
+		(CASE WHEN TO_CHAR(SYSDATE(), 'YYYYMMDDHH24MISS') >= A.SCHDUL_BGNDE AND A.SCHDUL_ENDDE >= TO_CHAR(SYSDATE(), 'YYYYMMDDHH24MISS') THEN
+		1 
+		ELSE 0
+		END) AS statAt,
+		(
+		select COUNT(SCHDUL_ID) from COMTNEVENTADHRNC B where B.SCHDUL_ID = A.SCHDUL_ID
+		) irdsMlgScore,
+		(
+		select count(SCHDUL_ID) from COMTNEVENTPRZWNER C where C.SCHDUL_ID = A.SCHDUL_ID
+		) adsbtrMlgScore
+		FROM COMTNSCHDULINFO A where A.SCHDUL_CL_CODE in (2,3) AND A.USE_AT = 'Y'
+		<isNotEmpty prepend="AND" property="fromDate">
+			to_char(A.FRST_REGISTER_PNTTM, 'YYYYMMDD') >= #fromDate# and #toDate# >= to_char(A.FRST_REGISTER_PNTTM, 'YYYYMMDD')
+		</isNotEmpty>
+		ORDER BY A.FRST_REGISTER_PNTTM 
+		</select>
+		
+		<select id="EvtStatsDAO.selectEvtUserStats" parameterClass="userSearchVO" resultClass="statsVO">
+			SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT statId, statsCo, statsNm FROM
+			(
+			SELECT A.USER_ID statId, COUNT(A.USER_ID) AS statsCo,
+			(
+				SELECT USER_NM 
+				FROM 
+				COMTNMBER 
+				WHERE USER_ID = A.USER_ID
+			) AS statsNm 
+			FROM COMTNEVENTPRZWNER A LEFT JOIN COMTNSCHDULINFO B
+			ON A.SCHDUL_ID = B.SCHDUL_ID 
+			WHERE A.USE_AT = 'Y' AND B.USE_AT != 'N'
+			GROUP BY A.USER_ID
+			)
+			WHERE statsCo > 0
+	        <isEqual prepend="AND" property="searchCondition" compareValue="0">
+	            statId LIKE '%' ||#searchKeyword#|| '%'
+	        </isEqual>
+	        <isEqual prepend="AND" property="searchCondition" compareValue="1">
+	            statsNm LIKE '%' ||#searchKeyword#|| '%'
+	        </isEqual>
+			ORDER BY statsCo DESC
+			) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		</select>
+		
+		<select id="EvtStatsDAO.selectEvtUserStatsCnt" parameterClass="userSearchVO" resultClass="int">
+			SELECT COUNT(statId) FROM
+			(
+			SELECT A.USER_ID statId, COUNT(A.USER_ID) AS statsCo,
+			(
+				SELECT USER_NM 
+				FROM 
+				COMTNMBER 
+				WHERE USER_ID = A.USER_ID
+			) AS statsNm 
+			FROM COMTNEVENTPRZWNER A LEFT JOIN COMTNSCHDULINFO B
+			ON A.SCHDUL_ID = B.SCHDUL_ID 
+			WHERE A.USE_AT = 'Y' AND B.USE_AT != 'N'
+			GROUP BY A.USER_ID
+			)
+			WHERE statsCo > 0
+			<isEqual prepend="AND" property="searchCondition" compareValue="0">
+            	statId LIKE '%' ||#searchKeyword#|| '%'
+	        </isEqual>
+	        <isEqual prepend="AND" property="searchCondition" compareValue="1">
+	            statsNm LIKE '%' ||#searchKeyword#|| '%'
+	        </isEqual>
+    </select>
+</sqlMap>

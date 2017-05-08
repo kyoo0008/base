@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BBSComment">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="Comment" type="egovframework.com.cop.bbs.service.Comment"/>
+	<typeAlias  alias="CommentVO" type="egovframework.com.cop.bbs.service.CommentVO"/>
+	
+	<resultMap id="commentList" class="egovframework.com.cop.bbs.service.CommentVO">
+		<result property="commentNo" column="COMMENT_NO" columnIndex="1"/>
+		<result property="nttNo" column="NTT_NO" columnIndex="2"/>
+		<result property="wrterNm" column="WRTER_NM" columnIndex="3"/>
+		<result property="commentCn" column="COMMENT_CN" columnIndex="4"/>
+		<result property="useAt" column="USE_AT" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="7"/>
+		<result property="ordrCode" column="ORDR_CODE" columnIndex="8"/>
+		<result property="ordrCodeDp" column="ORDR_CODE_DP" columnIndex="9"/>
+		<result property="score" column="SCORE" columnIndex="10"/>
+	</resultMap>
+	
+	<resultMap id="commentDetail" class="egovframework.com.cop.bbs.service.CommentVO">
+		<result property="commentNo" column="COMMENT_NO" columnIndex="1"/>
+		<result property="nttNo" column="NTT_NO" columnIndex="2"/>
+		<result property="wrterNm" column="WRTER_NM" columnIndex="3"/>
+		<result property="commentCn" column="COMMENT_CN" columnIndex="4"/>
+		<result property="useAt" column="USE_AT" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="ordrCode" column="ORDR_CODE" columnIndex="7"/>
+		<result property="ordrCodeDp" column="ORDR_CODE_DP" columnIndex="8"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="9"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="10"/>
+	</resultMap>
+
+	<select id="BBSCommentDAO.selectCommentList" parameterClass="CommentVO" resultMap="commentList" >
+		
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT
+				a.COMMENT_NO, a.NTT_NO, 
+				a.WRTER_NM, a.COMMENT_CN, a.USE_AT,
+				a.FRST_REGISTER_PNTTM,
+				a.FRST_REGISTER_ID, a.ORDR_CODE, a.ORDR_CODE_DP, NVL(a.SCORE, 0) SCORE
+			FROM
+				COMTNCOMMENT a
+			WHERE
+				a.NTT_NO = #nttNo#
+			AND
+				a.USE_AT = 'Y'
+			ORDER BY a.ORDR_CODE DESC
+			) TB ) WHERE rn BETWEEN #subFirstIndex# + 1 AND #subFirstIndex# + #subRecordCountPerPage#
+				
+	</select>	
+	
+	<select id="BBSCommentDAO.selectCommentListCnt" parameterClass="CommentVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT
+				COUNT(COMMENT_NO)
+			FROM
+				COMTNCOMMENT 
+			WHERE
+				NTT_NO = #nttNo#
+			AND
+				USE_AT = 'Y'
+		]]>			
+	</select>
+	
+	<insert id="BBSCommentDAO.insertComment" parameterClass="Comment" >
+		
+			INSERT INTO COMTNCOMMENT
+			(COMMENT_NO, NTT_NO, WRTER_NM,
+			 COMMENT_CN, USE_AT, 
+			 FRST_REGISTER_ID, FRST_REGISTER_PNTTM
+			 , ORDR_CODE
+			 , ORDR_CODE_DP
+			 , SCORE
+			 )
+			VALUES
+			( #commentNo#
+				, #nttNo#
+				, #wrterNm#
+				, #commentCn#
+				, #useAt#
+				, #frstRegisterId#
+				<isEmpty property="frstRegisterPnttm">
+				, SYSDATE()
+				</isEmpty>
+				<isNotEmpty property="frstRegisterPnttm">
+				, #frstRegisterPnttm#
+				</isNotEmpty>
+			  	, NVL(#ordrCode#, FN_CREATE_INIT_SEQ_ID(#commentNo# , 10))
+			  	, #ordrCodeDp#
+			  	, #score#
+			 )
+		
+	</insert>
+	
+	<insert id="BBSCommentDAO.insertReplyComment" parameterClass="CommentVO" >
+		<selectKey resultClass="String" keyProperty="genOrdrCode">
+		<![CDATA[
+			SELECT MIN(ORDR_CODE) FROM COMTNCOMMENT 
+			WHERE ORDR_CODE LIKE SUBSTR(#prntOrdrCode#, 0, 15) || '%' AND ORDR_CODE < #prntOrdrCode# AND ORDR_CODE_DP = #ordrCodeDp#
+		]]>
+	    </selectKey>
+		
+			INSERT INTO COMTNCOMMENT
+			(COMMENT_NO, NTT_NO, WRTER_NM,
+			 COMMENT_CN, USE_AT, 
+			 FRST_REGISTER_ID, FRST_REGISTER_PNTTM
+			 , ORDR_CODE
+			 , ORDR_CODE_DP
+			 , SCORE
+			 )
+			VALUES
+			( #commentNo#
+				, #nttNo#
+				, #wrterNm#
+				, #commentCn#
+				, #useAt#
+				, #frstRegisterId#
+			  	<isEmpty property="frstRegisterPnttm">
+				, SYSDATE()
+				</isEmpty>
+				<isNotEmpty property="frstRegisterPnttm">
+				, #frstRegisterPnttm#
+				</isNotEmpty>
+			  	, FN_CREATE_NEXT_SEQ_ID(#prntOrdrCode#, #ordrCodeDp#, #genOrdrCode#)
+			  	, #ordrCodeDp#
+			  	, #score#
+			 )
+		
+	</insert>
+	
+	<update id="BBSCommentDAO.deleteComment" parameterClass="CommentVO">
+		<![CDATA[
+			UPDATE COMTNCOMMENT
+			SET USE_AT = 'N'
+			WHERE ORDR_CODE LIKE (SELECT SUBSTR(ORDR_CODE, 0, 15 + (5*ORDR_CODE_DP)) FROM COMTNCOMMENT WHERE COMMENT_NO = #commentNo#) || '%'	
+		]]>		
+	</update>
+	
+	<delete id="BBSCommentDAO.deleteAllComment" parameterClass="CommentVO">
+		DELETE COMTNCOMMENT
+		WHERE NTT_NO IN
+		<iterate property="nttNoArr" open=" (" close=") " conjunction=",">
+			#nttNoArr[]#
+		</iterate>
+	</delete>
+	
+	<select id="BBSCommentDAO.selectComment" parameterClass="CommentVO" resultMap="commentDetail" >
+		<![CDATA[
+			SELECT
+				a.COMMENT_NO
+				, a.NTT_NO
+				, a.FRST_REGISTER_ID
+				, a.WRTER_NM
+				, a.COMMENT_CN
+				, a.USE_AT
+				, a.FRST_REGISTER_PNTTM
+				, a.ORDR_CODE, a.ORDR_CODE_DP
+				, a.LAST_UPDUSR_PNTTM
+				, a.LAST_UPDUSR_ID
+			FROM
+				COMTNCOMMENT a
+			WHERE
+				a.COMMENT_NO = #commentNo#
+
+		]]>				
+	</select> 
+
+ 	 <update id="BBSCommentDAO.updateComment" parameterClass="Comment">
+ 		<![CDATA[
+			UPDATE COMTNCOMMENT SET
+				COMMENT_CN = #commentCn#,
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDUSR_PNTTM = SYSDATE()
+			WHERE COMMENT_NO = #commentNo# 
+ 		]]>
+ 	</update>
+ 	
+	<select id="BBSCommentDAO.selectMyCommentListCnt" parameterClass="CommentVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT
+				COUNT(COMMENT_NO)
+			FROM
+				COMTNCOMMENT 
+			WHERE
+				NTT_NO = #nttNo# 
+			AND FRST_REGISTER_ID = #frstRegisterId#
+			AND USE_AT = 'Y'
+		]]>			
+	</select>
+	
+	<select id="BBSCommentDAO.selectCommentManageCopyList" parameterClass="CommentVO" resultMap="commentDetail" >
+		SELECT
+			a.COMMENT_NO
+			, a.NTT_NO
+			, a.FRST_REGISTER_ID
+			, a.WRTER_NM
+			, a.COMMENT_CN
+			, a.USE_AT
+			, a.FRST_REGISTER_PNTTM
+			, a.ORDR_CODE, a.ORDR_CODE_DP
+			, a.LAST_UPDUSR_PNTTM
+			, a.LAST_UPDUSR_ID
+		FROM
+			COMTNCOMMENT a
+		WHERE
+			NTT_NO IN
+		<iterate property="nttNoArr" open=" (" close=") " conjunction=",">
+			#nttNoArr[]#
+		</iterate>
+		ORDER BY a.ORDR_CODE ASC
+	</select> 
+</sqlMap>

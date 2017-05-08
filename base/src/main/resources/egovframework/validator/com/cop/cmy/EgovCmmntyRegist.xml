@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+    <formset>
+		<form name="communityVO">
+			<field property="cmmntyNm" depends="required, minlength, maxlength">
+        		<arg0 key="cop.cmmntyNm" resource="ture" />
+        		<arg1 key="3"/>
+        		<var>
+	                <var-name>minlength</var-name>
+	                <var-value>3</var-value>
+                </var>
+                <arg2 key="50"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="cmmntyAdres" depends="required, minlength, maxlength">
+        		<arg0 key="cop.cmmntyAdres" resource="ture" />
+        		<arg1 key="3"/>
+        		<var>
+	                <var-name>minlength</var-name>
+	                <var-value>3</var-value>
+                </var>
+                <arg2 key="30"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>30</var-value>
+				</var>
+			</field>
+			<field property="othbcAt" depends="required">
+        		<arg0 key="cop.othbcAt" />
+			</field>		
+			<field property="confmPolicyCode" depends="required">
+        		<arg0 key="cop.confmPolicyCode" />
+			</field>	
+			<field property="resbscrbPolicyCode" depends="required">
+        		<arg0 key="cop.resbscrbPolicyCode" />
+			</field>			
+			<field property="cmmntySeCode" depends="required">
+        		<arg0 key="cop.cmmntySeCode" />
+			</field>
+			<field property="cmmntyIntrcn" depends="required, maxlength">
+        		<arg0 key="cop.cmmntyIntrcn" />
+        		<arg1 key="1200" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>1200</var-value>
+				</var>
+			</field>
+		</form>
+		
+    </formset>
+
+</form-validation>

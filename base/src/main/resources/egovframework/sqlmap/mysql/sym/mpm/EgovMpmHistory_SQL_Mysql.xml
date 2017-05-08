@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MpmHistoryDAO">
+	
+	<typeAlias  alias="MpmVO" type="egovframework.com.sym.mpm.service.MpmVO"/>
+	<typeAlias  alias="Mpm" type="egovframework.com.sym.mpm.service.Mpm"/>
+	
+	<resultMap id="mpmHistory" class="egovframework.com.sym.mpm.service.MpmVO">
+		<result property="menuHistId" column="MENU_HIST_ID" columnIndex="1"/>
+		<result property="menuId" column="MENU_ID" columnIndex="2"/>
+		<result property="compositionTyCode" column="COMPOSITION_TY_CODE" columnIndex="3"/>
+		<result property="cntntsTyCode" column="CNTNTS_TY_CODE" columnIndex="4"/>
+		<result property="menuNm" column="MENU_NM" columnIndex="5"/>
+		<result property="imageFileNm" column="IMAGE_FILE_NM" columnIndex="6"/>
+		<result property="htmlUseAt" column="HTML_USE_AT" columnIndex="7"/>
+		<result property="htmlsourcTyCode" column="HTMLSOURC_TY_CODE" columnIndex="8"/>
+		<result property="styleCn" column="STYLE_CN" columnIndex="9"/>
+		<result property="scriptCn" column="SCRIPT_CN" columnIndex="10"/>
+		<result property="htmlCn" column="HTML_CN" columnIndex="11"/>
+		<result property="mobileHtmlsourcTyCode" column="MOBILE_HTMLSOURC_TY_CODE" columnIndex="12"/>
+		<result property="mobileStyleCn" column="MOBILE_STYLE_CN" columnIndex="13"/>
+		<result property="mobileScriptCn" column="MOBILE_SCRIPT_CN" columnIndex="14"/>
+		<result property="mobileHtmlCn" column="MOBILE_HTML_CN" columnIndex="15"/>
+		<result property="progrmId" column="PROGRM_ID" columnIndex="16"/>
+		<result property="url" column="URL" columnIndex="17"/>
+		<result property="expsrUseAt" column="EXPSR_USE_AT" columnIndex="18"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="19"/>
+		<result property="menuLevel" column="MENU_LEVEL" columnIndex="20"/>
+		<result property="nwdAt" column="NWD_AT" columnIndex="21"/>
+		<result property="mobileUseAt" column="MOBILE_USE_AT" columnIndex="22"/>
+		<result property="useAt" column="USE_AT" columnIndex="23"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="24"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="25"/>
+		<result property="stdntUseAt" column="STDNT_USE_AT" columnIndex="26"/>
+		<result property="stdnprntUseAt" column="STDNPRNT_USE_AT" columnIndex="27"/>
+		<result property="profsrUseAt" column="PROFSR_USE_AT" columnIndex="28"/>
+		<result property="generalUseAt" column="GENERAL_USE_AT" columnIndex="29"/>
+		
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="29"/>
+		<result property="mobileAtchFileId" column="MOBILE_ATCH_FILE_ID" columnIndex="30"/>
+		<result property="progrmFactr" column="PROGRM_FACTR" columnIndex="31"/>
+	</resultMap>
+	
+	<resultMap id="mpmHistoryList" class="egovframework.com.sym.mpm.service.Mpm">
+		<result property="menuHistId" column="MENU_HIST_ID" columnIndex="1"/>
+		<result property="menuId" column="MENU_ID" columnIndex="2"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="3"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="4"/>
+	</resultMap>
+	
+	<insert id="MpmHistoryDAO.insertMpmHistory">
+		<![CDATA[
+			INSERT INTO COMTHSITEMNUHISTORY 
+				( MENU_HIST_ID
+				  , MENU_ID
+				  , COMPOSITION_TY_CODE
+				  , CNTNTS_TY_CODE
+				  , MENU_NM
+				  , IMAGE_FILE_NM
+				  , HTML_USE_AT
+				  , HTMLSOURC_TY_CODE
+				  , STYLE_CN
+				  , SCRIPT_CN
+				  , HTML_CN
+				  , MOBILE_HTMLSOURC_TY_CODE
+				  , MOBILE_STYLE_CN
+				  , MOBILE_SCRIPT_CN
+				  , MOBILE_HTML_CN
+				  , PROGRM_ID
+				  , URL
+				  , EXPSR_USE_AT
+				  , SORT_ORDR
+				  , MENU_LEVEL
+				  , NWD_AT
+				  , MOBILE_USE_AT
+				  , USE_AT
+				  , LAST_UPDUSR_PNTTM
+				  , LAST_UPDUSR_ID
+				  , STDNT_USE_AT
+				  , STDNPRNT_USE_AT
+				  , PROFSR_USE_AT
+				  , GENERAL_USE_AT 
+				  , ATCH_FILE_ID
+				  , MOBILE_ATCH_FILE_ID
+				  , PROGRM_FACTR
+				  )
+			VALUES ( #menuHistId#
+				  , #menuId#
+				  , #compositionTyCode#
+				  , #cntntsTyCode#
+				  , #menuNm#
+				  , #imageFileNm#
+				  , #htmlUseAt#
+				  , #htmlsourcTyCode#
+				  , #styleCn#
+				  , #scriptCn#
+				  , #htmlCn#
+				  , #mobileHtmlsourcTyCode#
+				  , #mobileStyleCn#
+				  , #mobileScriptCn#
+				  , #mobileHtmlCn#
+				  , #progrmId#
+				  , #url#
+				  , #expsrUseAt#
+				  , #sortOrdr#
+				  , #menuLevel#
+				  , #nwdAt#
+				  , #mobileUseAt#
+				  , #useAt#
+				  , SYSDATE()
+				  , #lastUpdusrId#
+				  , #stdntUseAt#
+				  , #stdnprntUseAt#
+				  , #profsrUseAt#
+				  , #generalUseAt# 
+				  , #atchFileId#
+			 	  , #mobileAtchFileId#
+			 	  , #progrmFactr#
+				  )
+		]]>
+	</insert>
+
+	
+	<delete id="MpmHistoryDAO.deleteMpmHistory">
+		<![CDATA[
+			DELETE FROM COMTHSITEMNUHISTORY 
+			WHERE MENU_HIST_ID=#menuHistId#
+		]]>
+	</delete>
+	
+	<select id="MpmHistoryDAO.selectMpmHistory" resultMap="mpmHistory">
+		<![CDATA[
+			SELECT
+				MENU_HIST_ID
+				, MENU_ID
+				, COMPOSITION_TY_CODE
+				, CNTNTS_TY_CODE
+				, MENU_NM
+				, IMAGE_FILE_NM
+				, HTML_USE_AT
+				, HTMLSOURC_TY_CODE
+				, STYLE_CN
+				, SCRIPT_CN
+				, HTML_CN
+				, MOBILE_HTMLSOURC_TY_CODE
+				, MOBILE_STYLE_CN
+				, MOBILE_SCRIPT_CN
+				, MOBILE_HTML_CN
+				, PROGRM_ID
+				, URL
+				, EXPSR_USE_AT
+				, SORT_ORDR
+				, MENU_LEVEL
+				, NWD_AT
+				, MOBILE_USE_AT
+				, USE_AT
+				, LAST_UPDUSR_PNTTM
+				, LAST_UPDUSR_ID
+				, STDNT_USE_AT
+				, STDNPRNT_USE_AT
+				, PROFSR_USE_AT
+				, GENERAL_USE_AT
+				, ATCH_FILE_ID
+				, MOBILE_ATCH_FILE_ID
+				, PROGRM_FACTR
+			FROM COMTHSITEMNUHISTORY
+			WHERE MENU_HIST_ID=#menuHistId#
+		]]>
+	</select>
+	
+	<select id="MpmHistoryDAO.selectMpmHistoryList" parameterClass="MpmVO" resultMap="mpmHistoryList">
+		SELECT
+			MENU_HIST_ID
+			, MENU_ID
+			, LAST_UPDUSR_PNTTM
+			, LAST_UPDUSR_ID
+		FROM COMTHSITEMNUHISTORY
+		WHERE MENU_ID = #menuId#
+		ORDER BY MENU_HIST_ID DESC
+		LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	<select id="MpmHistoryDAO.selectMpmHistoryListCnt" parameterClass="MpmVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTHSITEMNUHISTORY
+			WHERE MENU_ID = #menuId#
+	</select>
+
+</sqlMap>

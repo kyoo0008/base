@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="LoginInfo">
+
+	<resultMap id="loginInfo" class="egovframework.com.sym.log.service.LoginInfoVO">
+		<result property="loginId" column="LOGIN_ID" columnIndex="1"/>
+		<result property="loginIdntfcId" column="LOGIN_IDNTFC_ID" columnIndex="2"/>
+		<result property="siteId" column="SITE_ID" columnIndex="3"/>
+		<result property="loginIp" column="LOGIN_IP" columnIndex="4"/>
+		<result property="sessionId" column="SESSION_ID" columnIndex="5"/>
+		<result property="creatDt" column="CREAT_DT" columnIndex="6"/>
+	</resultMap>
+	
+	<insert id="LoginInfoDAO.insertLoginInfo">
+		INSERT INTO COMTNLOGININFO 
+				( LOGIN_ID
+				  , LOGIN_IDNTFC_ID
+				  , SITE_ID
+				  , LOGIN_IP
+				  , SESSION_ID
+				  , CREAT_DT )
+			SELECT #loginId#
+				  , #loginIdntfcId#
+				  , #siteId#
+				  , #loginIp#
+				  , #sessionId#
+				  , NOW()
+		<!-- 
+		<![CDATA[
+			INSERT INTO COMTNLOGININFO 
+				( LOGIN_ID
+				  , LOGIN_IDNTFC_ID
+				  , SITE_ID
+				  , LOGIN_IP
+				  , SESSION_ID
+				  , CREAT_DT )
+			SELECT CAST(#loginId# AS VARCHAR2(20))
+				  , CAST(#loginIdntfcId# AS VARCHAR2(64))
+				  , CAST(#siteId# AS VARCHAR2(20))
+				  , CAST(#loginIp# AS VARCHAR2(128))
+				  , CAST(#sessionId# AS VARCHAR2(64))
+				  , SYSDATE()
+			FROM DUAL
+			WHERE NOT EXISTS(SELECT LOGIN_ID FROM COMTNLOGININFO WHERE LOGIN_ID=#loginId# AND SITE_ID=#siteId# AND LOGIN_IDNTFC_ID=#loginIdntfcId#)
+		]]>
+		 -->
+	</insert>
+	
+	<update id="LoginInfoDAO.updateLoginInfo">
+		<![CDATA[
+			UPDATE COMTNLOGININFO
+			SET LOGIN_IDNTFC_ID=#newLoginIdntfcId#
+			WHERE LOGIN_ID=#loginId#
+				AND SITE_ID=#siteId#
+				AND LOGIN_IDNTFC_ID=#loginIdntfcId#
+		]]>
+	</update>
+	
+	<delete id="LoginInfoDAO.deleteLoginInfo">
+		
+			DELETE FROM COMTNLOGININFO 
+			WHERE LOGIN_ID=#loginId#
+				AND LOGIN_IDNTFC_ID=#loginIdntfcId#
+		
+	</delete>
+	
+	<select id="LoginInfoDAO.selectLoginExistsForLoginIdntfcIdCnt" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT
+				COUNT(*)
+			FROM COMTNLOGININFO
+			WHERE LOGIN_ID=#loginId#
+				AND LOGIN_IDNTFC_ID=#loginIdntfcId#
+		]]>
+	</select>
+	
+	<select id="LoginInfoDAO.selectLoginExistsForSession" resultMap="loginInfo">
+		<![CDATA[
+			SELECT
+				LOGIN_ID
+				  , LOGIN_IDNTFC_ID
+				  , SITE_ID
+				  , LOGIN_IP
+				  , SESSION_ID
+				  , CREAT_DT
+			FROM COMTNLOGININFO
+			WHERE LOGIN_ID=#loginId#
+				AND SITE_ID=#siteId#
+				AND LOGIN_IDNTFC_ID=#loginIdntfcId#
+		]]>
+	</select>
+	
+	<select id="LoginInfoDAO.selectLoginExistsForSiteId" resultMap="loginInfo">
+		<![CDATA[
+			SELECT
+				LOGIN_ID
+				  , LOGIN_IDNTFC_ID
+				  , SITE_ID
+				  , LOGIN_IP
+				  , SESSION_ID
+				  , CREAT_DT
+			FROM COMTNLOGININFO
+			WHERE LOGIN_ID=#loginId#
+				AND SITE_ID=#siteId#
+				AND LOGIN_IDNTFC_ID=#loginIdntfcId#
+		]]>
+	</select>
+	
+	<select id="LoginInfoDAO.selectLoginInfo" resultMap="loginInfo">
+		<![CDATA[
+			SELECT
+				LOGIN_ID
+				, LOGIN_IDNTFC_ID
+				, SITE_ID
+				, LOGIN_IP
+				, SESSION_ID
+				, CREAT_DT
+			FROM COMTNLOGININFO
+			WHERE LOGIN_ID=#loginId#
+				AND LOGIN_IDNTFC_ID=#loginIdntfcId#
+		]]>
+	</select>
+	
+	<select id="LoginInfoDAO.selectLogininfoRemoveTargetList" resultMap="loginInfo">
+		<![CDATA[
+			SELECT
+				LOGIN_ID
+				, LOGIN_IDNTFC_ID
+				, SITE_ID
+				, LOGIN_IP
+				, SESSION_ID
+				, CREAT_DT
+			FROM COMTNLOGININFO
+			WHERE LOGIN_IDNTFC_ID IN (SELECT LOGIN_IDNTFC_ID FROM COMTNLOGININFO WHERE CREAT_DT < SYSDATE() - 1)
+		]]>
+	</select>
+	<delete id="LoginInfoDAO.deleteLogininfoRemoveTarget">
+		<![CDATA[
+			DELETE FROM COMTNLOGININFO
+			WHERE LOGIN_IDNTFC_ID IN (SELECT LOGIN_IDNTFC_ID FROM COMTNLOGININFO WHERE CREAT_DT < SYSDATE() - 1)
+		]]>
+	</delete>
+</sqlMap>

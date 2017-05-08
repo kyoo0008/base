@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="File">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="FileVO" type="egovframework.com.cmm.service.FileVO"/>
+
+	<resultMap id="fileMaster" class="egovframework.com.cmm.service.FileVO">
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="1"/>
+	</resultMap>
+
+
+	<resultMap id="fileList" class="egovframework.com.cmm.service.FileVO">
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="1"/>
+		<!-- <result property="fileCn" column="FILE_CN" columnIndex="2"/> -->
+		<result property="fileExtsn" column="FILE_EXTSN" columnIndex="3"/>
+		<result property="fileMg" column="FILE_MG" columnIndex="4"/>
+		<result property="fileSn" column="FILE_SN" columnIndex="5"/>
+		<result property="fileStreCours" column="FILE_STRE_COURS" columnIndex="6"/>
+		<result property="orignlFileNm" column="ORIGNL_FILE_NM" columnIndex="7"/>
+		<result property="streFileNm" column="STRE_FILE_NM" columnIndex="8"/>
+		<result property="creatDt" column="CREAT_DT" columnIndex="9"/>			
+	</resultMap>
+
+	<resultMap id="fileDetail" class="egovframework.com.cmm.service.FileVO">
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="1"/>
+		<result property="fileCn" column="FILE_CN" columnIndex="2"/>
+		<result property="fileExtsn" column="FILE_EXTSN" columnIndex="3"/>
+		<result property="fileMg" column="FILE_MG" columnIndex="4"/>
+		<result property="fileSn" column="FILE_SN" columnIndex="5"/>
+		<result property="fileStreCours" column="FILE_STRE_COURS" columnIndex="6"/>
+		<result property="orignlFileNm" column="ORIGNL_FILE_NM" columnIndex="7"/>
+		<result property="streFileNm" column="STRE_FILE_NM" columnIndex="8"/>
+		<result property="useAt" column="USE_AT" columnIndex="9"/>
+	</resultMap>
+	
+	<resultMap id="tempFileDetail" class="egovframework.com.cmm.service.FileVO">
+		<result property="tmprFileId" column="TMPR_FILE_ID" columnIndex="1"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="2"/>
+		<result property="fileExtsn" column="FILE_EXTSN" columnIndex="3"/>
+		<result property="fileMg" column="FILE_MG" columnIndex="4"/>
+		<result property="fileSn" column="FILE_SN" columnIndex="5"/>
+		<result property="fileStreCours" column="FILE_STRE_COURS" columnIndex="6"/>
+		<result property="orignlFileNm" column="ORIGNL_FILE_NM" columnIndex="7"/>
+		<result property="streFileNm" column="STRE_FILE_NM" columnIndex="8"/>
+	</resultMap>		
+
+	<resultMap id="fileDetailTotal" class="egovframework.com.cmm.service.FileVO">
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="1"/>
+		<result property="totalFileMg" column="TOTAL_FILE_MG" columnIndex="2"/>
+		<result property="totalFileCount" column="TOTAL_FILE_COUNT" columnIndex="3"/>
+	</resultMap>
+
+ 	<select id="FileManageDAO.selectFileList" parameterClass="FileVO" resultMap="fileList" >
+ 		<![CDATA[
+			SELECT 
+				a.ATCH_FILE_ID, NULL AS FILE_CN, b.FILE_SN, b.FILE_STRE_COURS, b.STRE_FILE_NM,
+				b.FILE_EXTSN, b.ORIGNL_FILE_NM, b.FILE_MG, a.CREAT_DT
+			FROM
+				COMTNFILE a, COMTNFILEDETAIL b
+			WHERE
+				a.ATCH_FILE_ID = #atchFileId#
+			AND 
+				a.ATCH_FILE_ID = b.ATCH_FILE_ID
+			AND 
+				a.USE_AT = 'Y'		
+		]]>
+			ORDER BY b.FILE_SN ASC
+ 		
+ 	</select>
+ 	
+	<insert id="FileManageDAO.insertFileMaster" parameterClass="FileVO" >
+	
+		INSERT INTO COMTNFILE
+		(ATCH_FILE_ID, CREAT_DT, USE_AT)
+		VALUES
+		( 
+			#atchFileId#
+			<isEmpty property="creatDt">
+			, SYSDATE()
+			</isEmpty>
+			<isNotEmpty property="creatDt">
+			, #creatDt#
+			</isNotEmpty>
+			, #useAt#)			
+	
+	</insert>
+	
+	<select id="FileManageDAO.selectFileMaster" parameterClass="FileVO" resultMap="fileMaster" >
+ 		<![CDATA[
+			SELECT 
+				a.ATCH_FILE_ID
+			FROM
+				COMTNFILE a
+			WHERE
+				a.ATCH_FILE_ID = #atchFileId#		
+		]]>
+ 	</select>
+	
+	<insert id="FileManageDAO.insertFileDetail" parameterClass="FileVO" >
+		<![CDATA[
+			INSERT INTO COMTNFILEDETAIL
+			( ATCH_FILE_ID, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM, 
+			  ORIGNL_FILE_NM, FILE_EXTSN, FILE_MG, FILE_CN )
+			VALUES
+			( #atchFileId#
+			, #fileSn#
+			, #fileStreCours#
+			, #streFileNm#
+			, #orignlFileNm#
+			, #fileExtsn#
+			, #fileMg#
+			, #fileCn# )
+		]]>
+	</insert>	
+	
+	<delete id="FileManageDAO.deleteFileDetail" parameterClass="FileVO" >
+		<![CDATA[
+			DELETE FROM COMTNFILEDETAIL
+			WHERE
+				ATCH_FILE_ID = #atchFileId#
+			AND	
+				FILE_SN = #fileSn#			
+		]]>	
+	</delete>
+ 	
+	<select id="FileManageDAO.getMaxFileSN" parameterClass="FileVO" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT NVL(MAX(FILE_SN),0)+1 AS FILE_SN
+			FROM COMTNFILEDETAIL
+			WHERE ATCH_FILE_ID =  #atchFileId#		
+		]]>
+	</select>
+	
+	<select id="FileManageDAO.getFileCount" parameterClass="FileVO" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM COMTNFILEDETAIL
+			WHERE ATCH_FILE_ID =  #atchFileId#		
+		]]>
+	</select>
+
+ 	<select id="FileManageDAO.selectFileInf" parameterClass="FileVO" resultMap="fileDetail" >
+ 		<![CDATA[
+			SELECT 
+				ATCH_FILE_ID, FILE_CN, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM,
+				FILE_EXTSN, ORIGNL_FILE_NM, FILE_MG, NULL AS USE_AT, NULL AS CREAT_DT
+			FROM
+				COMTNFILEDETAIL
+			WHERE
+				ATCH_FILE_ID = #atchFileId#
+			AND 
+				FILE_SN = #fileSn#	
+ 		]]>
+ 	</select>
+ 	
+ 	<select id="FileManageDAO.selectFileInfByFileNm" parameterClass="FileVO" resultMap="fileDetail" >
+ 		<![CDATA[
+			SELECT 
+			ATCH_FILE_ID, FILE_CN, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM,
+				FILE_EXTSN, ORIGNL_FILE_NM, FILE_MG, NULL AS USE_AT, NULL AS CREAT_DT
+			FROM COMTNFILEDETAIL
+			WHERE STRE_FILE_NM = #streFileNm#
+ 		]]>
+ 	</select>
+ 	
+
+	<delete id="FileManageDAO.deleteFileInf" parameterClass="FileVO" >
+		<![CDATA[
+			DELETE COMTNFILE
+			WHERE ATCH_FILE_ID = #atchFileId#
+		]]>
+	</delete>
+	
+	<delete id="FileManageDAO.deleteAllFileDetail" parameterClass="FileVO" >
+		<![CDATA[
+			DELETE FROM COMTNFILEDETAIL
+			WHERE
+				ATCH_FILE_ID = #atchFileId#
+		]]>	
+	</delete>
+
+ 	<select id="FileManageDAO.selectFileListByFileNm" parameterClass="FileVO" resultMap="fileList" >
+ 		<![CDATA[
+ 		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT 
+				a.ATCH_FILE_ID, NULL AS FILE_CN, b.FILE_SN, b.FILE_STRE_COURS, b.STRE_FILE_NM,
+				b.FILE_EXTSN, b.ORIGNL_FILE_NM, b.FILE_MG, a.CREAT_DT
+			FROM
+				COMTNFILE a, COMTNFILEDETAIL b
+			WHERE
+				a.ATCH_FILE_ID = b.ATCH_FILE_ID
+			AND 
+				a.USE_AT = 'Y'
+ 		]]>
+			<isEqual prepend="AND" property="searchCnd" compareValue="streFileNm">
+				<![CDATA[	b.STRE_FILE_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="orignlFileNm">
+				<![CDATA[	b.ORIGNL_FILE_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>	
+		<![CDATA[			
+			ORDER BY a.ATCH_FILE_ID, b.FILE_SN	
+			) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>		 		
+ 	</select>
+
+ 	<select id="FileManageDAO.selectFileListCntByFileNm" parameterClass="FileVO" resultClass="java.lang.Integer" >
+ 		<![CDATA[
+			SELECT 
+				COUNT(a.ATCH_FILE_ID)
+			FROM
+				COMTNFILE a, COMTNFILEDETAIL b
+			WHERE
+				a.ATCH_FILE_ID = b.ATCH_FILE_ID
+			AND 
+				a.USE_AT = 'Y'				
+ 		]]>
+			<isEqual prepend="AND" property="searchCnd" compareValue="streFileNm">
+				<![CDATA[	b.STRE_FILE_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="orignlFileNm">
+				<![CDATA[	b.ORIGNL_FILE_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>	 		
+ 	</select>
+ 	
+  	<select id="FileManageDAO.selectImageFileList" parameterClass="FileVO" resultMap="fileList" >
+ 		<![CDATA[
+			SELECT 
+				a.ATCH_FILE_ID, NULL AS FILE_CN, b.FILE_SN, b.FILE_STRE_COURS, b.STRE_FILE_NM,
+				b.FILE_EXTSN, b.ORIGNL_FILE_NM, b.FILE_MG, a.CREAT_DT
+			FROM
+				COMTNFILE a, COMTNFILEDETAIL b
+			WHERE
+				a.ATCH_FILE_ID = #atchFileId#
+			AND 
+				a.ATCH_FILE_ID = b.ATCH_FILE_ID
+			AND
+				UPPER(b.FILE_EXTSN) IN ('GIF','JPG','BMP','PNG')
+			AND 
+				a.USE_AT = 'Y'				
+			ORDER BY b.FILE_SN	
+ 		]]>
+ 	</select>	
+ 	
+ 	
+ 	
+ 	
+ 	<select id="FileManageDAO.selectTempFileInf" parameterClass="FileVO" resultMap="tempFileDetail" >
+ 		<![CDATA[
+			SELECT 
+				TMPR_FILE_ID, ATCH_FILE_ID, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM,
+				FILE_EXTSN, ORIGNL_FILE_NM, FILE_MG
+			FROM
+				COMTNTMPRFILEDETAIL
+			WHERE
+				TMPR_FILE_ID = #tmprFileId#
+ 		]]>
+ 	</select>
+ 	
+ 	<select id="FileManageDAO.selectTempFileInfByAtchFileIdAndFileSn" parameterClass="FileVO" resultMap="tempFileDetail" >
+ 		<![CDATA[
+			SELECT 
+				TMPR_FILE_ID, ATCH_FILE_ID, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM,
+				FILE_EXTSN, ORIGNL_FILE_NM, FILE_MG
+			FROM
+				COMTNTMPRFILEDETAIL
+			WHERE
+				ATCH_FILE_ID = #atchFileId#	AND FILE_SN = #fileSn#	
+ 		]]>
+ 	</select>
+ 	
+ 	<insert id="FileManageDAO.insertTempFileDetail" parameterClass="FileVO" >
+		<![CDATA[
+			INSERT INTO COMTNTMPRFILEDETAIL
+			( TMPR_FILE_ID, ATCH_FILE_ID, FILE_STRE_COURS, STRE_FILE_NM, 
+			  ORIGNL_FILE_NM, FILE_EXTSN, FILE_MG, FILE_SN, FRST_REGISTER_PNTTM)
+			SELECT 
+				CAST(#tmprFileId# AS VARCHAR2(36)), 
+				CAST(#atchFileId# AS VARCHAR2(20)), 
+				CAST(#fileStreCours# AS VARCHAR2(2000)), 
+				CAST(#atchFileId# AS VARCHAR2(20)) || '_' || FILE_SN, 
+			  	CAST(#orignlFileNm# AS VARCHAR2(255)), 
+			  	CAST(#fileExtsn# AS VARCHAR2(20)), 
+			  	CAST(#fileMg# AS NUMBER), 
+			  	FILE_SN, 
+			  	SYSDATE()
+	        FROM
+	        (
+		        SELECT NVL(SUM(FILE_SN),  0) + 1 FILE_SN
+	            FROM
+	            (
+		            SELECT MAX(FILE_SN) FILE_SN
+		            FROM COMTNTMPRFILEDETAIL
+		            WHERE ATCH_FILE_ID = #atchFileId#
+		            
+		            UNION ALL
+		            
+		            SELECT MAX(FILE_SN) FILE_SN
+		            FROM COMTNFILEDETAIL
+		            WHERE ATCH_FILE_ID = #atchFileId#
+		    	) A
+	        ) 
+		]]>
+	</insert>	
+	
+	<delete id="FileManageDAO.deleteTempFileDetail" parameterClass="FileVO" >
+		<![CDATA[
+			DELETE FROM COMTNTMPRFILEDETAIL
+			WHERE
+				TMPR_FILE_ID = #tmprFileId#
+		]]>	
+	</delete>
+	
+ 	<insert id="FileManageDAO.insertFileDetailByTemp" parameterClass="FileVO" >
+		<![CDATA[
+			INSERT INTO COMTNFILEDETAIL
+			( ATCH_FILE_ID, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM, 
+			  ORIGNL_FILE_NM, FILE_EXTSN, FILE_MG, FILE_CN )
+			
+			SELECT ATCH_FILE_ID, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM, 
+			  ORIGNL_FILE_NM, FILE_EXTSN, FILE_MG, NULL
+			FROM COMTNTMPRFILEDETAIL
+			WHERE ATCH_FILE_ID = #atchFileId#
+		]]>
+	</insert>
+	
+	<insert id="FileManageDAO.deleteFileDetailByTemp" parameterClass="FileVO" >
+		<![CDATA[
+			DELETE FROM COMTNTMPRFILEDETAIL
+			WHERE
+				ATCH_FILE_ID = #atchFileId#		
+		]]>	
+	</insert>
+	
+	<update id="FileManageDAO.deleteProgrmFileId" parameterClass="FileVO" >
+		
+			UPDATE COMTNBBS
+			SET 
+			<isEqual property="estnAt" compareValue="Y">ESTN_ATCH_FILE_ID = NULL</isEqual>
+			<isNotEqual property="estnAt" compareValue="Y">	ATCH_FILE_ID = NULL</isNotEqual>
+			WHERE BBS_ID = #progrmId# AND ATCH_FILE_ID = #atchFileId#
+		
+	</update>
+	
+	<select id="FileManageDAO.selectFileDetailTotalInfo" parameterClass="FileVO" resultMap="fileDetailTotal" >
+			SELECT 
+				MAX(ATCH_FILE_ID) AS ATCH_FILE_ID
+				, NVL(SUM(TOTAL_FILE_MG), 0) AS TOTAL_FILE_MG
+				, NVL(SUM(TOTAL_FILE_COUNT), 0) AS TOTAL_FILE_COUNT
+            FROM
+            (
+	            SELECT ATCH_FILE_ID, SUM(FILE_MG) AS TOTAL_FILE_MG, COUNT(*) AS TOTAL_FILE_COUNT
+	            FROM COMTNTMPRFILEDETAIL
+	            WHERE ATCH_FILE_ID = #atchFileId#
+	            GROUP BY ATCH_FILE_ID
+	            
+	            UNION ALL
+	            
+	            SELECT ATCH_FILE_ID, SUM(FILE_MG) AS TOTAL_FILE_MG, COUNT(*) AS TOTAL_FILE_COUNT
+	            FROM COMTNFILEDETAIL
+	            WHERE ATCH_FILE_ID = #atchFileId#
+	            GROUP BY ATCH_FILE_ID
+	    	) A
+	</select>
+	
+	<select id="FileManageDAO.selectFileManageCopyList" parameterClass="FileVO" resultMap="fileDetail" >
+			SELECT 
+				B.ATCH_FILE_ID
+				, B.FILE_CN
+				, B.FILE_SN
+				, B.FILE_STRE_COURS
+				, B.STRE_FILE_NM
+				, B.FILE_EXTSN
+				, B.ORIGNL_FILE_NM
+				, B.FILE_MG
+				, A.USE_AT
+				, A.CREAT_DT
+			FROM
+				COMTNFILE A, COMTNFILEDETAIL B
+			WHERE
+				A.ATCH_FILE_ID = B.ATCH_FILE_ID
+				AND B.ATCH_FILE_ID IN
+				<iterate property="atchFileIdArr" open=" (" close=") " conjunction=",">
+					#atchFileIdArr[]#
+				</iterate>
+ 	</select>
+</sqlMap>

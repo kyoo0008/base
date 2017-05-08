@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="LytTmplatDAO">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="LytTmplatVO" type="egovframework.com.cop.com.service.LytTmplatVO"/>
+	
+	<resultMap id="lytTmplat" class="egovframework.com.cop.com.service.LytTmplat">
+		<result property="lytTmplatId" column="LYT_TMPLAT_ID" columnIndex="1"/>
+		<result property="tmplatLcasCode" column="TMPLAT_LCAS_CODE" columnIndex="2"/>
+		<result property="tmplatMlsfcCode" column="TMPLAT_MLSFC_CODE" columnIndex="3"/>
+		<result property="tmplatNm" column="TMPLAT_NM" columnIndex="4"/>
+		<result property="cssSourc" column="CSS_SOURC" columnIndex="5"/>
+		<result property="scriptSourc" column="SCRIPT_SOURC" columnIndex="6"/>
+		<result property="mobileCssSourc" column="MOBILE_CSS_SOURC" columnIndex="7"/>
+		<result property="mobileScriptSourc" column="MOBILE_SCRIPT_SOURC" columnIndex="8"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="9"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="10"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="11"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="12"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="13"/>
+	</resultMap>
+	
+	<resultMap id="lytTmplatList" class="egovframework.com.cop.com.service.LytTmplat">
+		<result property="lytTmplatId" column="LYT_TMPLAT_ID" columnIndex="1"/>
+		<result property="tmplatLcasCode" column="TMPLAT_LCAS_CODE" columnIndex="2"/>
+		<result property="tmplatLcasCodeNm" column="TMPLAT_LCAS_CODE_NM" columnIndex="3"/>
+		<result property="tmplatMlsfcCode" column="TMPLAT_MLSFC_CODE" columnIndex="4"/>
+		<result property="tmplatMlsfcCodeNm" column="TMPLAT_MLSFC_CODE_NM" columnIndex="5"/>
+		<result property="tmplatNm" column="TMPLAT_NM" columnIndex="6"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="7"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="8"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="9"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="10"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="11"/>
+	</resultMap>
+	
+	<parameterMap id="paramInsert" class="egovframework.com.cop.com.service.LytTmplat">
+		<parameter property="lytTmplatId"/>
+		<parameter property="tmplatLcasCode"/>
+		<parameter property="tmplatMlsfcCode"/>
+		<parameter property="tmplatNm"/>
+		<parameter property="cssSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="scriptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileCssSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileScriptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="frstRegisterId"/>
+	</parameterMap>
+	
+	<parameterMap id="paramUpdate" class="egovframework.com.cop.com.service.LytTmplat">
+		<parameter property="tmplatLcasCode"/>
+		<parameter property="tmplatMlsfcCode"/>
+		<parameter property="tmplatNm"/>
+		<parameter property="cssSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="scriptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileCssSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="mobileScriptSourc" jdbcType="CLOB" javaType="java.lang.String"/>
+		<parameter property="prevewFileNm"/>
+		<parameter property="lastUpdusrId"/>
+		<parameter property="lytTmplatId"/>
+	</parameterMap>
+
+	<insert id="LytTmplatDAO.insertLytTmplat">
+		<![CDATA[
+			INSERT INTO COMTNLYTTMPLAT 
+				( LYT_TMPLAT_ID
+				  , TMPLAT_LCAS_CODE
+				  , TMPLAT_MLSFC_CODE
+				  , TMPLAT_NM
+				  , CSS_SOURC
+				  , SCRIPT_SOURC
+				  , MOBILE_CSS_SOURC
+				  , MOBILE_SCRIPT_SOURC
+				  , PREVEW_FILE_NM
+				  , USE_AT
+				  , FRST_REGISTER_ID
+				  , FRST_REGISTER_PNTTM
+				  )
+			VALUES ( #lytTmplatId#
+				  , #tmplatLcasCode#
+				  , #tmplatMlsfcCode#
+				  , #tmplatNm#
+				  , #cssSourc#
+				  , #scriptSourc#
+				  , #mobileCssSourc#
+				  , #mobileScriptSourc#
+				  , #prevewFileNm#
+				  , 'Y'
+				  , #frstRegisterId#
+				  , SYSDATE()
+				  )
+		]]>
+	</insert>
+
+	<update id="LytTmplatDAO.updateLytTmplat" parameterMap="paramInsert">
+		
+			UPDATE COMTNLYTTMPLAT
+			SET LYT_TMPLAT_ID=#lytTmplatId#
+				, TMPLAT_LCAS_CODE=#tmplatLcasCode#
+				, TMPLAT_MLSFC_CODE=#tmplatMlsfcCode#
+				<isNotEmpty property="tmplatNm">, TMPLAT_NM=#tmplatNm#</isNotEmpty>
+				, CSS_SOURC=#cssSourc#
+				, SCRIPT_SOURC=#scriptSourc#
+				, MOBILE_CSS_SOURC=#mobileCssSourc#
+				, MOBILE_SCRIPT_SOURC=#mobileScriptSourc#
+				<isNotEmpty property="prevewFileNm">, PREVEW_FILE_NM = #prevewFileNm#</isNotEmpty>
+				, LAST_UPDUSR_ID=#lastUpdusrId#
+				, LAST_UPDUSR_PNTTM=SYSDATE()
+			WHERE LYT_TMPLAT_ID=#lytTmplatId#
+		
+	</update>
+
+	
+	<delete id="LytTmplatDAO.deleteLytTmplat">
+		<![CDATA[
+			UPDATE COMTNLYTTMPLAT 
+			SET	USE_AT = 'N'
+				, LAST_UPDUSR_ID=#lastUpdusrId#
+				, LAST_UPDUSR_PNTTM=SYSDATE()
+			WHERE LYT_TMPLAT_ID=#lytTmplatId#
+		]]>
+	</delete>
+	
+	<select id="LytTmplatDAO.selectLytTmplat" resultMap="lytTmplat">
+		<![CDATA[
+			SELECT
+				LYT_TMPLAT_ID
+				, TMPLAT_LCAS_CODE
+				, TMPLAT_MLSFC_CODE
+				, TMPLAT_NM
+				, CSS_SOURC
+				, SCRIPT_SOURC
+				, MOBILE_CSS_SOURC
+				, MOBILE_SCRIPT_SOURC
+				, PREVEW_FILE_NM
+				, FRST_REGISTER_ID
+				, FRST_REGISTER_PNTTM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+			FROM COMTNLYTTMPLAT
+			WHERE LYT_TMPLAT_ID=#lytTmplatId#
+				AND USE_AT = 'Y'
+		]]>
+	</select>
+	
+	<select id="LytTmplatDAO.selectLytTmplatList" parameterClass="LytTmplatVO" resultMap="lytTmplatList">
+	/** QUERY : LytTmplatDAO.selectLytTmplatList */
+	
+				SELECT
+					LYT_TMPLAT_ID
+					, TMPLAT_LCAS_CODE
+					, c.CODE_NM AS TMPLAT_LCAS_CODE_NM
+					, TMPLAT_MLSFC_CODE
+					, d.CODE_NM AS TMPLAT_MLSFC_CODE_NM
+					, TMPLAT_NM
+					, PREVEW_FILE_NM
+					, FRST_REGISTER_ID
+					, FRST_REGISTER_PNTTM
+					, LAST_UPDUSR_ID
+					, LAST_UPDUSR_PNTTM
+				FROM COMTNLYTTMPLAT a
+				LEFT OUTER JOIN (SELECT CODE_ID, CODE, CODE_NM FROM 
+					COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM916' AND USE_AT='Y') c
+				ON a.TMPLAT_LCAS_CODE = c.CODE
+				LEFT OUTER JOIN (SELECT CODE_ID, CODE, CODE_NM FROM 
+					COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM917' AND USE_AT='Y') d
+				ON a.TMPLAT_MLSFC_CODE = d.CODE
+				WHERE USE_AT = 'Y'
+					<isNotEmpty prepend="AND" property="searchTmplatLcasCode">
+						TMPLAT_LCAS_CODE = #searchTmplatLcasCode#
+					</isNotEmpty>
+					<isNotEmpty prepend="AND" property="searchTmplatMlsfcCode">
+						TMPLAT_MLSFC_CODE = #searchTmplatMlsfcCode#
+					</isNotEmpty>
+					<isNotEmpty property="searchCnd">
+						<isNotEmpty property="searchWrd">
+							<isEqual prepend="AND" property="searchCnd" compareValue="0">
+								TMPLAT_NM LIKE '%' || #searchWrd# || '%'
+							</isEqual>
+						</isNotEmpty>
+					</isNotEmpty>
+				ORDER BY LYT_TMPLAT_ID DESC
+				LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	<select id="LytTmplatDAO.selectLytTmplatListCnt" parameterClass="LytTmplatVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTNLYTTMPLAT a
+				WHERE USE_AT = 'Y'
+					<isNotEmpty prepend="AND" property="searchTmplatLcasCode">
+						TMPLAT_LCAS_CODE = #searchTmplatLcasCode#
+					</isNotEmpty>
+					<isNotEmpty prepend="AND" property="searchTmplatMlsfcCode">
+						TMPLAT_MLSFC_CODE = #searchTmplatMlsfcCode#
+					</isNotEmpty>
+					<isNotEmpty property="searchCnd">
+						<isNotEmpty property="searchWrd">
+							<isEqual prepend="AND" property="searchCnd" compareValue="0">
+								TMPLAT_NM LIKE '%' || #searchWrd# || '%'
+							</isEqual>
+						</isNotEmpty>
+					</isNotEmpty>
+	</select>
+
+</sqlMap>

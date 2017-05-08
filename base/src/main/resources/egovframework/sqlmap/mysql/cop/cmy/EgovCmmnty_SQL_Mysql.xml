@@ -1,0 +1,1161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="CommunityManageDAO">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="Cmmnty" type="egovframework.com.cop.cmy.service.Community"/>
+	<typeAlias  alias="CmmntyVO" type="egovframework.com.cop.cmy.service.CommunityVO"/>
+	<typeAlias  alias="CmmntyUser" type="egovframework.com.cop.cmy.service.CommunityUser"/>
+	<typeAlias  alias="CmmntyUserVO" type="egovframework.com.cop.cmy.service.CommunityUserVO"/>
+	<typeAlias  alias="CmmntyMnu" type="egovframework.com.cop.cmy.service.CommunityMnu"/>
+	<typeAlias  alias="CmmntyMnuVO" type="egovframework.com.cop.cmy.service.CommunityMnuVO"/>
+	<typeAlias  alias="BoardMasterVO" type="egovframework.com.cop.bbs.service.BoardMasterVO"/>
+	<typeAlias  alias="BoardVO" type="egovframework.com.cop.bbs.service.BoardVO"/>
+
+	<resultMap id="CmmntyInfo" class="egovframework.com.cop.cmy.service.CommunityVO">
+		<result property="cmmntyId" column="CMMNTY_ID" columnIndex="1"/>
+		<result property="cmmntyNm" column="CMMNTY_NM" columnIndex="2"/>
+		<result property="cmmntyAdres" column="CMMNTY_ADRES" columnIndex="3"/>
+		<result property="cmmntySeCode" column="CMMNTY_SE_CODE" columnIndex="4"/>
+		<result property="atchFileNm" column="ATCH_FILE_NM" columnIndex="5"/>
+		<result property="atchFileIcon" column="ATCH_FILE_ICON" columnIndex="6"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="7"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="8"/>
+		<result property="userCo" column="USER_CO" columnIndex="9"/>
+		<result property="articleNewCo" column="ARTICLE_NEW_CO" columnIndex="10"/>
+	</resultMap>
+	
+	<resultMap id="CmmntyList" class="egovframework.com.cop.cmy.service.CommunityVO">
+		<result property="siteId" column="SITE_ID" columnIndex="1"/>
+		<result property="cmmntyId" column="CMMNTY_ID" columnIndex="2"/>
+		<result property="cmmntyNm" column="CMMNTY_NM" columnIndex="3"/>
+		<result property="cmmntyIntrcn" column="CMMNTY_INTRCN" columnIndex="4"/>
+		<result property="cmmntyAdres" column="CMMNTY_ADRES" columnIndex="5"/>
+		<result property="atchFileIcon" column="ATCH_FILE_ICON" columnIndex="6"/>
+		<result property="useAt" column="USE_AT" columnIndex="7"/>
+		<result property="registSeCode" column="REGIST_SE_CODE" columnIndex="8"/>
+		<result property="registSeCodeNm" column="REGIST_SE_CODE_NM" columnIndex="9"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="10"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="11"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM" columnIndex="12"/>
+		<result property="userCo" column="USER_CO" columnIndex="13"/>
+	</resultMap>
+
+	<resultMap id="CmmntyDetail" class="egovframework.com.cop.cmy.service.CommunityVO">
+		<result property="siteId" column="SITE_ID" columnIndex="1"/>
+		<result property="cmmntyId" column="CMMNTY_ID" columnIndex="2"/>
+		<result property="cmmntyNm" column="CMMNTY_NM" columnIndex="3"/>
+		<result property="cmmntySeCode" column="CMMNTY_SE_CODE" columnIndex="4"/>
+		<result property="cmmntySeNm" column="CMMNTY_SE_NM" columnIndex="5"/>
+		<result property="cmmntyAdres" column="CMMNTY_ADRES" columnIndex="6"/>
+		<result property="registSeCode" column="REGIST_SE_CODE" columnIndex="7"/>
+		<result property="confmPolicyCode" column="CONFM_POLICY_CODE" columnIndex="8"/>
+		<result property="resbscrbPolicyCode" column="RESBSCRB_POLICY_CODE" columnIndex="9"/>
+		<result property="cmmntyIntrcn" column="CMMNTY_INTRCN" columnIndex="10"/>
+		<result property="othbcAt" column="OTHBC_AT" columnIndex="11"/>
+		<result property="atchFileNm" column="ATCH_FILE_NM" columnIndex="12"/>
+		<result property="atchFileIcon" column="ATCH_FILE_ICON" columnIndex="13"/>
+		<result property="useAt" column="USE_AT" columnIndex="14"/>		
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="15"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM" columnIndex="16"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="17"/>
+	</resultMap>
+
+	<resultMap id="CmmntyBBSUseList" class="egovframework.com.cop.cmy.service.CommunityVO">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="2"/>
+	</resultMap>	
+
+	<resultMap id="CmmntyListPortlet" class="egovframework.com.cop.cmy.service.CommunityVO">
+		<result property="cmmntyId" column="CMMNTY_ID" columnIndex="1"/>
+		<result property="cmmntyNm" column="CMMNTY_NM" columnIndex="2"/>
+		<result property="cmmntyIntrcn" column="CMMNTY_INTRCN" columnIndex="3"/>
+	</resultMap>
+
+	<resultMap id="CmmntyUserInf" class="egovframework.com.cop.cmy.service.CommunityUser">
+		<result property="emplyrId" column="EMPLYR_ID" columnIndex="1"/>
+		<result property="emplyrNm" column="USER_NM" columnIndex="2"/>
+		<result property="authorCode" column="AUTHOR_CODE" columnIndex="3"/>
+	    <result property="mngrAt" column="MNGR_AT" columnIndex="4"/>
+		<result property="useAt" column="USE_AT" columnIndex="5"/>				
+	</resultMap>
+	
+	<resultMap id="CmmntyManagerInf" class="egovframework.com.cop.cmy.service.CommunityUser">
+	    <result property="emplyrId" column="EMPLYR_ID" columnIndex="1"/>
+		<result property="emplyrNm" column="EMPLYR_NM" columnIndex="2"/>				
+	</resultMap>
+
+	<resultMap id="author" class="egovframework.com.sec.ram.service.AuthorManageVO">
+        <result property="authorCode" column="AUTHOR_CODE" columnIndex="1"/>
+        <result property="authorNm" column="AUTHOR_NM" columnIndex="2"/>
+        <result property="authorDc" column="AUTHOR_DC" columnIndex="3"/>
+        <result property="authorCreatDe" column="AUTHOR_CREAT_DE" columnIndex="4"/>
+    </resultMap>
+    
+    <resultMap id="sortMenuMap" class="egovframework.com.cop.cmy.service.CommunityMnu">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="2"/>
+	</resultMap>
+
+	<resultMap id="CmmntyMyList" class="egovframework.com.cop.cmy.service.CommunityVO">
+		<result property="cmmntyId" column="CMMNTY_ID" columnIndex="1"/>
+		<result property="cmmntyNm" column="CMMNTY_NM" columnIndex="2"/>
+		<result property="cmmntyAdres" column="CMMNTY_ADRES" columnIndex="3"/>
+		<result property="atchFileIcon" column="ATCH_FILE_ICON" columnIndex="4"/>
+	</resultMap>
+	
+	<resultMap id="CmmntyMenuList" class="egovframework.com.cop.cmy.service.CommunityMnu">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsAttrbCode" column="BBS_ATTRB_CODE" columnIndex="2"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="3"/>
+		<result property="tmplatId" column="TMPLAT_ID" columnIndex="4"/>
+		<result property="svcAt" column="SVC_AT" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="commentUseAt" column="COMMENT_USE_AT" columnIndex="7"/>
+		<result property="mainOutptAt" column="MAIN_OUTPT_AT" columnIndex="8"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="9"/>
+	</resultMap>
+
+	<resultMap id="CmmntyBoardMasterList" class="egovframework.com.cop.cmy.service.CommunityMnu">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsAttrbCode" column="BBS_ATTRB_CODE" columnIndex="2"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="3"/>
+		<result property="tmplatId" column="TMPLAT_ID" columnIndex="4"/>
+		<result property="svcAt" column="SVC_AT" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="commentUseAt" column="COMMENT_USE_AT" columnIndex="7"/>
+		<result property="mainOutptAt" column="MAIN_OUTPT_AT" columnIndex="8"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="9"/>
+		<result property="notifyAt" column="NOTIFY_AT" columnIndex="10"/>		
+	</resultMap>
+
+	<resultMap id="CmmntyBoardMasterAll" class="egovframework.com.cop.cmy.service.CommunityMnu">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="2"/>
+		<result property="tmplatId" column="TMPLAT_ID" columnIndex="3"/>
+	</resultMap>
+
+	<resultMap id="CmmntyBoardMasterDetail" class="egovframework.com.cop.cmy.service.CommunityMnu">
+		<result property="bbsId" column="BBS_ID" columnIndex="1"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="2"/>
+		<result property="bbsAttrbCode" column="BBS_ATTRB_CODE" columnIndex="3"/>
+		<result property="replyPosblAt" column="REPLY_POSBL_AT" columnIndex="4"/>
+		<result property="fileAtchPosblAt" column="FILE_ATCH_POSBL_AT" columnIndex="5"/>
+		<result property="posblAtchFileNumber" column="POSBL_ATCH_FILE_NUMBER" columnIndex="6"/>
+		<result property="posblAtchFileSize" column="POSBL_ATCH_FILE_SIZE" columnIndex="7"/>
+		<result property="tmplatId" column="TMPLAT_ID" columnIndex="8"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="9"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="10"/>
+		<result property="ctgrymasterId" column="CTGRYMASTER_ID" columnIndex="11"/>
+		<result property="commentUseAt" column="COMMENT_USE_AT" columnIndex="12"/>
+		<result property="othbcUseAt" column="OTHBC_USE_AT" columnIndex="13"/>
+		<result property="svcAt" column="SVC_AT" columnIndex="14"/>		
+	    <result property="inqireAuthor" column="INQIRE_AUTHOR" columnIndex="15"/>
+	    <result property="registAuthor" column="REGIST_AUTHOR" columnIndex="16"/>
+	    <result property="answerAuthor" column="ANSWER_AUTHOR" columnIndex="17"/>
+	    <result property="siteId" column="SITE_ID" columnIndex="18"/>
+	    <result property="mainOutptAt" column="MAIN_OUTPT_AT" columnIndex="19"/>
+	    <result property="notifyAt" column="NOTIFY_AT" columnIndex="20"/>
+	</resultMap>
+
+	<resultMap id="CmmntyBoardList" class="egovframework.com.cop.bbs.service.BoardVO">
+		<result property="nttNo" column="NTT_NO" columnIndex="1"/>
+		<result property="bbsId" column="BBS_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="4"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="7"/>
+		<result property="othbcAt" column="OTHBC_AT" columnIndex="8"/>
+		<result property="ordrCodeDp" column="ORDR_CODE_DP" columnIndex="9"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="10"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="11"/>
+		<result property="searchAuth" column="INQIRE_AUTHOR" columnIndex="12"/>
+		<result property="trgetId" column="TRGET_ID" columnIndex="13"/>
+	</resultMap>
+
+	<resultMap id="CmmntyBoardNewList" class="egovframework.com.cop.bbs.service.BoardVO">
+		<result property="nttNo" column="NTT_NO" columnIndex="1"/>
+		<result property="bbsId" column="BBS_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="4"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="7"/>
+		<result property="othbcAt" column="OTHBC_AT" columnIndex="8"/>
+		<result property="ordrCodeDp" column="ORDR_CODE_DP" columnIndex="9"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="10"/>
+		<result property="bbsNm" column="BBS_NM" columnIndex="11"/>
+		<result property="searchAuth" column="INQIRE_AUTHOR" columnIndex="12"/>
+	</resultMap>
+	
+	<resultMap id="boardList" class="egovframework.com.cop.bbs.service.BoardVO">
+		<result property="nttNo" column="NTT_NO" columnIndex="1"/>
+		<result property="bbsId" column="BBS_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="4"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="7"/>
+		<result property="othbcAt" column="OTHBC_AT" columnIndex="8"/>
+		<result property="ordrCodeDp" column="ORDR_CODE_DP" columnIndex="9"/>
+		<result property="useAt" column="USE_AT" columnIndex="10"/>
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="11"/>
+		<result property="ctgryNm" column="CTGRY_NM" columnIndex="12"/>
+		<result property="commentCount" column="COMMENT_COUNT" columnIndex="13"/>
+		<result property="scoreSum" column="SCORE_SUM" columnIndex="14"/>
+	</resultMap>
+	
+	<resultMap id="searchList" class="egovframework.com.cop.bbs.service.BoardVO">
+		<result property="nttNo" column="NTT_NO" columnIndex="1"/>
+		<result property="bbsId" column="BBS_ID" columnIndex="2"/>
+		<result property="nttSj" column="NTT_SJ" columnIndex="3"/>
+		<result property="nttCn" column="NTT_CN" columnIndex="4"/>
+		<result property="ntcrNm" column="NTCR_NM" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+		<result property="inqireCo" column="INQIRE_CO" columnIndex="7"/>
+		<result property="cmmntyAdres" column="CMMNTY_ADRES" columnIndex="8"/>
+		<result property="cmmntyNm" column="CMMNTY_NM" columnIndex="8"/>
+		<result property="trgetId" column="TRGET_ID" columnIndex="9"/>
+		<result property="siteNm" 	column="SITE_NM" columnIndex="10"/>
+		<result property="siteUrl" 	column="SITE_URL" columnIndex="11"/>
+	</resultMap>
+	
+	<select id="CommunityManageDAO.selectCmmntyFindId" resultClass="java.lang.String" >
+		<![CDATA[
+			SELECT 
+				CMMNTY_ID
+			FROM
+				COMTNCMMNTY
+			WHERE 
+				CMMNTY_ADRES = #cmmntyAdres# AND USE_AT = 'Y'
+		]]>	
+	</select>
+
+	<insert id="CommunityManageDAO.insertCommunityInf" parameterClass="Cmmnty">
+		<![CDATA[
+			INSERT INTO COMTNCMMNTY
+			(SITE_ID, SYS_TY_CODE, CMMNTY_SE_CODE, CMMNTY_ID, CMMNTY_NM, CMMNTY_INTRCN, REGIST_SE_CODE, CONFM_POLICY_CODE, RESBSCRB_POLICY_CODE, CMMNTY_ADRES,
+			 ATCH_FILE_NM, ATCH_FILE_ICON, USE_AT, FRST_REGISTER_ID, FRST_REGISTER_PNTTM, FRST_REGISTER_NM,
+			 OTHBC_AT
+			 )
+			VALUES
+			(NVL(#siteId#, 'SITE_000000000000001'), NVL(#sysTyCode#, 'SYS01'), #cmmntySeCode#,
+			 #cmmntyId#, #cmmntyNm#, #cmmntyIntrcn#, #registSeCode#, #confmPolicyCode#, #resbscrbPolicyCode#, #cmmntyAdres#, 
+			 #atchFileNm#, #atchFileIcon#, #useAt#, #frstRegisterId#, SYSDATE(), #frstRegisterNm#, #othbcAt#)
+		]]>
+	</insert>
+
+	<insert id="CommunityManageDAO.insertCommunityUserInf" parameterClass="CmmntyUser">
+		<![CDATA[
+			INSERT INTO COMTNCMMNTYUSER
+			(CMMNTY_ID, EMPLYR_ID, USER_NM, SBSCRB_DE, MNGR_AT, AUTHOR_CODE, 
+			 USE_AT, FRST_REGISTER_ID, FRST_REGISTER_PNTTM)
+			VALUES
+			(#cmmntyId#, #emplyrId#, #emplyrNm#, SYSDATE(), #mngrAt#, #authorCode#, 
+			 #useAt#, #frstRegisterId#, SYSDATE())		
+		]]>
+	</insert>
+
+	<select id="CommunityManageDAO.selectCommunityInfs" parameterClass="CmmntyVO" resultMap="CmmntyList" >
+		<![CDATA[
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT 
+				a.SITE_ID, a.CMMNTY_ID, a.CMMNTY_NM, a.CMMNTY_INTRCN, a.CMMNTY_ADRES, a.ATCH_FILE_ICON, a.USE_AT, a.REGIST_SE_CODE, 
+				c.CODE_NM as REGIST_SE_CODE_NM, 
+				a.FRST_REGISTER_PNTTM,
+				a.FRST_REGISTER_ID, 
+				a.FRST_REGISTER_NM,
+				(SELECT COUNT(CMMNTY_ID) FROM COMTNCMMNTYUSER WHERE CMMNTY_ID = a.CMMNTY_ID AND USE_AT = 'Y') AS USER_CO
+			FROM
+				COMTNCMMNTY a
+			LEFT OUTER JOIN COMTCCMMNDETAILCODE c
+			ON a.REGIST_SE_CODE = c.CODE AND c.CODE_ID = 'COM001'
+			WHERE a.SITE_ID = #siteId#
+		]]>
+			<isNotEqual prepend="AND" property="mngrAt" compareValue="Y">
+				<![CDATA[	a.USE_AT = 'Y' AND a.OTHBC_AT = 'Y' 		]]>
+			</isNotEqual>
+			<isNotEmpty prepend="AND" property="searchUse">
+				<![CDATA[	a.USE_AT = #searchUse# 		]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchTy">
+				<![CDATA[	a.CMMNTY_SE_CODE = #searchTy# 		]]>
+			</isNotEmpty>
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.CMMNTY_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.FRST_REGISTER_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	(a.CMMNTY_NM LIKE '%' || #searchWrd# || '%' or a.FRST_REGISTER_NM LIKE '%' || #searchWrd# || '%')		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="3">
+				<![CDATA[	a.CMMNTY_INTRCN LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="4">
+				<![CDATA[	a.CMMNTY_ADRES LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+		<![CDATA[			
+			ORDER BY a.CMMNTY_ID DESC 
+			) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>				
+	</select>	
+	
+	<select id="CommunityManageDAO.selectCommunityInfsCnt" parameterClass="CmmntyVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT 
+				COUNT(a.CMMNTY_ID)
+			FROM
+				COMTNCMMNTY a
+			LEFT OUTER JOIN COMTCCMMNDETAILCODE c
+			ON a.REGIST_SE_CODE = c.CODE AND c.CODE_ID = 'COM001'
+			WHERE a.SITE_ID = #siteId#
+		]]>
+			<isNotEqual prepend="AND" property="mngrAt" compareValue="Y">
+				<![CDATA[	a.USE_AT = 'Y' AND a.OTHBC_AT = 'Y' 		]]>
+			</isNotEqual>
+			<isNotEmpty prepend="AND" property="searchUse">
+				<![CDATA[	a.USE_AT = #searchUse# 		]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchTy">
+				<![CDATA[	a.CMMNTY_SE_CODE = #searchTy# 		]]>
+			</isNotEmpty>
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.CMMNTY_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	a.FRST_REGISTER_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="2">
+				<![CDATA[	(a.CMMNTY_NM LIKE '%' || #searchWrd# || '%' or a.FRST_REGISTER_NM LIKE '%' || #searchWrd# || '%')		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="3">
+				<![CDATA[	a.CMMNTY_INTRCN LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="4">
+				<![CDATA[	a.CMMNTY_ADRES LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+	</select>	
+
+	<select id="CommunityManageDAO.selectCommunityInfo" parameterClass="CmmntyVO" resultMap="CmmntyInfo">
+		<![CDATA[
+			SELECT 
+				a.CMMNTY_ID, 
+				a.CMMNTY_NM, 
+				a.CMMNTY_ADRES, 
+				a.CMMNTY_SE_CODE,
+				a.ATCH_FILE_NM, 
+				a.ATCH_FILE_ICON, 
+				a.FRST_REGISTER_PNTTM,
+				a.FRST_REGISTER_ID,
+				(
+					SELECT COUNT(CMMNTY_ID) 
+					FROM COMTNCMMNTYUSER 
+					WHERE CMMNTY_ID = a.CMMNTY_ID 
+					AND USE_AT = 'Y'
+				) AS USER_CO,
+				(
+					SELECT COUNT(BBS_ID) 
+					FROM COMTNBBS 
+					WHERE BBS_ID IN 
+					(
+					 	   SELECT BBS_ID 
+						   FROM COMTNBBSUSE 
+						   WHERE 
+						   		 TRGET_ID = #cmmntyId#
+								 AND USE_AT = 'Y'
+					) AND FRST_REGISTER_PNTTM < SYSDATE() AND FRST_REGISTER_PNTTM > TO_DATE(TO_CHAR((SYSDATE() - 2), 'YYYYMMDD'), 'YYYYMMDD') AND USE_AT = 'Y'
+				) AS ARTICLE_NEW_CO
+			FROM
+				COMTNCMMNTY a
+			LEFT OUTER JOIN COMTCCMMNDETAILCODE c
+			ON a.CMMNTY_SE_CODE = c.CODE AND c.CODE_ID = 'COM001'
+			WHERE 
+				a.CMMNTY_ID = #cmmntyId# AND a.USE_AT = 'Y'
+		]]>	
+	</select>
+	
+	<select id="CommunityManageDAO.selectCommunityInf" parameterClass="CmmntyVO" resultMap="CmmntyDetail">
+		<![CDATA[
+			SELECT 
+				a.SITE_ID,
+				a.CMMNTY_ID, 
+				a.CMMNTY_NM, 
+				a.CMMNTY_SE_CODE, 
+				c.CODE_NM AS CMMNTY_SE_NM,
+				a.CMMNTY_ADRES, 
+				a.REGIST_SE_CODE, 
+				a.CONFM_POLICY_CODE, 
+				a.RESBSCRB_POLICY_CODE, 
+				a.CMMNTY_INTRCN,
+				a.OTHBC_AT, 
+				a.ATCH_FILE_NM, 
+				a.ATCH_FILE_ICON, 
+				a.USE_AT, 
+				a.FRST_REGISTER_ID, 
+				a.FRST_REGISTER_NM, 
+				a.FRST_REGISTER_PNTTM
+			FROM
+				COMTNCMMNTY a
+			LEFT OUTER JOIN COMTCCMMNDETAILCODE c
+			ON a.CMMNTY_SE_CODE = c.CODE AND c.CODE_ID = 'COM001'
+			WHERE 
+				a.CMMNTY_ID = #cmmntyId#
+		]]>	
+			<isNotEqual prepend="AND" property="mngrAt" compareValue="Y">
+				<![CDATA[	a.USE_AT = 'Y' 		]]>
+			</isNotEqual>
+	</select>
+
+	<select id="CommunityManageDAO.selectCommunityBBSUseInf" parameterClass="CmmntyVO" resultMap="CmmntyBBSUseList">
+		<![CDATA[
+			SELECT
+				a.BBS_ID, c.BBS_NM
+			FROM
+				COMTNCMMNTYMNU a
+		    LEFT OUTER JOIN COMTNBBSUSE b
+			ON a.BBS_ID = b.BBS_ID
+			LEFT OUTER JOIN COMTNBBSMASTER c
+			ON a.BBS_ID = c.BBS_ID
+			WHERE b.TRGET_ID = #cmmntyId#
+			AND b.USE_AT = 'Y'	
+			ORDER BY a.SORT_ORDR ASC
+		]]>	
+	</select>
+	
+	<select id="CommunityManageDAO.selectCommunityMenuList" parameterClass="CmmntyVO" resultMap="CmmntyBBSUseList">
+		<![CDATA[
+			SELECT
+				a.BBS_ID, c.BBS_NM
+			FROM
+				COMTNCMMNTYMNU a
+		    LEFT OUTER JOIN COMTNBBSUSE b
+			ON a.BBS_ID = b.BBS_ID
+			LEFT OUTER JOIN COMTNBBSMASTER c
+			ON a.BBS_ID = c.BBS_ID
+			WHERE b.TRGET_ID = #cmmntyId#
+			AND b.USE_AT = 'Y'	AND c.SVC_AT = 'Y'
+			ORDER BY a.SORT_ORDR ASC
+		]]>	
+	</select>
+	
+	<select id="CommunityManageDAO.selectCommunityBBSMasterInfs" parameterClass="BoardMasterVO" resultMap="CmmntyMenuList" >
+		<![CDATA[
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT 
+				a.BBS_ID, 
+				a.BBS_ATTRB_CODE, c.CODE_NM as BBS_ATTRB_CODE_NM, a.BBS_NM, 
+				a.TMPLAT_ID, a.SVC_AT, 
+				a.FRST_REGISTER_PNTTM,
+				a.COMMENT_USE_AT, 
+				d.MAIN_OUTPT_AT, d.SORT_ORDR
+			FROM
+				COMTNBBSMASTER a
+			LEFT OUTER JOIN 
+				(SELECT CODE_ID, CODE, CODE_NM FROM 
+					COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM912' AND USE_AT='Y') c
+				ON a.BBS_ATTRB_CODE = c.CODE
+			LEFT OUTER JOIN
+				COMTNCMMNTYMNU d
+				ON a.BBS_ID = d.BBS_ID
+			WHERE 
+				a.SITE_ID = NVL(#siteId#, 'SITE_000000000000001') AND a.SYS_TY_CODE = NVL(#sysTyCode#, 'SYS01') AND a.USE_AT = 'Y'
+				AND a.BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID = NVL(#trgetId#, 'SYSTEM_DEFAULT_BOARD'))
+		]]>
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.BBS_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	c.CODE_NM LIKE '%' || #searchWrd# || '%'		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="svcAt">
+				<![CDATA[	a.SVC_AT = #searchWrd#		]]>
+			</isEqual>
+		<![CDATA[			
+			ORDER BY d.SORT_ORDR ASC 
+			) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>				
+	</select>	
+	
+	<select id="CommunityManageDAO.selectCommunityBBSMasterInfsCnt" parameterClass="BoardMasterVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT 
+				COUNT(a.BBS_ID)
+			FROM
+				COMTNBBSMASTER a
+			LEFT OUTER JOIN 
+				(SELECT CODE_ID, CODE, CODE_NM FROM 
+					COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM912' AND USE_AT='Y') c
+				ON a.BBS_ATTRB_CODE = c.CODE
+			WHERE 
+				a.SITE_ID = NVL(#siteId#, 'SITE_000000000000001') AND a.SYS_TY_CODE = NVL(#sysTyCode#, 'SYS01') AND a.USE_AT = 'Y'
+				AND a.BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID = NVL(#trgetId#, 'SYSTEM_DEFAULT_BOARD'))
+		]]>
+			
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.BBS_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	c.CODE_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="svcAt">
+				<![CDATA[	a.SVC_AT = #searchWrd#		]]>
+			</isEqual>
+	</select>
+	
+	<select id="CommunityManageDAO.selectCommunityBBSMasterByTrget" parameterClass="BoardMasterVO" resultMap="CmmntyBoardMasterAll" >
+		<![CDATA[
+			SELECT 
+				a.BBS_ID, a.BBS_ATTRB_CODE, a.BBS_NM, a.TMPLAT_ID
+			FROM
+				COMTNBBSMASTER a, COMTNBBSUSE b, COMTNCMMNTYMNU c 
+			WHERE 
+				a.BBS_ID = b.BBS_ID AND a.BBS_ID = c.BBS_ID 
+			AND
+				b.TRGET_ID = #trgetId#
+			AND
+				 a.USE_AT = 'Y'	 AND b.USE_AT = 'Y' AND c.MAIN_OUTPT_AT = 'Y'
+			 ORDER BY c.SORT_ORDR ASC  
+ 		]]>
+	</select>
+	
+	<update id="CommunityManageDAO.updateCommunityInf"  parameterClass="Cmmnty">
+			UPDATE COMTNCMMNTY
+			SET CMMNTY_NM = #cmmntyNm#
+				, CMMNTY_INTRCN = #cmmntyIntrcn# 
+				, CMMNTY_SE_CODE = #cmmntySeCode# 
+				<isNotNull property="cmmntyAdres" prepend=","> CMMNTY_ADRES = #cmmntyAdres# </isNotNull>
+				, CONFM_POLICY_CODE = #confmPolicyCode# 
+				, RESBSCRB_POLICY_CODE = #resbscrbPolicyCode# 
+				, OTHBC_AT = #othbcAt# 
+				, ATCH_FILE_NM = #atchFileNm#
+				, ATCH_FILE_ICON = #atchFileIcon#
+				<isNotEmpty property="useAt" prepend=",">USE_AT = #useAt# </isNotEmpty>
+				, LAST_UPDUSR_ID = #lastUpdusrId# 
+				, LAST_UPDUSR_PNTTM = SYSDATE()
+			WHERE
+				CMMNTY_ID = #cmmntyId#
+	</update>
+	
+	<update id="CommunityManageDAO.deleteCommunityInf"  parameterClass="Cmmnty">
+		<![CDATA[
+			UPDATE COMTNCMMNTY
+			SET
+				USE_AT = 'N',
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDUSR_PNTTM = SYSDATE()
+			WHERE
+				CMMNTY_ID = #cmmntyId#
+		]]>
+	</update>
+	
+	<update id="CommunityManageDAO.updateCommunityUserInf" parameterClass="CmmntyUser">
+		
+			UPDATE COMTNCMMNTYUSER
+			SET
+			<isNotEmpty property="mngrAt">MNGR_AT = #mngrAt#, </isNotEmpty>
+			<isNotEmpty property="authorCode">AUTHOR_CODE = #authorCode#, </isNotEmpty>	
+			<isNotEmpty property="useAt">USE_AT = #useAt#, </isNotEmpty>
+			<isNotEmpty property="secsnDe">SECSN_DE = #secsnDe#,</isNotEmpty>
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDUSR_PNTTM = SYSDATE()
+			WHERE
+				CMMNTY_ID = #cmmntyId#	
+			AND
+				EMPLYR_ID = #emplyrId#
+		
+	</update>	
+	
+	<update id="CommunityManageDAO.deleteCommunityUserInf" parameterClass="CmmntyUser">
+		<![CDATA[
+			UPDATE COMTNCMMNTYUSER
+			SET
+				USE_AT = 'N',
+				SECSN_DE = #secsnDe#,
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDUSR_PNTTM = SYSDATE()
+			WHERE
+				CMMNTY_ID = #cmmntyId#	
+			AND
+				EMPLYR_ID = #emplyrId#
+		]]>
+	</update>	
+		
+	<select id="CommunityManageDAO.selectCmmntyListPortlet"  parameterClass="CmmntyVO" resultMap="CmmntyListPortlet" >
+		<![CDATA[
+			SELECT 
+				CMMNTY_ID, CMMNTY_NM, CMMNTY_INTRCN
+			FROM
+				COMTNCMMNTY
+			WHERE USE_AT = 'Y' 
+		]]>
+	</select>
+		
+	<select id="CommunityManageDAO.checkExistUser" parameterClass="CmmntyUser" resultClass="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(CMMNTY_ID)
+				FROM
+			COMTNCMMNTYUSER
+				WHERE EMPLYR_ID = #emplyrId# 
+					AND CMMNTY_ID = #cmmntyId#
+		]]>
+		<isNotEmpty prepend="AND" property="useAt">
+			<![CDATA[	USE_AT = #useAt# 		]]>
+		</isNotEmpty>
+	</select>
+		
+	<select id="CommunityManageDAO.selectAllCmmnty" resultMap="CmmntyList" >
+		<![CDATA[
+			SELECT 
+				a.SITE_ID, a.CMMNTY_ID, a.CMMNTY_NM, a.CMMNTY_ADRES, a.USE_AT, a.REGIST_SE_CODE, 
+				c.CODE_NM as REGIST_SE_CODE_NM, 
+				a.FRST_REGISTER_PNTTM, a.FRST_REGISTER_ID, 
+				a.FRST_REGISTER_NM
+			FROM
+				COMTNCMMNTY a
+			LEFT OUTER JOIN COMTCCMMNDETAILCODE c
+			ON a.REGIST_SE_CODE = c.CODE
+			WHERE c.CODE_ID = 'COM001'
+			AND a.USE_AT = 'Y' 
+			ORDER BY CMMNTY_NM		
+		]]>
+	</select>	
+
+	<update id="CommunityManageDAO.deleteAllCommunityUserInf" parameterClass="CmmntyUser">
+		<![CDATA[
+			UPDATE COMTNCMMNTYUSER
+			SET
+				USE_AT = 'N',
+				SECSN_DE = #secsnDe#,
+				LAST_UPDUSR_ID = #lastUpdusrId#,
+				LAST_UPDUSR_PNTTM = SYSDATE()
+			WHERE
+				CMMNTY_ID = #cmmntyId#	
+			AND
+				USE_AT = 'Y'
+		]]>
+	</update>	
+	
+	<select id="CommunityManageDAO.selectSingleCommunityUserInf" parameterClass="CmmntyUser"  resultMap="CmmntyUserInf" >
+		<![CDATA[			
+			SELECT a.EMPLYR_ID, a.USER_NM, c.AUTHOR_CODE, a.MNGR_AT, a.USE_AT 
+			FROM COMTNCMMNTYUSER a, COMTNCMMNTYAUTHORINFO c
+			WHERE a.AUTHOR_CODE = c.AUTHOR_CODE
+				AND a.EMPLYR_ID = #emplyrId# 
+				AND a.CMMNTY_ID =  #cmmntyId#
+				AND a.USE_AT = 'Y'
+		]]>
+	</select>	
+	
+	<select id="CommunityManageDAO.selectCommunityManagerInf" parameterClass="CmmntyVO"  resultMap="CmmntyManagerInf" >
+		<![CDATA[			
+			SELECT a.EMPLYR_ID, a.USER_NM as EMPLYR_NM 
+			FROM COMTNCMMNTYUSER a, COMTNCMMNTYAUTHORINFO c
+			WHERE a.AUTHOR_CODE = c.AUTHOR_CODE
+				AND a.CMMNTY_ID =  #cmmntyId#
+				AND a.USE_AT = 'Y' AND a.MNGR_AT = 'Y'
+			ORDER BY a.EMPLYR_ID ASC
+		]]>
+	</select>	
+	
+	<select id="CommunityManageDAO.selectAuthorAllList" resultMap="author">
+            SELECT
+                   AUTHOR_CODE, AUTHOR_NM, AUTHOR_DC, AUTHOR_CREAT_DE
+              FROM COMTNCMMNTYAUTHORINFO
+              ORDER BY AUTHOR_CODE ASC
+    </select>
+    
+    <select id="CommunityManageDAO.checkCmmntyNmDplct" parameterClass="CmmntyVO" resultClass="int">
+        <![CDATA[
+            SELECT COUNT(CMMNTY_ID)
+                FROM    COMTNCMMNTY
+            WHERE CMMNTY_NM = #cmmntyNm#
+        ]]>
+    </select>
+    
+    <select id="CommunityManageDAO.checkCmmntyAdresDplct" parameterClass="CmmntyVO" resultClass="int">
+        <![CDATA[
+            SELECT COUNT(CMMNTY_ID)
+                FROM    COMTNCMMNTY
+            WHERE CMMNTY_ADRES = #cmmntyAdres#
+        ]]>
+    </select>
+	
+	<insert id="CommunityManageDAO.insertCommunityMnu" parameterClass="CmmntyMnu">
+		<selectKey resultClass="int" keyProperty="sortOrdr">
+		<![CDATA[
+			SELECT 
+			NVL(MAX(SORT_ORDR) + 1, 1)
+			FROM COMTNCMMNTYMNU
+			WHERE CMMNTY_ID = #trgetId#
+		]]>
+	    </selectKey>
+		<![CDATA[
+			INSERT INTO COMTNCMMNTYMNU
+			(CMMNTY_ID, BBS_ID, MAIN_OUTPT_AT, SORT_ORDR, NOTIFY_AT)
+			VALUES
+			(#trgetId#, #bbsId#, #mainOutptAt#, #sortOrdr#, #notifyAt#)		
+		]]>
+	</insert>
+	
+	<update id="CommunityManageDAO.updateCommunityMnu" parameterClass="CmmntyMnu">
+		<![CDATA[
+			UPDATE COMTNCMMNTYMNU
+			SET
+				MAIN_OUTPT_AT = #mainOutptAt#
+			WHERE
+				CMMNTY_ID = #trgetId#	
+				AND BBS_ID = #bbsId#
+		]]>
+	</update>
+	
+	<update id="CommunityManageDAO.updateCommunityMnuSortOrdr" parameterClass="CmmntyMnu">
+		<![CDATA[
+			UPDATE COMTNCMMNTYMNU
+			SET
+				SORT_ORDR = #sortOrdr#
+			WHERE
+				CMMNTY_ID = #cmmntyId#	
+				AND BBS_ID = #bbsId#
+		]]>
+	</update>
+	
+	<update id="CommunityManageDAO.updateCommunityMnuMainAt" parameterClass="CmmntyMnu">
+		<![CDATA[
+			UPDATE COMTNCMMNTYMNU
+			SET
+				MAIN_OUTPT_AT = #mainOutptAt#
+			WHERE
+				CMMNTY_ID = #cmmntyId#	
+				AND BBS_ID = #bbsId#
+		]]>
+	</update>
+	
+	<select id="CommunityManageDAO.selectCommunityMnuSortOrdr" parameterClass="CmmntyMnu" resultMap="sortMenuMap">
+		SELECT 
+			SUBSTR(A, 11) AS BBS_ID,
+			TO_NUMBER(SUBSTR(A, 0, 10)) AS SORT_ORDR
+		FROM
+		(
+            SELECT 
+             	<isEqual property="sortTyCode" compareValue="U">NVL(MAX(LPAD(A.SORT_ORDR, 10, '0') || BBS_ID), 1) AS A </isEqual> 
+				<isEqual property="sortTyCode" compareValue="D">NVL(MIN(LPAD(A.SORT_ORDR, 10, '0') || BBS_ID), 1) AS A </isEqual>
+			FROM COMTNCMMNTYMNU A LEFT JOIN COMTNCMMNTYUSER B
+				 ON A.CMMNTY_ID = B.CMMNTY_ID 
+			LEFT JOIN COMTNCMMNTY C
+				 ON A.CMMNTY_ID = C.CMMNTY_ID 
+			WHERE A.CMMNTY_ID = #cmmntyId#
+				<isEqual property="sortTyCode" compareValue="U" prepend="AND"><![CDATA[ A.SORT_ORDR < #sortOrdr# ]]></isEqual> 
+				<isEqual property="sortTyCode" compareValue="D" prepend="AND"><![CDATA[ A.SORT_ORDR > #sortOrdr# ]]></isEqual>   
+				AND B.EMPLYR_ID = #emplyrId#
+                AND C.SITE_ID = NVL(#siteId#, 'SITE_000000000000001') AND C.SYS_TY_CODE = NVL(#sysTyCode#, 'SYS01')			
+		) X
+		WHERE A IS NOT NULL
+	</select>
+	
+	<select id="CommunityManageDAO.selectMyCmmntyList" parameterClass="CmmntyUser" resultMap="CmmntyMyList" >
+			SELECT 
+                b.CMMNTY_ID, 
+                b.CMMNTY_NM, 
+                b.CMMNTY_ADRES,
+                b.ATCH_FILE_ICON
+            FROM
+                COMTNCMMNTYUSER a, COMTNCMMNTY b
+            WHERE a.CMMNTY_ID = b.CMMNTY_ID
+            AND b.SITE_ID = #siteId#
+            AND a.EMPLYR_ID = #emplyrId#
+            AND a.USE_AT = 'Y' AND b.USE_AT = 'Y' 
+            AND b.REGIST_SE_CODE = 'REGC02'
+            ORDER BY b.CMMNTY_NM ASC    	
+	</select>	
+	
+	<select id="CommunityManageDAO.selectCmmntyBBSMasterInfs" parameterClass="CmmntyMnuVO" resultMap="CmmntyBoardMasterList">
+		<![CDATA[
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT 
+				a.BBS_ID, 
+				a.BBS_ATTRB_CODE, a.BBS_NM, 
+				a.TMPLAT_ID, a.SVC_AT, 
+				a.FRST_REGISTER_PNTTM,
+				a.COMMENT_USE_AT,
+				b.MAIN_OUTPT_AT,
+				b.SORT_ORDR,
+				b.NOTIFY_AT
+			FROM
+				COMTNBBSMASTER a
+			LEFT OUTER JOIN COMTNCMMNTYMNU b
+				ON a.BBS_ID = b.BBS_ID
+			WHERE 
+				a.SITE_ID = NVL(#siteId#, 'SITE_000000000000001') AND a.SYS_TY_CODE = NVL(#sysTyCode#, 'SYS01') AND a.USE_AT = 'Y'
+				AND a.BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID = NVL(#trgetId#, 'SYSTEM_DEFAULT_BOARD'))
+		]]>
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.BBS_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="svcAt">
+				<![CDATA[	a.SVC_AT = #searchWrd#		]]>
+			</isEqual>
+		<![CDATA[			
+			ORDER BY b.SORT_ORDR ASC 
+			) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>				
+	</select>	
+	
+	<select id="CommunityManageDAO.selectCmmntyBBSMasterInfsCnt" parameterClass="CmmntyMnuVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT 
+				COUNT(a.BBS_ID)
+			FROM
+				COMTNBBSMASTER a
+			LEFT OUTER JOIN 
+				(SELECT CODE_ID, CODE, CODE_NM FROM 
+					COMTCCMMNDETAILCODE WHERE CODE_ID = 'COM912' AND USE_AT='Y') c
+				ON a.BBS_ATTRB_CODE = c.CODE
+			WHERE 
+				a.SITE_ID = NVL(#siteId#, 'SITE_000000000000001') AND a.SYS_TY_CODE = NVL(#sysTyCode#, 'SYS01') AND a.USE_AT = 'Y'
+				AND a.BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID = NVL(#trgetId#, 'SYSTEM_DEFAULT_BOARD'))
+		]]>
+			
+			<isEqual prepend="AND" property="searchCnd" compareValue="0">
+				<![CDATA[	a.BBS_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>
+			<isEqual prepend="AND" property="searchCnd" compareValue="1">
+				<![CDATA[	c.CODE_NM LIKE '%' || #searchWrd# || '%' 		]]>
+			</isEqual>	
+			<isEqual prepend="AND" property="searchCnd" compareValue="svcAt">
+				<![CDATA[	a.SVC_AT = #searchWrd#		]]>
+			</isEqual>
+	</select>
+	
+	<select id="CommunityManageDAO.selectCmmntyBBSMasterInf" parameterClass="CmmntyMnuVO" resultMap="CmmntyBoardMasterDetail" >
+		<![CDATA[
+			SELECT 
+				a.BBS_ID, a.BBS_NM, a.BBS_ATTRB_CODE, a.REPLY_POSBL_AT, a.FILE_ATCH_POSBL_AT, a.POSBL_ATCH_FILE_NUMBER, a.POSBL_ATCH_FILE_SIZE,
+				a.TMPLAT_ID, a.FRST_REGISTER_ID,
+				a.FRST_REGISTER_PNTTM,
+				a.CTGRYMASTER_ID,	
+				a.COMMENT_USE_AT,
+				a.OTHBC_USE_AT,	
+				a.SVC_AT,
+				a.INQIRE_AUTHOR,
+				a.REGIST_AUTHOR,
+				a.ANSWER_AUTHOR,
+				a.SITE_ID,
+				c.MAIN_OUTPT_AT,
+				c.NOTIFY_AT
+			FROM
+				COMTNBBSMASTER a
+			LEFT OUTER JOIN COMTNCMMNTYMNU c
+				ON a.BBS_ID = c.BBS_ID
+			WHERE a.BBS_ID = #bbsId#
+				AND a.SITE_ID = NVL(#siteId#, 'SITE_000000000000001') AND a.SYS_TY_CODE = NVL(#sysTyCode#, 'SYS01') AND a.USE_AT = 'Y'
+				AND a.BBS_ID IN (SELECT BBS_ID FROM COMTNBBSUSE WHERE TRGET_ID = NVL(#trgetId#, 'SYSTEM_DEFAULT_BOARD'))
+		]]>				
+	</select>
+	
+	<select id="CommunityManageDAO.selectCommunityBbsMaster" parameterClass="CmmntyVO" resultMap="CmmntyBoardMasterAll" >
+		<![CDATA[
+			SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+				SELECT 
+					B.BBS_ID, B.BBS_ATTRB_CODE, B.BBS_NM, B.TMPLAT_ID
+				FROM 
+					 COMTNCMMNTYMNU A LEFT JOIN COMTNBBSMASTER B
+					ON A.BBS_ID = B.BBS_ID
+				WHERE 
+				  A.CMMNTY_ID = #cmmntyId#
+				  AND A.MAIN_OUTPT_AT = 'Y'
+				  AND B.USE_AT = 'Y' AND B.SVC_AT = 'Y'
+				  ORDER BY A.SORT_ORDR ASC, B.BBS_ID ASC  
+			) TB ) WHERE rn BETWEEN 1 AND 4
+ 		]]>
+	</select>
+	
+	
+	<select id="CommunityManageDAO.selectCommunityBoardMyArticles" parameterClass="CmmntyVO" resultMap="CmmntyBoardList" >
+	<![CDATA[
+		SELECT
+	        NTT_NO, BBS_ID, NTT_SJ,
+	        FRST_REGISTER_ID, NTCR_NM,
+	        FRST_REGISTER_PNTTM, INQIRE_CO,
+	        OTHBC_AT, ORDR_CODE_DP, ATCH_FILE_ID,
+			BBS_NM, INQIRE_AUTHOR, TRGET_ID
+	    FROM
+        ( SELECT
+            rownum rn,
+            TB.* 
+        FROM
+            (
+            SELECT
+                a.NTT_NO, a.BBS_ID, a.NTT_SJ,
+                a.FRST_REGISTER_ID, NTCR_NM, a.FRST_REGISTER_PNTTM,
+                a.INQIRE_CO, a.OTHBC_AT, a.ORDR_CODE_DP,
+                a.ATCH_FILE_ID, b.BBS_NM, b.INQIRE_AUTHOR, C.TRGET_ID
+            FROM
+                COMTNBBS a LEFT JOIN COMTNBBSMASTER b ON a.BBS_ID = b.BBS_ID
+				LEFT JOIN COMTNBBSUSE c ON a.BBS_ID = c.BBS_ID
+            WHERE
+                a.BBS_ID IN 
+				(
+					SELECT C.BBS_ID FROM COMTNCMMNTYUSER A
+					LEFT JOIN COMTNCMMNTY B
+					ON A.CMMNTY_ID = B.CMMNTY_ID
+					LEFT JOIN COMTNBBSUSE C
+					ON A.CMMNTY_ID = C.TRGET_ID
+					WHERE A.EMPLYR_ID = #emplyrId# AND A.USE_AT = 'Y' AND B.USE_AT = 'Y' AND C.USE_AT = 'Y'
+				) AND c.USE_AT = 'Y' AND a.USE_AT = 'Y'                                                    
+            ORDER BY
+                a.ORDR_CODE DESC
+			) TB ) X WHERE rn BETWEEN 1 AND 4
+		]]>
+	</select>
+
+	<select id="CommunityManageDAO.selectCommunityBoardAllArticles" parameterClass="CmmntyVO" resultMap="CmmntyBoardList">
+	<![CDATA[
+		SELECT
+	        NTT_NO, BBS_ID, NTT_SJ,
+	        FRST_REGISTER_ID, NTCR_NM,
+	        FRST_REGISTER_PNTTM, INQIRE_CO,
+	        OTHBC_AT, ORDR_CODE_DP, ATCH_FILE_ID,
+			BBS_NM, INQIRE_AUTHOR, TRGET_ID
+	    FROM
+        ( 
+        SELECT rownum rn, TB.* 
+        FROM
+            (
+            SELECT
+                a.NTT_NO, a.BBS_ID, a.NTT_SJ,
+                a.FRST_REGISTER_ID, NTCR_NM, a.FRST_REGISTER_PNTTM,
+                a.INQIRE_CO, a.OTHBC_AT, a.ORDR_CODE_DP,
+                a.ATCH_FILE_ID, b.BBS_NM, b.INQIRE_AUTHOR, '' AS TRGET_ID
+            FROM
+                COMTNBBS a LEFT JOIN COMTNBBSMASTER b ON a.BBS_ID = b.BBS_ID
+            WHERE
+                a.BBS_ID IN 
+				(
+					SELECT A.BBS_ID FROM COMTNBBSUSE A
+					LEFT JOIN COMTNCMMNTY B
+					ON A.TRGET_ID = B.CMMNTY_ID
+					WHERE A.TRGET_ID = #cmmntyId# AND A.USE_AT = 'Y' AND B.USE_AT = 'Y'
+				) AND a.USE_AT = 'Y' AND b.USE_AT = 'Y'
+			]]>
+				<isEqual prepend="AND" property="searchCnd" compareValue="0">
+					<![CDATA[	a.NTT_SJ LIKE '%' || #searchWrd# || '%' 		]]>
+				</isEqual>
+				<isEqual prepend="AND" property="searchCnd" compareValue="1">
+					<![CDATA[	a.NTT_CN LIKE '%' || #searchWrd# || '%' 		]]>
+				</isEqual>
+				<isEqual prepend="AND" property="searchCnd" compareValue="2">
+					<![CDATA[	a.NTCR_NM LIKE '%' || #searchWrd# || '%' 		]]>
+				</isEqual>
+			<![CDATA[
+            ORDER BY
+                a.ORDR_CODE DESC
+			) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>
+	</select>
+	
+	<select id="CommunityManageDAO.selectCommunityBoardAllArticlesCnt" parameterClass="CmmntyVO" resultClass="java.lang.Integer" >
+	<![CDATA[
+			SELECT
+                COUNT(*)
+            FROM
+                COMTNBBS a LEFT JOIN COMTNBBSMASTER b ON a.BBS_ID = b.BBS_ID
+            WHERE
+                a.BBS_ID IN 
+				(
+					SELECT A.BBS_ID FROM COMTNBBSUSE A
+					LEFT JOIN COMTNCMMNTY B
+					ON A.TRGET_ID = B.CMMNTY_ID
+					WHERE A.TRGET_ID = #cmmntyId# AND A.USE_AT = 'Y' AND B.USE_AT = 'Y'
+				) AND a.USE_AT = 'Y' AND b.USE_AT = 'Y'                                                    
+			]]>
+				<isEqual prepend="AND" property="searchCnd" compareValue="0">
+					<![CDATA[	a.NTT_SJ LIKE '%' || #searchWrd# || '%' 		]]>
+				</isEqual>
+				<isEqual prepend="AND" property="searchCnd" compareValue="1">
+					<![CDATA[	a.NTT_CN LIKE '%' || #searchWrd# || '%' 		]]>
+				</isEqual>
+				<isEqual prepend="AND" property="searchCnd" compareValue="2">
+					<![CDATA[	a.NTCR_NM LIKE '%' || #searchWrd# || '%' 		]]>
+				</isEqual>
+	</select>
+	
+	<select id="CommunityManageDAO.selectBoardNewArticleList" parameterClass="BoardVO" resultMap="CmmntyBoardNewList">
+	<![CDATA[
+		SELECT
+	        NTT_NO, BBS_ID,NTT_SJ, FRST_REGISTER_ID,
+	        NTCR_NM, FRST_REGISTER_PNTTM, INQIRE_CO,
+	        OTHBC_AT, ORDR_CODE_DP, ATCH_FILE_ID, BBS_NM, INQIRE_AUTHOR
+	    FROM
+        ( 
+        	SELECT rownum rn, TB.* 
+			FROM
+            (
+            SELECT
+                a.NTT_NO, a.BBS_ID, a.NTT_SJ, a.FRST_REGISTER_ID,
+                NTCR_NM, a.FRST_REGISTER_PNTTM, a.INQIRE_CO,
+                a.OTHBC_AT, a.ORDR_CODE_DP, a.ATCH_FILE_ID, b.BBS_NM, b.INQIRE_AUTHOR
+            FROM
+                COMTNBBS a LEFT JOIN COMTNBBSMASTER b ON a.BBS_ID = b.BBS_ID
+            WHERE
+                a.BBS_ID IN 
+				(
+					SELECT A.BBS_ID FROM 
+					COMTNCMMNTYMNU A
+					LEFT JOIN COMTNBBSUSE B
+					ON A.BBS_ID = B.BBS_ID
+					WHERE A.CMMNTY_ID = #trgetId#
+			]]>
+				<isNotEmpty prepend="AND" property="bbsId">
+					<![CDATA[	B.BBS_ID = #bbsId# 		]]>
+				</isNotEmpty>
+			<![CDATA[
+					
+					AND A.MAIN_OUTPT_AT = 'Y'
+				)
+                AND a.USE_AT = 'Y'                                                      
+            ORDER BY
+                a.ORDR_CODE DESC
+			) TB ) X WHERE rn BETWEEN 1 AND #recordCountPerPage#
+	]]>
+	</select>
+	
+	<select id="CommunityManageDAO.selectSearchCommunityBoardArticleList" parameterClass="BoardVO" resultMap="searchList">
+		
+		   SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+            SELECT
+                a.NTT_NO, a.BBS_ID, a.NTT_SJ, a.NTT_CN, NTCR_NM,
+                a.FRST_REGISTER_PNTTM, a.INQIRE_CO, m.CMMNTY_ADRES, m.CMMNTY_NM, c.TRGET_ID,
+                s.SITE_NM, s.SITE_URL
+            FROM
+                COMTNBBS a, COMTNBBSMASTER b, COMTNBBSUSE c, COMTNCMMNTY m, COMTNSITEINFO s
+            
+            WHERE 
+            	a.BBS_ID = b.BBS_ID
+                AND  b.BBS_ID = c.BBS_ID
+                AND b.SITE_ID = m.SITE_ID
+                AND c.TRGET_ID = m.CMMNTY_ID
+                AND m.SITE_ID = s.SITE_ID
+				<isNotEmpty property="siteId">AND s.SITE_ID = #siteId#</isNotEmpty>
+				<isNotEmpty property="searchWrd">
+                	AND (a.NTT_SJ LIKE '%' || #searchWrd# || '%' OR a.NTT_CN LIKE '%' || #searchWrd# || '%')
+                </isNotEmpty>
+                <![CDATA[ AND b.INQIRE_AUTHOR <= NVL(#searchAuth#, '01')]]>
+                AND C.TRGET_ID LIKE 'CMMNTY%'
+                AND a.USE_AT = 'Y' AND b.USE_AT = 'Y' AND c.USE_AT = 'Y'
+                AND m.USE_AT = 'Y' AND m.OTHBC_AT = 'Y'
+                AND s.USE_AT = 'Y' AND s.ACTVTY_AT = 'Y' 
+            ORDER BY a.ORDR_CODE DESC
+            ) TB ) X WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+    	
+	</select>	
+	
+	<select id="CommunityManageDAO.selectSearchCommunityBoardArticleListCnt" parameterClass="BoardVO" resultClass="java.lang.Integer" >
+		
+			SELECT
+				COUNT(*)
+			FROM
+				COMTNBBS a, COMTNBBSMASTER b, COMTNBBSUSE c, COMTNCMMNTY m, COMTNSITEINFO s
+			WHERE
+				a.BBS_ID = b.BBS_ID
+                AND  b.BBS_ID = c.BBS_ID
+                AND b.SITE_ID = m.SITE_ID
+                AND c.TRGET_ID = m.CMMNTY_ID
+                AND m.SITE_ID = s.SITE_ID
+				<isNotEmpty property="siteId">AND s.SITE_ID = #siteId#</isNotEmpty>
+				<isNotEmpty property="searchWrd">
+                	AND (a.NTT_SJ LIKE '%' || #searchWrd# || '%' OR a.NTT_CN LIKE '%' || #searchWrd# || '%')
+                </isNotEmpty>
+                <![CDATA[ AND b.INQIRE_AUTHOR <= NVL(#searchAuth#, '01')]]>
+                AND C.TRGET_ID LIKE 'CMMNTY%'
+                AND a.USE_AT = 'Y' AND b.USE_AT = 'Y' AND c.USE_AT = 'Y'
+                AND m.USE_AT = 'Y' AND m.OTHBC_AT = 'Y'
+                AND s.USE_AT = 'Y' AND s.ACTVTY_AT = 'Y' 
+	</select>
+	
+	<select id="CommunityManageDAO.selectSearchCommunityNotifyArticleList" parameterClass="BoardVO" resultMap="searchList">
+		   SELECT
+                a.NTT_NO, a.BBS_ID, a.NTT_SJ, a.NTT_CN, NTCR_NM,
+                a.FRST_REGISTER_PNTTM, a.INQIRE_CO, m.CMMNTY_ADRES, m.CMMNTY_NM, c.TRGET_ID,
+                s.SITE_NM, s.SITE_URL
+            FROM
+                COMTNBBS a, COMTNBBSMASTER b, COMTNBBSUSE c, COMTNCMMNTY m, COMTNSITEINFO s, COMTNCMMNTYMNU x, COMTNCMMNTYUSER y
+            
+            WHERE 
+                a.BBS_ID = b.BBS_ID
+                AND  b.BBS_ID = c.BBS_ID
+                AND b.SITE_ID = m.SITE_ID
+                AND c.TRGET_ID = m.CMMNTY_ID
+                AND m.SITE_ID = s.SITE_ID
+                AND m.CMMNTY_ID = x.CMMNTY_ID
+                AND y.CMMNTY_ID = m.CMMNTY_ID
+                AND b.BBS_ID = x.BBS_ID
+                AND C.TRGET_ID LIKE 'CMMNTY%'
+                AND a.USE_AT = 'Y' AND b.USE_AT = 'Y' AND c.USE_AT = 'Y'
+                AND m.USE_AT = 'Y' AND m.OTHBC_AT = 'Y'
+                AND s.USE_AT = 'Y' AND s.ACTVTY_AT = 'Y' 
+                AND x.NOTIFY_AT = 'Y'
+                AND y.EMPLYR_ID = #trgetId#
+                AND y.USE_AT = 'Y'
+                AND a.FRST_REGISTER_PNTTM > SYSDATE() - 1
+            ORDER BY a.ORDR_CODE DESC
+	</select>	
+	
+	<select id="CommunityManageDAO.selectSearchCommunityNotifyUrlList" parameterClass="BoardVO" resultMap="searchList">
+		   SELECT
+                NULL as NTT_NO, b.BBS_ID, NULL as NTT_SJ, NULL as NTT_CN, NULL as NTCR_NM,
+                NULL as FRST_REGISTER_PNTTM, NULL as INQIRE_CO, m.CMMNTY_ADRES, m.CMMNTY_NM, c.TRGET_ID,
+                s.SITE_NM, s.SITE_URL
+            FROM
+                COMTNBBSMASTER b, COMTNBBSUSE c, COMTNCMMNTY m, COMTNSITEINFO s, COMTNCMMNTYMNU x, COMTNCMMNTYUSER y
+            
+            WHERE 
+                b.BBS_ID = c.BBS_ID
+                AND b.SITE_ID = m.SITE_ID
+                AND c.TRGET_ID = m.CMMNTY_ID
+                AND m.SITE_ID = s.SITE_ID
+                AND m.CMMNTY_ID = x.CMMNTY_ID
+                AND y.CMMNTY_ID = m.CMMNTY_ID
+                AND b.BBS_ID = x.BBS_ID
+                AND C.TRGET_ID LIKE 'CMMNTY%'
+                AND b.USE_AT = 'Y' AND c.USE_AT = 'Y'
+                AND m.USE_AT = 'Y' AND m.OTHBC_AT = 'Y'
+                AND s.USE_AT = 'Y' AND s.ACTVTY_AT = 'Y' 
+                AND x.NOTIFY_AT = 'Y'
+                AND s.SITE_ID = #siteId#
+                AND y.EMPLYR_ID = #trgetId#
+                AND y.USE_AT = 'Y'
+	</select>	
+	
+	
+	<select id="CommunityManageDAO.selectSearchCommunityNotifyArticleListCnt" parameterClass="BoardVO" resultClass="java.lang.Integer" >
+		
+			SELECT
+				COUNT(*)
+			FROM
+                COMTNBBS a, COMTNBBSMASTER b, COMTNBBSUSE c, COMTNCMMNTY m, COMTNSITEINFO s, COMTNCMMNTYMNU x, COMTNCMMNTYUSER y
+            
+            WHERE 
+                a.BBS_ID = b.BBS_ID
+                AND  b.BBS_ID = c.BBS_ID
+                AND b.SITE_ID = m.SITE_ID
+                AND c.TRGET_ID = m.CMMNTY_ID
+                AND m.SITE_ID = s.SITE_ID
+                AND m.CMMNTY_ID = x.CMMNTY_ID
+                AND y.CMMNTY_ID = m.CMMNTY_ID
+                AND b.BBS_ID = x.BBS_ID
+                AND C.TRGET_ID LIKE 'CMMNTY%'
+                AND a.USE_AT = 'Y' AND b.USE_AT = 'Y' AND c.USE_AT = 'Y'
+                AND m.USE_AT = 'Y' AND m.OTHBC_AT = 'Y'
+                AND s.USE_AT = 'Y' AND s.ACTVTY_AT = 'Y' 
+                AND x.NOTIFY_AT = 'Y'
+                AND y.EMPLYR_ID = #trgetId#
+                AND y.USE_AT = 'Y'
+                AND a.FRST_REGISTER_PNTTM > SYSDATE() - 1
+	</select>
+
+</sqlMap>
+

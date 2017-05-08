@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Mpm">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="MpmVO" type="egovframework.com.sym.mpm.service.MpmVO"/>
+	<typeAlias  alias="Mpm" type="egovframework.com.sym.mpm.service.Mpm"/>
+	
+	<resultMap id="mpmList" class="egovframework.com.sym.mpm.service.Mpm">
+		<result property="menuId" column="MENU_ID" columnIndex="1"/>
+		<result property="siteId" column="SITE_ID" columnIndex="2"/>
+		<result property="sysTyCode" column="SYS_TY_CODE" columnIndex="3"/>
+		<result property="upperMenuId" column="UPPER_MENU_ID" columnIndex="4"/>
+		<result property="compositionTyCode" column="COMPOSITION_TY_CODE" columnIndex="5"/>
+		<result property="cntntsTyCode" column="CNTNTS_TY_CODE" columnIndex="6"/>
+		<result property="menuNm" column="MENU_NM" columnIndex="7"/>
+		<result property="htmlUseAt" column="HTML_USE_AT" columnIndex="8"/>
+		<result property="progrmId" column="PROGRM_ID" columnIndex="9"/>
+		<result property="url" column="URL" columnIndex="10"/>		
+		<result property="expsrUseAt" column="EXPSR_USE_AT" columnIndex="11"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="12"/>
+		<result property="nwdAt" column="NWD_AT" columnIndex="13"/>
+		<result property="mobileUseAt" column="MOBILE_USE_AT" columnIndex="14"/>
+		<result property="useAt" column="USE_AT" columnIndex="15"/>
+		<result property="menuPathByName" column="MENU_PATH_BY_NAME" columnIndex="16"/>
+		<result property="menuPathById" column="MENU_PATH_BY_ID" columnIndex="17"/>
+		<result property="menuLevel" column="MENU_LEVEL" columnIndex="18"/>	
+		<result property="menuLastNodeAt" column="MENU_LAST_NODE_AT" columnIndex="19"/>	
+		<result property="siteUrl" column="SITE_URL" columnIndex="20"/>
+		
+		<result property="stdntUseAt" column="STDNT_USE_AT" columnIndex="21"/>
+		<result property="stdnprntUseAt" column="STDNPRNT_USE_AT" columnIndex="22"/>
+		<result property="profsrUseAt" column="PROFSR_USE_AT" columnIndex="23"/>
+		<result property="generalUseAt" column="GENERAL_USE_AT" columnIndex="24"/>
+		<result property="progrmFactr" column="PROGRM_FACTR" columnIndex="25"/>
+	</resultMap>
+
+	<resultMap id="mpmDetail" class="egovframework.com.sym.mpm.service.MpmVO">
+		<result property="menuId" column="MENU_ID" columnIndex="1"/>
+		<result property="siteId" column="SITE_ID" columnIndex="2"/>
+		<result property="sysTyCode" column="SYS_TY_CODE" columnIndex="3"/>
+		<result property="upperMenuId" column="UPPER_MENU_ID" columnIndex="4"/>
+		<result property="compositionTyCode" column="COMPOSITION_TY_CODE" columnIndex="5"/>
+		<result property="cntntsTyCode" column="CNTNTS_TY_CODE" columnIndex="6"/>
+		<result property="menuNm" column="MENU_NM" columnIndex="7"/>
+		<result property="imageFileNm" column="IMAGE_FILE_NM" columnIndex="8"/>
+		<result property="htmlUseAt" column="HTML_USE_AT" columnIndex="9"/>
+		<result property="styleCn" column="STYLE_CN" columnIndex="10"/>
+		<result property="scriptCn" column="SCRIPT_CN" columnIndex="11"/>
+		<result property="htmlCn" column="HTML_CN" columnIndex="12"/>
+		<result property="progrmId" column="PROGRM_ID" columnIndex="13"/>
+		<result property="url" column="URL" columnIndex="14"/>		
+		<result property="expsrUseAt" column="EXPSR_USE_AT" columnIndex="15"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="16"/>
+		<result property="nwdAt" column="NWD_AT" columnIndex="17"/>
+		<result property="mobileUseAt" column="MOBILE_USE_AT" columnIndex="18"/>
+		<result property="useAt" column="USE_AT" columnIndex="19"/>
+		<result property="frstRegisterPnttm" 	column="FRST_REGISTER_PNTTM" 	columnIndex="20"/>
+		<result property="frstRegisterId" 		column="FRST_REGISTER_ID" 		columnIndex="21"/>
+		<result property="lastUpdusrPnttm" 		column="LAST_UPDUSR_PNTTM" 		columnIndex="22"/>
+		<result property="lastUpdusrId" 		column="LAST_UPDUSR_ID" 		columnIndex="23"/>	
+		<result property="menuPathByName" column="MENU_PATH_BY_NAME" columnIndex="24"/>
+		<result property="menuPathById" column="MENU_PATH_BY_ID" columnIndex="25"/>
+		<result property="menuLevel" column="MENU_LEVEL" columnIndex="26"/>	
+		<result property="menuLastNodeAt" column="MENU_LAST_NODE_AT" columnIndex="27"/>
+		<result property="siteUrl" column="SITE_URL" columnIndex="28"/>
+		
+		<result property="stdntUseAt" column="STDNT_USE_AT" columnIndex="29"/>
+		<result property="stdnprntUseAt" column="STDNPRNT_USE_AT" columnIndex="30"/>
+		<result property="profsrUseAt" column="PROFSR_USE_AT" columnIndex="31"/>
+		<result property="generalUseAt" column="GENERAL_USE_AT" columnIndex="32"/>
+		
+		<result property="htmlsourcTyCode" column="HTMLSOURC_TY_CODE" columnIndex="33"/>
+		<result property="mobileHtmlsourcTyCode" column="MOBILE_HTMLSOURC_TY_CODE" columnIndex="34"/>
+		<result property="mobileStyleCn" column="MOBILE_STYLE_CN" columnIndex="35"/>
+		<result property="mobileScriptCn" column="MOBILE_SCRIPT_CN" columnIndex="36"/>
+		<result property="mobileHtmlCn" column="MOBILE_HTML_CN" columnIndex="37"/>
+		
+		<result property="atchFileId" column="ATCH_FILE_ID" columnIndex="38"/>
+		<result property="mobileAtchFileId" column="MOBILE_ATCH_FILE_ID" columnIndex="39"/>
+		<result property="progrmFactr" column="PROGRM_FACTR" columnIndex="40"/>
+	</resultMap>
+	
+	<select id="MpmManageDAO.selectChildMpmCnt" parameterClass="Mpm" resultClass="java.lang.Integer" >
+		 SELECT IF
+		      (CHILDE_CNT > 0,
+		        CASE MENU_LEVEL
+		          WHEN 0 THEN MAX_SORT_ORDR + 10000000
+		          WHEN 1 THEN MAX_SORT_ORDR + 100000
+		          WHEN 2 THEN MAX_SORT_ORDR + 1000
+		          WHEN 3 THEN MAX_SORT_ORDR + 10
+		       END
+		       , CASE MENU_LEVEL
+		          WHEN 0 THEN SORT_ORDR + 10000000
+		          WHEN 1 THEN SORT_ORDR + 100000
+		          WHEN 2 THEN SORT_ORDR + 1000
+		          WHEN 3 THEN SORT_ORDR + 10
+		       END
+		       ) AS VALUE
+		  FROM COMTNSITEMNU A,
+		       (SELECT COUNT(*) AS CHILDE_CNT, MAX(SORT_ORDR) AS MAX_SORT_ORDR FROM COMTNSITEMNU
+		  WHERE UPPER_MENU_ID = #upperMenuId#) B
+		 WHERE A.MENU_ID = #upperMenuId#
+	</select>
+	
+
+	<insert id="MpmManageDAO.insertMpm" parameterClass="Mpm" >
+		INSERT INTO COMTNSITEMNU (
+			   MENU_ID, SITE_ID, SYS_TY_CODE, UPPER_MENU_ID,
+			   COMPOSITION_TY_CODE, CNTNTS_TY_CODE, MENU_NM, 
+			   IMAGE_FILE_NM, HTML_USE_AT, STYLE_CN, 
+			   SCRIPT_CN, HTML_CN, PROGRM_ID, 
+			   URL, EXPSR_USE_AT, SORT_ORDR, MENU_LEVEL,
+			   NWD_AT, MOBILE_USE_AT, 
+			   USE_AT, FRST_REGISTER_PNTTM, FRST_REGISTER_ID,
+			   STDNT_USE_AT, STDNPRNT_USE_AT, PROFSR_USE_AT, GENERAL_USE_AT,
+			   HTMLSOURC_TY_CODE, MOBILE_HTMLSOURC_TY_CODE, MOBILE_STYLE_CN, MOBILE_SCRIPT_CN, MOBILE_HTML_CN,
+			   ATCH_FILE_ID, MOBILE_ATCH_FILE_ID, PROGRM_FACTR
+			   ) 
+			VALUES ( #menuId#,
+			 IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#),
+			 IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#),
+			 #upperMenuId#,
+			 #compositionTyCode#,
+			 #cntntsTyCode#,
+			 REPLACE(#menuNm#, '>', '-'),
+			 #imageFileNm#,
+			 #htmlUseAt#,
+			 #styleCn#,
+			 #scriptCn#,
+			 #htmlCn#,
+			 #progrmId#,
+			 #url#,
+			 #expsrUseAt#,
+			 #sortOrdr#,
+			 #menuLevel#,
+			 #nwdAt#,
+			 #mobileUseAt#,
+			 #useAt#,
+			 SYSDATE(),
+			 #frstRegisterId#,
+			 IF(#stdntUseAt# = '' OR #stdntUseAt# = NULL, 'N', #stdntUseAt#),
+			 IF(#stdnprntUseAt# = '' OR #stdnprntUseAt# = NULL, 'N', #stdnprntUseAt#),
+			 IF(#profsrUseAt# = '' OR #profsrUseAt# = NULL, 'N', #profsrUseAt#),
+			 IF(#generalUseAt# = '' OR #generalUseAt# = NULL, 'N', #generalUseAt#),
+			 #htmlsourcTyCode#,
+			 #mobileHtmlsourcTyCode#,
+			 #mobileStyleCn#,
+			 #mobileScriptCn#,
+			 #mobileHtmlCn#,
+			 #atchFileId#,
+			 #mobileAtchFileId#,
+			 #progrmFactr#
+			 )
+			 
+	</insert>
+
+
+	
+	<select id="MpmManageDAO.selectFullMpmList" parameterClass="MpmVO" resultMap="mpmDetail" >
+
+		SELECT 
+		   MENU_ID, A.SITE_ID, A.SYS_TY_CODE, UPPER_MENU_ID,
+		   COMPOSITION_TY_CODE, CNTNTS_TY_CODE, MENU_NM, 
+		   IMAGE_FILE_NM, HTML_USE_AT, STYLE_CN, 
+		   SCRIPT_CN, HTML_CN, PROGRM_ID, 
+		   URL, EXPSR_USE_AT, A.SORT_ORDR, 
+		   NWD_AT, A.MOBILE_USE_AT, 
+		   A.USE_AT, 
+		   NULL AS MENU_PATH_BY_NAME,
+		   NULL AS MENU_PATH_BY_ID,
+		   1 AS MENU_LEVEL,
+		   NULL AS MENU_LAST_NODE_AT,
+		   A.FRST_REGISTER_PNTTM, A.FRST_REGISTER_ID, 
+		   A.LAST_UPDUSR_PNTTM, A.LAST_UPDUSR_ID, NULL AS SITE_URL,
+		   STDNT_USE_AT, STDNPRNT_USE_AT, PROFSR_USE_AT, GENERAL_USE_AT,
+		   HTMLSOURC_TY_CODE, MOBILE_HTMLSOURC_TY_CODE, MOBILE_STYLE_CN, MOBILE_SCRIPT_CN, MOBILE_HTML_CN, 
+		   ATCH_FILE_ID, MOBILE_ATCH_FILE_ID, PROGRM_FACTR
+		FROM COMTNSITEMNU A
+		WHERE A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+			AND A.USE_AT = 'Y'
+		START WITH UPPER_MENU_ID IS NULL
+		CONNECT BY PRIOR MENU_ID = UPPER_MENU_ID
+		ORDER SIBLINGS BY A.SORT_ORDR ASC
+
+
+	</select>	
+	
+	<select id="MpmManageDAO.selectMpmList" parameterClass="MpmVO" resultMap="mpmList" >
+		SELECT
+			MENU_ID, SITE_ID, SYS_TY_CODE, UPPER_MENU_ID,
+		   COMPOSITION_TY_CODE, CNTNTS_TY_CODE, MENU_NM, 
+		   HTML_USE_AT, PROGRM_ID, 
+		   URL, EXPSR_USE_AT, SORT_ORDR, 
+		   NWD_AT, MOBILE_USE_AT, 
+		   USE_AT,
+		   
+		   CASE MENU_LEVEL 
+		     WHEN 0 THEN '홈페이지'
+		     WHEN 1 THEN (SELECT MENU_NM FROM COMTNSITEMNU B WHERE SORT_ORDR = CONCAT(LEVEL1,'000000'))
+		     WHEN 2 THEN (SELECT GROUP_CONCAT(MENU_NM SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000')))
+		     WHEN 3 THEN (SELECT GROUP_CONCAT(MENU_NM SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000'),CONCAT(CONCAT(LEVEL1,CONCAT(LEVEL2,LEVEL3)),'00')))
+		     WHEN 4 THEN (SELECT GROUP_CONCAT(MENU_NM SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000'),CONCAT(CONCAT(LEVEL1,CONCAT(LEVEL2,LEVEL3)),'00'),CONCAT(LEVEL1,CONCAT(LEVEL2,CONCAT(LEVEL3,LEVEL4)))))
+		   END AS MENU_PATH_BY_NAME,
+		   
+		    CASE MENU_LEVEL 
+		      WHEN 0 THEN MENU_ID
+		      WHEN 1 THEN (SELECT MENU_ID FROM COMTNSITEMNU B WHERE SORT_ORDR = CONCAT(LEVEL1,'000000'))
+		      WHEN 2 THEN (SELECT GROUP_CONCAT(MENU_ID SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000')))
+		      WHEN 3 THEN (SELECT GROUP_CONCAT(MENU_ID SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000'),CONCAT(CONCAT(LEVEL1,CONCAT(LEVEL2,LEVEL3)),'00')))
+		      WHEN 4 THEN (SELECT GROUP_CONCAT(MENU_ID SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000'),CONCAT(CONCAT(LEVEL1,CONCAT(LEVEL2,LEVEL3)),'00'),CONCAT(LEVEL1,CONCAT(LEVEL2,CONCAT(LEVEL3,LEVEL4)))))
+		    END AS MENU_PATH_BY_ID,
+		   
+		   MENU_LEVEL,
+		   'Y' AS MENU_LAST_NODE_AT,
+		   
+		   SITE_URL, STDNT_USE_AT, STDNPRNT_USE_AT, PROFSR_USE_AT, GENERAL_USE_AT, PROGRM_FACTR
+		FROM
+		(
+		SELECT 
+		   MENU_ID, A.SITE_ID, A.SYS_TY_CODE, UPPER_MENU_ID,
+		   COMPOSITION_TY_CODE, CNTNTS_TY_CODE, MENU_NM, 
+		   HTML_USE_AT, PROGRM_ID, 
+		   URL, EXPSR_USE_AT, A.SORT_ORDR, 
+		   NWD_AT, A.MOBILE_USE_AT, 
+		   A.USE_AT,
+		   A.MENU_LEVEL,
+		   SUBSTR(SORT_ORDR,1,2) AS LEVEL1,
+		   SUBSTR(SORT_ORDR,3,2) AS LEVEL2,
+		   SUBSTR(SORT_ORDR,5,2) AS LEVEL3,
+		   SUBSTR(SORT_ORDR,7,2) AS LEVEL4,
+		   IF((SELECT COUNT(*) FROM COMTNSITEMNU C WHERE A.MENU_ID = C.UPPER_MENU_ID) > 0, 'N', 'Y') AS MENU_LAST_NODE_AT,
+		   B.SITE_URL,
+		   STDNT_USE_AT, STDNPRNT_USE_AT, PROFSR_USE_AT, GENERAL_USE_AT, PROGRM_FACTR
+		FROM COMTNSITEMNU A
+		LEFT OUTER JOIN COMTNSITEINFO B ON A.SITE_ID = B.SITE_ID 
+		WHERE A.SITE_ID = IF(#siteId# = '' OR #siteId# = NULL, 'SITE_000000000000001', #siteId#) 
+			AND A.SYS_TY_CODE = IF(#sysTyCode# = '' OR #sysTyCode# = NULL, 'SYS01', #sysTyCode#)
+			AND A.USE_AT = 'Y'
+		ORDER BY A.SORT_ORDR ASC
+		) TB
+	</select>
+ 	
+	<select id="MpmManageDAO.selectMpm" parameterClass="Mpm" resultMap="mpmDetail" >
+		SELECT 
+		   MENU_ID, SITE_ID, SYS_TY_CODE, UPPER_MENU_ID,
+		   COMPOSITION_TY_CODE, CNTNTS_TY_CODE, MENU_NM, 
+		   IMAGE_FILE_NM, HTML_USE_AT, STYLE_CN, 
+		   SCRIPT_CN, HTML_CN, PROGRM_ID, 
+		   URL, EXPSR_USE_AT, SORT_ORDR, 
+		   NWD_AT, MOBILE_USE_AT, 
+		   USE_AT, 
+		   NULL AS MENU_PATH_BY_NAME,
+		   NULL AS MENU_PATH_BY_ID,
+		   1 AS MENU_LEVEL,
+		   NULL AS MENU_LAST_NODE_AT,
+		   FRST_REGISTER_PNTTM, FRST_REGISTER_ID, 
+		   LAST_UPDUSR_PNTTM, LAST_UPDUSR_ID, NULL AS SITE_URL,
+		   STDNT_USE_AT, STDNPRNT_USE_AT, PROFSR_USE_AT, GENERAL_USE_AT,
+		   HTMLSOURC_TY_CODE, MOBILE_HTMLSOURC_TY_CODE, MOBILE_STYLE_CN, MOBILE_SCRIPT_CN, MOBILE_HTML_CN,
+		   ATCH_FILE_ID, MOBILE_ATCH_FILE_ID, PROGRM_FACTR
+		FROM COMTNSITEMNU
+		WHERE SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+			AND MENU_ID = #menuId#	
+			AND USE_AT = 'Y'
+	</select> 
+ 
+
+ 	<update id="MpmManageDAO.updateMpm" parameterClass="Mpm">
+
+			UPDATE COMTNSITEMNU SET	
+				<isNotEmpty property="upperMenuId"> UPPER_MENU_ID = #upperMenuId#,</isNotEmpty>		
+				COMPOSITION_TY_CODE = #compositionTyCode#,
+				CNTNTS_TY_CODE = #cntntsTyCode#,
+				MENU_NM = REPLACE(#menuNm#, '>', '-'),
+   				<isNotEmpty property="imageFileNm"> IMAGE_FILE_NM = #imageFileNm#,</isNotEmpty>
+   				HTML_USE_AT = #htmlUseAt#,
+   				STYLE_CN = #styleCn#,
+   				SCRIPT_CN = #scriptCn#,
+   				HTML_CN = #htmlCn# ,
+   				PROGRM_ID = #progrmId#,
+   				URL = #url#, 
+   				EXPSR_USE_AT = #expsrUseAt#,
+   				SORT_ORDR = #sortOrdr#, 
+   				NWD_AT = #nwdAt#,
+   				MOBILE_USE_AT = #mobileUseAt#,
+   				LAST_UPDUSR_PNTTM = SYSDATE(),
+   				LAST_UPDUSR_ID = #lastUpdusrId#,
+   				STDNT_USE_AT = IFNULL(#stdntUseAt#, 'N'), 
+   				STDNPRNT_USE_AT = IFNULL(#stdnprntUseAt#, 'N'), 
+   				PROFSR_USE_AT = IFNULL(#profsrUseAt#, 'N'),
+   				GENERAL_USE_AT = IFNULL(#generalUseAt#, 'N'),
+   				
+   				HTMLSOURC_TY_CODE = #htmlsourcTyCode#,
+   				MOBILE_HTMLSOURC_TY_CODE = #mobileHtmlsourcTyCode#,
+				MOBILE_STYLE_CN = #mobileStyleCn#,
+				MOBILE_SCRIPT_CN = #mobileScriptCn#,
+				MOBILE_HTML_CN = #mobileHtmlCn#,
+				
+				ATCH_FILE_ID = #atchFileId#,
+				MOBILE_ATCH_FILE_ID = #mobileAtchFileId#,
+				PROGRM_FACTR = #progrmFactr#
+			WHERE SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+				AND MENU_ID = #menuId#
+
+ 	</update>
+
+
+
+	<delete id="MpmManageDAO.deleteMpm">
+		<![CDATA[
+			UPDATE COMTNSITEMNU SET
+				USE_AT = 'N',
+				LAST_UPDUSR_PNTTM = SYSDATE(),
+   				LAST_UPDUSR_ID = #lastUpdusrId#
+			WHERE SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') 
+				AND SYS_TY_CODE = CASE #sysTyCode# WHEN '' THEN 'SYS01' ELSE #sysTyCode# END 
+				AND MENU_ID = #menuId#
+		]]>
+	</delete>
+
+	<update id="MpmManageDAO.updateMpmSortOrdr" parameterClass="Mpm">
+			UPDATE COMTNSITEMNU A
+			    SET SORT_ORDR =  
+				(
+				    SELECT
+				    	(				    	
+					    	CASE 
+					            WHEN MENU_ID = CAST(#menuId# AS CHAR(20)) THEN CAST(#sortOrdr# AS NUMBER(8))
+					            <isEqual property="sortTyCode" compareValue="D">
+	                				ELSE INDEX_POS - 1 
+					            </isEqual>
+					            <isEqual property="sortTyCode" compareValue="U">
+					            	ELSE INDEX_POS + 1
+					            </isEqual>
+					        END
+				        ) SORT_ORDR
+				    FROM
+				    (    
+				        SELECT 
+				            ROWNUM -1 INDEX_POS,
+				            MENU_ID
+				        FROM
+				        (        
+			                SELECT 
+			                    MENU_ID
+			                FROM COMTNSITEMNU
+			                WHERE SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+			                    AND LEVEL = 1      
+			                START WITH UPPER_MENU_ID = #upperMenuId#
+			                CONNECT BY PRIOR MENU_ID = UPPER_MENU_ID
+			                ORDER BY SORT_ORDR ASC
+				        )
+				    )
+				    WHERE MENU_ID = A.MENU_ID
+				)
+			WHERE MENU_ID IN
+			(
+				SELECT
+					MENU_ID
+				FROM
+				(
+			        SELECT 
+			        	ROWNUM -1 INDEX_POS,
+			            MENU_ID
+			        FROM
+			        (        
+		                SELECT 
+		                    MENU_ID
+		                FROM COMTNSITEMNU
+		                WHERE SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01')
+		                    AND LEVEL = 1
+		                START WITH UPPER_MENU_ID = #upperMenuId#
+		                CONNECT BY PRIOR MENU_ID = UPPER_MENU_ID
+		                ORDER BY SORT_ORDR ASC
+			        )
+		        ) 
+		        WHERE
+		        	<isEqual property="sortTyCode" compareValue="D">
+		        		<![CDATA[ INDEX_POS <= #sortOrdr# ]]>
+		        	</isEqual>
+		        	<isEqual property="sortTyCode" compareValue="U">
+		        		<![CDATA[ INDEX_POS >= #sortOrdr# ]]>
+		        	</isEqual>
+			)
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	<select id="MpmManageDAO.selectMpmServiceList" parameterClass="MpmVO" resultMap="mpmDetail" >
+		SELECT
+			  MENU_ID,
+			  SITE_ID,
+			  SYS_TY_CODE,
+			  UPPER_MENU_ID,
+			  COMPOSITION_TY_CODE,
+			  CNTNTS_TY_CODE,
+			  MENU_NM,
+			  IMAGE_FILE_NM,
+			  HTML_USE_AT,
+			  STYLE_CN,
+			  SCRIPT_CN,
+			  HTML_CN,
+			  PROGRM_ID,
+			  URL,
+			  EXPSR_USE_AT,
+			  SORT_ORDR,
+			  NWD_AT,
+			  MOBILE_USE_AT,
+			  USE_AT,
+			  CASE MENU_LEVEL 
+			    WHEN 0 THEN '홈페이지'
+			    WHEN 1 THEN (SELECT MENU_NM FROM COMTNSITEMNU B WHERE SORT_ORDR = CONCAT(LEVEL1,'000000'))
+			    WHEN 2 THEN (SELECT GROUP_CONCAT(MENU_NM SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000')))
+			    WHEN 3 THEN (SELECT GROUP_CONCAT(MENU_NM SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000'),CONCAT(CONCAT(LEVEL1,CONCAT(LEVEL2,LEVEL3)),'00')))
+			    WHEN 4 THEN (SELECT GROUP_CONCAT(MENU_NM SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000'),CONCAT(CONCAT(LEVEL1,CONCAT(LEVEL2,LEVEL3)),'00'),CONCAT(LEVEL1,CONCAT(LEVEL2,CONCAT(LEVEL3,LEVEL4)))))
+			  END AS MENU_PATH_BY_NAME,
+			  
+			  CASE MENU_LEVEL 
+			    WHEN 0 THEN MENU_ID
+			    WHEN 1 THEN (SELECT MENU_ID FROM COMTNSITEMNU B WHERE SORT_ORDR = CONCAT(LEVEL1,'000000'))
+			    WHEN 2 THEN (SELECT GROUP_CONCAT(MENU_ID SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000')))
+			    WHEN 3 THEN (SELECT GROUP_CONCAT(MENU_ID SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000'),CONCAT(CONCAT(LEVEL1,CONCAT(LEVEL2,LEVEL3)),'00')))
+			    WHEN 4 THEN (SELECT GROUP_CONCAT(MENU_ID SEPARATOR '>') FROM COMTNSITEMNU B WHERE SORT_ORDR IN (CONCAT(LEVEL1,'000000'),CONCAT(CONCAT(LEVEL1,LEVEL2),'0000'),CONCAT(CONCAT(LEVEL1,CONCAT(LEVEL2,LEVEL3)),'00'),CONCAT(LEVEL1,CONCAT(LEVEL2,CONCAT(LEVEL3,LEVEL4)))))
+			  END AS MENU_PATH_BY_ID,  
+			 MENU_LEVEL,
+			 MENU_LAST_NODE_AT,
+			 FRST_REGISTER_PNTTM,
+			 FRST_REGISTER_ID,
+			 LAST_UPDUSR_PNTTM,
+			 LAST_UPDUSR_ID,
+			 SITE_URL,
+			 STDNT_USE_AT,
+			 STDNPRNT_USE_AT,
+			 PROFSR_USE_AT,
+			 GENERAL_USE_AT,
+			 HTMLSOURC_TY_CODE,
+			 MOBILE_HTMLSOURC_TY_CODE,
+			 MOBILE_STYLE_CN,
+			 MOBILE_SCRIPT_CN,
+			 MOBILE_HTML_CN,
+			 ATCH_FILE_ID,
+			 MOBILE_ATCH_FILE_ID,
+			 PROGRM_FACTR
+		FROM(
+			SELECT 
+				MENU_ID, A.SITE_ID, A.SYS_TY_CODE, UPPER_MENU_ID,
+			   COMPOSITION_TY_CODE, CNTNTS_TY_CODE, MENU_NM, 
+			   IMAGE_FILE_NM, HTML_USE_AT, 
+			   NULL AS STYLE_CN, 
+			   NULL AS SCRIPT_CN, 
+			   NULL AS HTML_CN, 
+			   PROGRM_ID, 
+			   URL, EXPSR_USE_AT, SORT_ORDR, 
+			   NWD_AT, A.MOBILE_USE_AT, 
+			   A.USE_AT, 
+		   	   MENU_LEVEL,
+		   	   SUBSTR(SORT_ORDR,1,2) AS LEVEL1,
+		       SUBSTR(SORT_ORDR,3,2) AS LEVEL2,
+		       SUBSTR(SORT_ORDR,5,2) AS LEVEL3,
+		       SUBSTR(SORT_ORDR,7,2) AS LEVEL4,
+		   	   IF((SELECT COUNT(*) FROM COMTNSITEMNU C WHERE A.MENU_ID = C.UPPER_MENU_ID) > 0, 'N', 'Y') AS MENU_LAST_NODE_AT,
+			   A.FRST_REGISTER_PNTTM, A.FRST_REGISTER_ID, 
+			   A.LAST_UPDUSR_PNTTM, A.LAST_UPDUSR_ID,
+			   B.SITE_URL,
+			   STDNT_USE_AT, STDNPRNT_USE_AT, PROFSR_USE_AT, GENERAL_USE_AT,
+			   HTMLSOURC_TY_CODE, MOBILE_HTMLSOURC_TY_CODE, 
+			   NULL AS MOBILE_STYLE_CN, 
+			   NULL AS MOBILE_SCRIPT_CN, 
+			   NULL AS MOBILE_HTML_CN,
+			   NULL AS ATCH_FILE_ID,
+			   NULL AS MOBILE_ATCH_FILE_ID,
+			   PROGRM_FACTR
+			FROM COMTNSITEMNU A
+			LEFT OUTER JOIN COMTNSITEINFO B ON A.SITE_ID = B.SITE_ID 
+			WHERE A.SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') 
+				AND A.SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01') 
+				AND A.USE_AT = 'Y'
+			ORDER BY SORT_ORDR ASC			
+		) TB
+	</select>	
+	
+	<select id="MpmManageDAO.selectMpmByProgrmId" parameterClass="MpmVO" resultClass="string">
+		<![CDATA[
+			SELECT MAX(MENU_ID) AS MENU_ID 
+			FROM COMTNSITEMNU
+			WHERE SITE_ID = IFNULL(#siteId#, 'SITE_000000000000001') 
+				AND SYS_TY_CODE = IFNULL(#sysTyCode#, 'SYS01') 
+				AND USE_AT = 'Y'
+				AND COMPOSITION_TY_CODE = 'CNTNTS' 
+				AND PROGRM_ID = #progrmId#
+		]]>
+	</select>
+	
+	
+	
+	
+	<update id="MpmManageDAO.updateMpmMenuNm" parameterClass="Mpm">
+			UPDATE COMTNSITEMNU SET	
+				MENU_NM = REPLACE(#menuNm#, '>', '-')
+			WHERE MENU_ID = #menuId#
+ 	</update>
+	
+</sqlMap>

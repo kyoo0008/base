@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_pdf" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3e833d42-ed38-4358-8eb8-ed3e5f56e42e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="common" isDefault="true" fontName="백묵 굴림" fontSize="11" pdfFontName="gulim.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+	<field name="complNo" class="java.lang.String"/>
+	<field name="adhrncNm" class="java.lang.String"/>
+	<field name="schulNm" class="java.lang.String"/>
+	<field name="prgNm" class="java.lang.String"/>
+	<field name="operBgnde" class="java.util.Date"/>
+	<field name="operEndde" class="java.util.Date"/>
+	<field name="complDe" class="java.util.Date"/>
+	<field name="operInsttNm" class="java.lang.String"/>
+	<field name="operIstdrNm" class="java.lang.String"/>
+	<field name="imgUrl" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="11" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="776" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="f811a262-0343-4703-be02-135bd126cad8" x="0" y="16" width="555" height="760"/>
+			</rectangle>
+			<image>
+				<reportElement uuid="18047727-8961-4c2b-be28-74939b5831a8" x="398" y="500" width="83" height="81"/>
+				<imageExpression><![CDATA[$F{imgUrl}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="c095dc52-309b-4365-9008-480c7cd8ff97" x="104" y="203" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[이       름  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="27be23aa-729b-42fb-8594-0a22c3c6957b" x="104" y="223" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[소       속  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c29bacc0-0965-4450-9d93-333b55346eb3" x="104" y="243" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[프 로 그 램  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2ab45a39-99a5-48f1-950a-33dc5802201f" x="104" y="263" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[기       간  :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6b024df3-5e96-41dd-b6bb-c5f32486f927" x="232" y="203" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{adhrncNm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dc912670-5b38-44c6-8a0f-c0cb5408333e" x="232" y="223" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{schulNm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b2233d35-fdcc-45fd-9607-315f75c50321" x="232" y="243" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{prgNm}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy년 MM월 dd일">
+				<reportElement uuid="81de5356-3877-447a-8538-c0cfb013b89f" x="232" y="263" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{operBgnde}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy년 MM월 dd일">
+				<reportElement uuid="43e01492-ca80-4615-bd69-b94a2be42aa6" x="357" y="263" width="137" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{operEndde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4fa18453-ffbb-4baf-bd31-4e812b2ae331" x="0" y="424" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[위의 사실을 증명 합니다.]]></text>
+			</staticText>
+			<textField pattern="yyyy년 MM월 dd일">
+				<reportElement uuid="89d3c15b-b5fa-4002-b15e-6fde8862b31b" x="0" y="474" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{complDe}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bc8e17b0-2f9d-4ac2-aaa7-8c57ea67ff4b" x="332" y="263" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[~]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e29ccec7-ef2e-4fcb-b138-7749dec11623" x="104" y="337" width="51" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[위 사람은]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="64dc68d7-1859-4d40-9872-27192e5d29a3" x="255" y="337" width="30" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[부터]]></text>
+			</staticText>
+			<textField pattern="yyyy년 MM월 dd일">
+				<reportElement uuid="1b200ece-5720-4689-add3-12d8dc3576c1" x="155" y="337" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{operBgnde}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy년 MM월 dd일">
+				<reportElement uuid="1a3c2cda-ae3a-48c1-b3b5-a633eec11391" x="285" y="337" width="99" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{operEndde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="31b767eb-e2b6-469c-afcf-0a89a96cf6e8" x="384" y="337" width="110" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[까지 실시된체험학습]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4e5d3b1f-bd2f-4ff4-8b4f-4a1c548e8809" x="104" y="363" width="377" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[프로그램을 성실히 수료하였음을 증명함.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ddc045bf-ef35-43ae-b976-0c9f9bcdc880" x="0" y="73" width="555" height="66"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="36" isBold="true"/>
+				</textElement>
+				<text><![CDATA[수 료 증]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="95cad347-8abd-4a64-a64d-9dd43a0934fb" x="12" y="31" width="154" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["제 "+$F{complNo}+"호"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b4e1f2be-df86-4b3c-9f45-154ea3e7ad2f" x="0" y="527" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{operInsttNm} + " " + $F{operIstdrNm}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

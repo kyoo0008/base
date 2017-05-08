@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="MlgStats">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="statsVO" type="egovframework.com.sts.service.StatsVO"/>
+	
+	<!-- 화면통계 조회 -->
+	<select id="MlgStatsDAO.selectMlgStats" parameterClass="statsVO" resultClass="statsVO">
+		SELECT
+		    DECODE(GB, 1, statsDate, '합계') AS statsDate
+		    , mlgNm
+		    , SUM(irdsMlgScore) AS irdsMlgScore
+		    , SUM(adsbtrMlgScore) AS adsbtrMlgScore
+		
+		FROM
+		(
+			SELECT 
+				b.MLG_NM AS mlgNm
+				, NVL(SUM(a.IRDS_MLG_SCORE),0) AS irdsMlgScore
+				, NVL(SUM(a.ADSBTR_MLG_SCORE),0) AS adsbtrMlgScore
+				 <!-- 기간검색(년) -->
+				 <isEqual property="pdKind" compareValue="Y">
+			     , SUBSTR(OCCRRNC_DE, 1, 4) AS statsDate
+			     </isEqual>
+			     <!-- 기간검색(월) -->
+			     <isEqual property="pdKind" compareValue="M">
+			     , SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2) AS statsDate
+			     </isEqual>
+			     <!-- 기간검색(일) -->
+			     <isEqual property="pdKind" compareValue="D">
+			     , SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2) || '-' || SUBSTR(OCCRRNC_DE, 7, 2) AS statsDate
+			     </isEqual>
+			  FROM (
+			  	
+	            SELECT OCCRRNC_DE, SITE_ID, MLG_CODE, IRDS_MLG_SCORE,  ADSBTR_MLG_SCORE
+	            FROM     COMTSMLGLOGSUMMARY
+	            <isNotEmpty property="searchSiteId">
+					WHERE SITE_ID = #searchSiteId#
+				</isNotEmpty>
+	            UNION ALL
+	            <![CDATA[
+	            SELECT 
+	                TO_CHAR(b.REGISTER_PNTTM, 'YYYYMMDD')
+	                 , b.SITE_ID
+	                 , b.MLG_CODE
+	                 , NVL(SUM(CASE WHEN b.MLG_SCORE > 0 THEN b.MLG_SCORE END), 0)
+	                 , NVL(SUM(CASE WHEN b.MLG_SCORE < 0 THEN b.MLG_SCORE END), 0)
+	              FROM COMTNMLGUSERLOG b
+	            WHERE b.REGISTER_PNTTM >= TRUNC(SYSDATE()) AND b.REGISTER_PNTTM < TRUNC(SYSDATE()) + 1
+	            ]]>
+	            	<isNotEmpty prepend="AND" property="searchSiteId">
+				   		b.SITE_ID = #searchSiteId#
+				   </isNotEmpty>
+	            GROUP BY TO_CHAR(b.REGISTER_PNTTM, 'YYYYMMDD')
+	            		, b.SITE_ID
+	                    , b.MLG_CODE
+	          ) a
+	          LEFT OUTER JOIN COMTNMLGINFO b ON a.MLG_CODE  = b.MLG_CODE
+	          LEFT OUTER JOIN COMTNSITEINFO s ON a.SITE_ID  = s.SITE_ID
+	          WHERE a.OCCRRNC_DE BETWEEN #fromDate# AND #toDate# 
+			   <isNotEmpty prepend="AND" property="searchSiteId">
+			   		a.SITE_ID = #searchSiteId#
+			   </isNotEmpty>
+			 <isEqual property="pdKind" compareValue="Y">
+			 GROUP BY SUBSTR(OCCRRNC_DE, 1, 4), MLG_NM
+			 </isEqual>
+			 <isEqual property="pdKind" compareValue="M">
+			 GROUP BY SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2), MLG_NM
+			 </isEqual>
+			 <isEqual property="pdKind" compareValue="D">
+			 GROUP BY SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2) || '-' || SUBSTR(OCCRRNC_DE, 7, 2), MLG_NM
+			 </isEqual>
+		) A,
+		(
+		    SELECT 1 GB FROM DUAL
+		    UNION ALL 
+		    SELECT 2 GB FROM DUAL
+		)  
+		GROUP BY DECODE(GB, 1, statsDate, '합계'), mlgNm
+		ORDER BY statsDate ASC, mlgNm ASC
+	</select>
+</sqlMap>

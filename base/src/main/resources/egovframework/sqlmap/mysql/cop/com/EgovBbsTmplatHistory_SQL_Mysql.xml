@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BbsTmplatHistoryDAO">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="BbstmplatVO" type="egovframework.com.cop.com.service.BbsTmplatVO"/>
+	
+	<resultMap id="bbstmplatHistory" class="egovframework.com.cop.com.service.BbsTmplat">
+		<result property="bbsTmplatHistId" column="BBS_TMPLAT_HIST_ID" columnIndex="1"/>
+		<result property="bbsTmplatId" column="BBS_TMPLAT_ID" columnIndex="2"/>
+		<result property="cssSourc" column="CSS_SOURC" columnIndex="3"/>
+		<result property="scriptSourc" column="SCRIPT_SOURC" columnIndex="4"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="7"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="8"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="9"/>
+		<result property="tmplatSeCode" column="TMPLAT_SE_CODE" columnIndex="10"/>
+	</resultMap>
+	
+	<resultMap id="bbstmplatHistoryList" class="egovframework.com.cop.com.service.BbsTmplat">
+		<result property="bbsTmplatHistId" column="BBS_TMPLAT_HIST_ID" columnIndex="1"/>
+		<result property="bbsTmplatId" column="BBS_TMPLAT_ID" columnIndex="2"/>
+		<result property="prevewFileNm" column="PREVEW_FILE_NM" columnIndex="3"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID" columnIndex="4"/>
+		<result property="lastUpdusrPnttm" column="LAST_UPDUSR_PNTTM" columnIndex="5"/>
+	</resultMap>
+	
+	<insert id="BbsTmplatHistoryDAO.insertBbsTmplatHistory">
+		<![CDATA[
+			INSERT INTO COMTHBBSTMPLATHISTORY 
+				( BBS_TMPLAT_HIST_ID
+				  , BBS_TMPLAT_ID
+				  , TMPLAT_SE_CODE
+				  , CSS_SOURC
+				  , SCRIPT_SOURC
+				  , PREVEW_FILE_NM
+				  , LAST_UPDUSR_ID
+				  , LAST_UPDUSR_PNTTM )
+			VALUES ( #bbsTmplatHistId#
+			 	  , #bbsTmplatId#
+			 	  , #tmplatSeCode#
+				  , #cssSourc#
+				  , #scriptSourc#
+				  , #prevewFileNm#
+				  , #lastUpdusrId#
+				  , SYSDATE() )
+		]]>
+	</insert>
+
+	
+	<delete id="BbsTmplatHistoryDAO.deleteBbsTmplatHistory">
+		<![CDATA[
+			DELETE FROM COMTHBBSTMPLATHISTORY 
+			WHERE BBS_TMPLAT_HIST_ID=#bbsTmplatHistId#
+		]]>
+	</delete>
+	
+	<select id="BbsTmplatHistoryDAO.selectBbsTmplatHistory" resultMap="bbstmplatHistory">
+		<![CDATA[
+			SELECT
+				BBS_TMPLAT_HIST_ID
+				, BBS_TMPLAT_ID
+				, CSS_SOURC
+				, SCRIPT_SOURC
+				, PREVEW_FILE_NM
+				, LAST_UPDUSR_ID
+				, LAST_UPDUSR_PNTTM
+				, TMPLAT_SE_CODE
+			FROM COMTHBBSTMPLATHISTORY
+			WHERE BBS_TMPLAT_HIST_ID=#bbsTmplatHistId#
+		]]>
+	</select>
+	
+	<select id="BbsTmplatHistoryDAO.selectBbsTmplatHistoryList" parameterClass="BbstmplatVO" resultMap="bbstmplatHistoryList">
+		SELECT
+			BBS_TMPLAT_HIST_ID
+			, BBS_TMPLAT_ID
+			, PREVEW_FILE_NM
+			, LAST_UPDUSR_ID
+			, LAST_UPDUSR_PNTTM
+		FROM COMTHBBSTMPLATHISTORY
+		WHERE BBS_TMPLAT_ID = #bbsTmplatId#
+		ORDER BY BBS_TMPLAT_HIST_ID DESC
+		LIMIT #recordCountPerPage# OFFSET #firstIndex#
+	</select>	
+	
+	<select id="BbsTmplatHistoryDAO.selectBbsTmplatHistoryListCnt" parameterClass="BbstmplatVO" resultClass="int">
+			SELECT COUNT(*) totcnt
+			FROM COMTHBBSTMPLATHISTORY
+			WHERE BBS_TMPLAT_ID = #bbsTmplatId#
+	</select>
+
+</sqlMap>

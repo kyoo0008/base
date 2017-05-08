@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ScrinStats">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="statsVO" type="egovframework.com.sts.service.StatsVO"/>
+	
+	<!-- 화면통계 조회 -->
+	<select id="ScrinStatsDAO.selectScrinStats" parameterClass="statsVO" resultClass="statsVO">
+		SELECT
+			<isEqual property="statsKind" compareValue="H">
+				IFNULL(SUM(a.INQIRE_CO),0) AS statsCo
+			</isEqual>
+			<isEqual property="statsKind" compareValue="M">
+				IFNULL(SUM(a.MOBILE_INQIRE_CO),0) AS statsCo
+			</isEqual>
+			 <!-- 기간검색(년) -->
+			 <isEqual property="pdKind" compareValue="Y">
+		     , SUBSTR(OCCRRNC_DE, 1, 4) AS statsDate
+		     </isEqual>
+		     <!-- 기간검색(월) -->
+		     <isEqual property="pdKind" compareValue="M">
+		     , SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2) AS statsDate
+		     </isEqual>
+		     <!-- 기간검색(일) -->
+		     <isEqual property="pdKind" compareValue="D">
+		     , SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2) || '-' || SUBSTR(OCCRRNC_DE, 7, 2) AS statsDate
+		     </isEqual>
+		  FROM (
+            SELECT OCCRRNC_DE, INQIRE_CO, MOBILE_INQIRE_CO
+            FROM     COMTSWEBLOGSUMMARY
+            WHERE OCCRRNC_DE BETWEEN #fromDate# AND #toDate# 
+            <isNotEmpty prepend="AND" property="siteId">
+				SITE_ID = #siteId#
+			</isNotEmpty>
+            
+            UNION ALL
+				 	
+            SELECT DATE_FORMAT(b.OCCRRNC_PNTTM, '%Y%m%d') AS OCCRRNC_DE
+            		, COUNT(IF(MOBILE_AT = 'N', 1, 0)) AS INQIRE_CO
+			     	, COUNT(IF(MOBILE_AT = 'Y', 1, 0)) AS MOBILE_INQIRE_CO			     
+              FROM COMTNWEBLOG b
+             <![CDATA[ WHERE b.OCCRRNC_PNTTM >= CURDATE() AND b.OCCRRNC_PNTTM < CURDATE() + 1 ]]>
+             <isNotEmpty prepend="AND" property="siteId">
+				   		b.SITE_ID = #siteId#
+			 </isNotEmpty>
+             GROUP BY DATE_FORMAT(b.OCCRRNC_PNTTM, '%Y%m%d')
+            
+          ) a
+          WHERE a.OCCRRNC_DE BETWEEN #fromDate# AND #toDate# 
+		 <isEqual property="pdKind" compareValue="Y">
+		 GROUP BY SUBSTR(OCCRRNC_DE, 1, 4)
+		 ORDER BY SUBSTR(OCCRRNC_DE, 1, 4)
+		 </isEqual>
+		 <isEqual property="pdKind" compareValue="M">
+		 GROUP BY SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2)
+		 ORDER BY SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2)
+		 </isEqual>
+		 <isEqual property="pdKind" compareValue="D">
+		 GROUP BY SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2) || '-' || SUBSTR(OCCRRNC_DE, 7, 2)
+		 ORDER BY SUBSTR(OCCRRNC_DE, 1, 4) || '-' || SUBSTR(OCCRRNC_DE, 5, 2) || '-' || SUBSTR(OCCRRNC_DE, 7, 2)
+		 </isEqual>
+	</select>
+</sqlMap>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Comtnbbsctgry">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="comtnbbsctgrySerarchVO" type="egovframework.com.cop.bbs.service.Ctgry"/>
+	<typeAlias  alias="BoardVO" type="egovframework.com.cop.bbs.service.BoardVO"/>
+	
+	<resultMap id="comtnbbsctgry" class="egovframework.com.cop.bbs.service.Ctgry">
+		<result property="ctgryId" column="CTGRY_ID" columnIndex="1"/>
+		<result property="ctgrymasterId" column="CTGRYMASTER_ID" columnIndex="2"/>
+		<result property="upperCtgryId" column="UPPER_CTGRY_ID" columnIndex="3"/>
+		<result property="ctgryNm" column="CTGRY_NM" columnIndex="4"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="5"/>
+		<result property="useAt" column="USE_AT" columnIndex="6"/>
+		<result property="ctgryPathByName" column="CTGRY_PATH_BY_NAME" columnIndex="7"/>
+		<result property="ctgryPathById" column="CTGRY_PATH_BY_ID" columnIndex="8"/>
+		<result property="ctgryLevel" column="CTGRY_LEVEL" columnIndex="9"/>
+	</resultMap>
+	
+	<resultMap id="sortInfoMap" class="egovframework.com.cop.bbs.service.Ctgry">
+		<result property="ctgryId" column="CTGRY_ID" columnIndex="1"/>
+		<result property="sortOrdr" column="SORT_ORDR" columnIndex="2"/>
+	</resultMap>
+	
+	<insert id="comtnbbsctgryDAO.insertComtnbbsctgry_S">
+		<selectKey resultClass="int" keyProperty="sortOrdr">
+			SELECT IF(COUNT(*) IS NULL OR COUNT(*) = 0, 1, COUNT(*) + 1)
+			  FROM COMTNBBSCTGRY
+			WHERE UPPER_CTGRY_ID = #upperCtgryId#
+	    </selectKey>
+	    
+			INSERT INTO COMTNBBSCTGRY 
+				( CTGRY_ID
+				  , CTGRYMASTER_ID
+				  , UPPER_CTGRY_ID
+				  , CTGRY_NM
+				  , SORT_ORDR
+				  , CTGRY_LEVEL
+				  , USE_AT )
+			VALUES ( #ctgryId#
+				  , #ctgrymasterId#
+				  , #upperCtgryId#
+				  , REPLACE(#ctgryNm#, '/', '-')
+				  , #sortOrdr#
+				  , #ctgryLevel#
+				  , 'Y' )
+		
+	</insert>
+	
+	<update id="comtnbbsctgryDAO.updateComtnbbsctgry_S">
+		<![CDATA[
+			UPDATE COMTNBBSCTGRY
+			SET 
+				UPPER_CTGRY_ID = #upperCtgryId#
+				, CTGRY_NM = REPLACE(#ctgryNm#, '/', '-')
+				, SORT_ORDR = #sortOrdr#
+			WHERE CTGRY_ID=#ctgryId#
+		]]>
+	</update>
+	
+	<delete id="comtnbbsctgryDAO.deleteComtnbbsctgry_S">
+		<![CDATA[
+			UPDATE COMTNBBSCTGRY
+			SET USE_AT='N'
+			WHERE CTGRY_ID=#ctgryId#
+		]]>
+	</delete>
+	
+	<select id="comtnbbsctgryDAO.selectComtnbbsctgry_S" resultMap="comtnbbsctgry">
+		<![CDATA[
+			SELECT
+				CTGRY_ID
+				, CTGRYMASTER_ID
+				, UPPER_CTGRY_ID
+				, CTGRY_NM
+				, SORT_ORDR
+				, USE_AT
+				, NULL AS CTGRY_PATH_BY_NAME
+				, NULL AS CTGRY_PATH_BY_ID
+				, 1 AS CTGRY_LEVEL
+			FROM COMTNBBSCTGRY
+			WHERE CTGRY_ID=#ctgryId#
+				AND USE_AT = 'Y'
+		]]>
+	</select>
+	
+	<select id="comtnbbsctgryDAO.selectComtnbbsctgryList_D" parameterClass="comtnbbsctgrySerarchVO" resultMap="comtnbbsctgry">
+		SELECT * FROM (
+			SELECT
+				CTGRY_ID
+				, CTGRYMASTER_ID
+				, UPPER_CTGRY_ID
+				, CTGRY_NM
+				, SORT_ORDR
+				, USE_AT
+				, uf_category_connect_by_path('>', CTGRYMASTER_ID, CTGRY_ID, 2) AS CTGRY_PATH_BY_NAME
+       			, uf_category_connect_by('>', CTGRYMASTER_ID, CTGRY_ID, 2) AS CTGRY_PATH_BY_ID
+				, CTGRY_LEVEL
+				, uf_category_sort(CTGRYMASTER_ID, CTGRY_ID) AS SORT
+			FROM COMTNBBSCTGRY
+			WHERE CTGRYMASTER_ID = #ctgrymasterId#
+				AND USE_AT = 'Y'
+		) A
+		ORDER BY SORT
+	</select>
+	
+	<select id="comtnbbsctgryDAO.selectComtnbbsctgryListTotCnt_S" parameterClass="comtnbbsctgrySerarchVO" resultClass="int">
+			<!-- SELECT
+				COUNT(*)
+			FROM COMTNBBSCTGRY
+			WHERE USE_AT = 'Y'
+				AND CTGRYMASTER_ID = #ctgrymasterId#
+			 -->
+	</select>
+	
+	<select id="comtnbbsctgryDAO.selectComtnbbsctgryLevel" parameterClass="comtnbbsctgrySerarchVO" resultClass="int">
+			SELECT
+				CTGRY_LEVEL
+			FROM COMTNBBSCTGRY
+			WHERE CTGRY_ID = #ctgryId#
+	</select>
+	
+	<select id="comtnbbsctgryDAO.selectTargetSortOrdr" parameterClass="comtnbbsctgrySerarchVO" resultMap="sortInfoMap">
+		SELECT 
+			SUBSTR(A, 11) AS CTGRY_ID,
+			TO_NUMBER(SUBSTR(A, 0, 10)) AS SORT_ORDR
+		FROM
+		(
+            SELECT 
+             	<isEqual property="sortTyCode" compareValue="U">NVL(MAX(LPAD(SORT_ORDR, 10, '0') || CTGRY_ID), 1) AS A </isEqual> 
+				<isEqual property="sortTyCode" compareValue="D">NVL(MIN(LPAD(SORT_ORDR, 10, '0') || CTGRY_ID), 1) AS A </isEqual>
+            FROM COMTNBBSCTGRY
+            WHERE USE_AT = 'Y'    
+                AND LEVEL = 1      
+                <isEqual property="sortTyCode" compareValue="U" prepend="AND"><![CDATA[ SORT_ORDR < #sortOrdr# ]]></isEqual> 
+				<isEqual property="sortTyCode" compareValue="D" prepend="AND"><![CDATA[ SORT_ORDR > #sortOrdr# ]]></isEqual>   
+            START WITH UPPER_CTGRY_ID = #upperCtgryId#
+            CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID			
+		) X
+		WHERE A IS NOT NULL
+	</select>
+	
+	<update id="comtnbbsctgryDAO.updateSortOrdr" parameterClass="comtnbbsctgrySerarchVO">
+			UPDATE COMTNBBSCTGRY SET 
+				<isEqual property="sortTyCode" compareValue="U">SORT_ORDR = SORT_ORDR - 1</isEqual> 
+				<isEqual property="sortTyCode" compareValue="D">SORT_ORDR = SORT_ORDR + 1</isEqual>
+			WHERE CTGRY_ID = #ctgryId#
+	</update>
+	
+	<update id="comtnbbsctgryDAO.updateSiblingsSortOrdr" parameterClass="comtnbbsctgrySerarchVO">
+			UPDATE COMTNBBSCTGRY SET
+				<isEqual property="sortTyCode" compareValue="U">SORT_ORDR = SORT_ORDR + 1</isEqual> 
+				<isEqual property="sortTyCode" compareValue="D">SORT_ORDR = SORT_ORDR - 1</isEqual>
+			WHERE UPPER_CTGRY_ID = #upperCtgryId#
+				AND CTGRY_ID != #ctgryId#
+			<isEqual property="sortTyCode" compareValue="U"> AND SORT_ORDR = #sortOrdr# - 1</isEqual> 
+			<isEqual property="sortTyCode" compareValue="D"> AND SORT_ORDR = #sortOrdr# + 1</isEqual>
+	</update>
+	
+	<select id="comtnbbsctgryDAO.selectComtnbbsctgryList" parameterClass="String" resultMap="comtnbbsctgry">
+			SELECT
+				CTGRY_ID
+				, CTGRYMASTER_ID
+				, UPPER_CTGRY_ID
+				, CTGRY_NM
+				, SORT_ORDR
+				, USE_AT
+				, SYS_CONNECT_BY_PATH(CTGRY_NM, '>') AS CTGRY_PATH_BY_NAME
+		   	   	, SYS_CONNECT_BY_PATH(CTGRY_ID, '>') AS CTGRY_PATH_BY_ID
+		   	    , LEVEL - 1 AS CTGRY_LEVEL
+			FROM COMTNBBSCTGRY
+			WHERE CTGRYMASTER_ID = #ctgrymasterId#
+				AND USE_AT = 'Y'
+			START WITH UPPER_CTGRY_ID IS NULL
+		    CONNECT BY PRIOR CTGRY_ID = UPPER_CTGRY_ID
+		    ORDER SIBLINGS BY SORT_ORDR ASC
+
+	</select>
+	
+	<select id="comtnbbsctgryDAO.selectComtnbbsctgryNextLevel" parameterClass="comtnbbsctgrySerarchVO" resultClass="int">
+			SELECT IF(CTGRY_LEVEL IS NULL OR CTGRY_LEVEL = 0, 1, CTGRY_LEVEL + 1)
+			  FROM COMTNBBSCTGRY
+			WHERE CTGRY_ID = #upperCtgryId#
+	</select>
+</sqlMap>

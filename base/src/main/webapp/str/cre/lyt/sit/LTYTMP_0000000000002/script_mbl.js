@@ -1,0 +1,1 @@
+alert('mbl_script');

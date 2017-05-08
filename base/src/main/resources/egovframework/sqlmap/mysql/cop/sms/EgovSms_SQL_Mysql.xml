@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Sms">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="smsVO" type="egovframework.com.cop.sms.service.SmsVO"/>
+	<typeAlias  alias="sms" type="egovframework.com.cop.sms.service.Sms"/>
+	<typeAlias  alias="smsRecptn" type="egovframework.com.cop.sms.service.SmsRecptn"/>
+
+	<resultMap id="smsList" class="egovframework.com.cop.sms.service.SmsVO">
+		<result property="smsId" column="SMS_ID" columnIndex="1"/>
+		<result property="trnsmitTelno" column="TRNSMIT_TELNO" columnIndex="2"/>
+		<result property="recptnCnt" column="RECPTN_CNT" columnIndex="3"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="4"/>
+	</resultMap>
+
+	<resultMap id="smsDetail" class="egovframework.com.cop.sms.service.SmsVO">
+		<result property="smsId" column="SMS_ID" columnIndex="1"/>
+		<result property="trnsmitTelno" column="TRNSMIT_TELNO" columnIndex="2"/>
+		<result property="trnsmitCn" column="TRNSMIT_CN" columnIndex="3"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID" columnIndex="4"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM" columnIndex="5"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="6"/>
+	</resultMap>
+	
+	<resultMap id="smsRecptnList" class="egovframework.com.cop.sms.service.SmsRecptn">
+		<result property="smsId" column="SMS_ID" columnIndex="1"/>
+		<result property="recptnTelno" column="RECPTN_TELNO" columnIndex="2"/>
+		<result property="resultCode" column="RESULT_CODE" columnIndex="3"/>
+		<result property="resultMssage" column="RESULT_MSSAGE" columnIndex="4"/>
+	</resultMap>
+
+	<select id="SmsDAO.selectSmsInfs" parameterClass="smsVO" resultMap="smsList" >
+		<![CDATA[
+		SELECT * FROM ( SELECT rownum rn, TB.* FROM (
+			SELECT 
+				1
+			FROM
+				DUAL a
+			WHERE 1=1	
+		]]>	
+		<![CDATA[			
+			ORDER BY 1 DESC 
+			) TB ) WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>				
+	</select>	
+	
+	<select id="SmsDAO.selectSmsInfsCnt" parameterClass="smsVO" resultClass="java.lang.Integer" >
+		<![CDATA[
+			SELECT 
+				COUNT(*)
+			FROM
+				DUAL a
+			WHERE 1=1 
+		]]>
+	</select>
+	
+	<insert id="SmsDAO.insertSmsInf" parameterClass="sms" >
+		
+			INSERT INTO SC_TRAN (
+				TR_NUM,
+				TR_SENDDATE , 
+				TR_SENDSTAT ,
+				TR_MSGTYPE ,
+				TR_PHONE ,
+				TR_CALLBACK , 
+				TR_MSG
+			) VALUES (
+				SC_TRAN_SEQ.NEXTVAL,
+			<isEqual property="reservationAt" compareValue="Y">
+				TO_DATE(#reservationDateString#,'YYYY-MM-DD HH24:MI:SS'),
+			</isEqual>
+			<isEqual property="reservationAt" compareValue="N">
+				SYSDATE(),
+			</isEqual>
+				'0', 
+				'0', 
+				#recptnTelnoSingle#,
+				#trnsmitTelno#,  
+				#trnsmitCn#
+			)
+		
+	</insert>
+	
+	<insert id="SmsDAO.insertMmsInf" parameterClass="sms" >
+			INSERT INTO MMS_MSG (
+				MSGKEY,
+				SUBJECT, 
+				PHONE,
+				CALLBACK, 
+				STATUS,
+				REQDATE, 
+				MSG , 
+				<isNotEmpty property="filePath">
+					FILE_CNT, 
+					FILE_PATH1, 
+				</isNotEmpty>
+				TYPE
+			) VALUES (
+				MMS_MSG_SEQ.NEXTVAL,
+				#subject#,
+				#recptnTelnoSingle#, 
+				#trnsmitTelno#, 
+				'0', 
+			<isEqual property="reservationAt" compareValue="Y">
+				TO_DATE(#reservationDateString#,'YYYY-MM-DD HH24:MI:SS'),
+			</isEqual>
+			<isEqual property="reservationAt" compareValue="N">
+				SYSDATE(),
+			</isEqual>
+				#trnsmitCn#,
+			<isNotEmpty property="filePath">
+				#fileCnt#,
+				#filePath#,
+			</isNotEmpty>
+				'0'
+			)
+		
+	</insert>
+	
+</sqlMap>

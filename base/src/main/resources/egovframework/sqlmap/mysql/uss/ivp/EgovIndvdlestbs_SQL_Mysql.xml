@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Indvdlestbs">
+	
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="indvdlestbsVO" type="egovframework.com.uss.ivp.service.IndvdlestbsVO"/>
+	
+	<resultMap id="indvdlestbs" class="egovframework.com.uss.ivp.service.IndvdlestbsVO">
+		<result property="userId" column="USER_ID" columnIndex="1"/>
+		<result property="siteId" column="SITE_ID" columnIndex="2"/>
+		<result property="trgetTyCode" column="TRGET_TY_CODE" columnIndex="3"/>
+		<result property="trgetId" column="TRGET_ID" columnIndex="4"/>
+	</resultMap>
+	
+	<resultMap id="mpmDetail" class="egovframework.com.sym.mpm.service.MpmVO">
+		<result property="siteId" column="SITE_ID" columnIndex="1"/>
+		<result property="menuId" column="MENU_ID" columnIndex="2"/>
+		<result property="upperMenuId" column="UPPER_MENU_ID" columnIndex="3"/>
+		<result property="compositionTyCode" column="COMPOSITION_TY_CODE" columnIndex="4"/>
+		<result property="cntntsTyCode" column="CNTNTS_TY_CODE" columnIndex="5"/>
+		<result property="menuNm" column="MENU_NM" columnIndex="6"/>
+		<result property="progrmId" column="PROGRM_ID" columnIndex="7"/>
+		<result property="url" column="URL" columnIndex="8"/>		
+		<result property="expsrUseAt" column="EXPSR_USE_AT" columnIndex="9"/>
+		<result property="nwdAt" column="NWD_AT" columnIndex="10"/>
+		<result property="siteUrl" column="SITE_URL" columnIndex="11"/>
+		<result property="frstRegisterPnttm" column="FRST_REGISTER_PNTTM" columnIndex="12"/>
+	</resultMap>
+	
+	<insert id="indvdlestbsDAO.insertIndvdlestbs">
+		<![CDATA[
+			INSERT INTO COMTNINDVDLESTBS 
+				( USER_ID
+				  , SITE_ID
+				  , TRGET_TY_CODE
+				  , TRGET_ID
+				  , FRST_REGISTER_PNTTM
+				  , FRST_REGISTER_ID)
+			VALUES ( #userId#
+				  , #siteId#
+				  , #trgetTyCode#
+				  , #trgetId#
+				  , SYSDATE()
+				  , #frstRegisterId#)
+		]]>
+	</insert>
+		
+	<delete id="indvdlestbsDAO.deleteIndvdlestbs">
+		
+			DELETE FROM COMTNINDVDLESTBS 
+			WHERE USER_ID=#userId# AND SITE_ID = #siteId# AND TRGET_TY_CODE = #trgetTyCode# AND TRGET_ID = #trgetId#
+		
+	</delete>
+			
+	<select id="indvdlestbsDAO.selectMyMenuList" parameterClass="indvdlestbsVO" resultMap="mpmDetail" >
+			SELECT	B.SITE_ID
+					, B.MENU_ID
+					, B.UPPER_MENU_ID
+					, B.COMPOSITION_TY_CODE
+					, B.CNTNTS_TY_CODE
+					, B.MENU_NM AS MENU_NM
+					, B.PROGRM_ID
+					, B.URL
+					, B.EXPSR_USE_AT
+					, B.NWD_AT				
+					, B.SITE_URL
+					, A.FRST_REGISTER_PNTTM
+			FROM COMTNINDVDLESTBS A LEFT OUTER JOIN 
+			(
+				SELECT
+				   A.SITE_ID, MENU_ID, UPPER_MENU_ID,
+				   COMPOSITION_TY_CODE, CNTNTS_TY_CODE, MENU_NM,
+				   PROGRM_ID, 
+				   URL, EXPSR_USE_AT,
+				   A.NWD_AT,
+				   B.SITE_URL
+				FROM COMTNSITEMNU A
+				LEFT OUTER JOIN COMTNSITEINFO B ON A.SITE_ID = B.SITE_ID 
+				WHERE A.USE_AT = 'Y'		
+					AND MENU_ID IN (
+						SELECT TRGET_ID FROM COMTNINDVDLESTBS 
+						WHERE USER_ID = #userId# AND TRGET_TY_CODE = 'MNU'
+						<isNotEmpty property="siteId" prepend="AND">
+							 A.SITE_ID = #siteId#
+						</isNotEmpty>
+					)
+			)B
+			ON A.TRGET_ID = B.MENU_ID
+			WHERE A.USER_ID = #userId# AND A.TRGET_TY_CODE = 'MNU'
+			<isNotEmpty property="siteId" prepend="AND">
+				 A.SITE_ID = #siteId#
+			</isNotEmpty>
+			ORDER BY MENU_NM ASC			
+	</select>
+</sqlMap>

@@ -1,0 +1,15 @@
+h1, h2, h3, h4, h5, h6 {font-size:12px;color:#515151}
+h1, h2, h3, h4, h5, h6, ol, ul, li, form, fieldset, input, select, textarea, p, th, td, dt, dd, dl, p {margin:0px;padding:0px}
+.pop_file{position:relative;}
+	.pop_file h1{height:42px;background:#000;color:#fff;padding:0;margin:0;background:url('../img/bg_pop_top.gif') 0 0 repeat-x;}
+	.pop_file h1 span{display:block;padding:10px 0;height:22px;margin-left:10px;line-height:22px;vertical-align:middle;}
+	.pop_file .pop_file_cont{margin:0px 0px;}
+	.pop_file .pop_file_cont .ftip{padding-left:22px;height:15px;font-size:11px;background:url('../img/bg_tip.gif') 0 center no-repeat;}
+	.pop_file .pop_file_cont .file_upload{width:100%;min-height:200px;margin:20px 0 20px;background:#000000;}
+	.pop_file .pop_file_cont .tit_safe{padding-left:15px;background:url('../img/bg_safe.gif') 0 center no-repeat;}
+	.pop_file .pop_file_cont .txt_safe{padding:10px;;font-size:11px;color:#919191;}
+	.pop_file .pop_file_cont .blue{color:#0675bb;}
+	.pop_file .pop_btn{background:#ededed;text-align:center;padding:10px 0;}
+	.pop_file a.close{display:block;position:absolute;bottom:15px;right:20px;height:15px;line-height:15px;vertical-align:middle;padding-right:25px;background:url('../img/btn_close.gif') right 0  no-repeat;font-size:11px;color:#9b9b9b}
+	.pop_file a.close:hover{color:color:#9b9b9b}
+	.alR{text-align:right;}

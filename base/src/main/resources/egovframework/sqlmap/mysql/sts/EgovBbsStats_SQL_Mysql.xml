@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BbsStats">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="statsVO" type="egovframework.com.sts.service.StatsVO"/>
+	
+	<!-- 게시물 통계 조회 -->
+	<select id="BbsStatsDAO.selectBbsStats" parameterClass="statsVO" resultClass="StatsVO">
+		
+			SELECT 
+				SITE_NM AS siteNm,
+				IF(TRGET_ID = 'SYSTEM_DEFAULT_BOARD', '통합게시판', NULL) AS gbNm,
+     			IF(TRGET_ID = 'SYSTEM_DEFAULT_BOARD', BBS_NM, NULL) AS bbsNm,
+				IFNULL(SUM(CREAT_CO), 0) AS creatCo,
+				IFNULL(SUM(TOT_INQIRE_CO), 0) AS totInqireCo,
+				IFNULL(SUM(DWLD_CO), 0) AS dwldCo
+			  FROM
+			  (
+			  	SELECT 
+			  		SITE_ID
+			  		, SYS_TY_CODE
+			  		, TRGET_ID
+			  		, BBS_ID
+			  		, CREAT_CO
+			  		, TOT_INQIRE_CO
+			  		, DWLD_CO
+			  	FROM COMTSBBSSUMMARY a
+			  	WHERE OCCRRNC_DE BETWEEN #fromDate# AND #toDate#
+			  	
+			  	UNION ALL
+			  	
+			  	SELECT 
+	                b.SITE_ID
+	                 , b.SYS_TY_CODE
+	                 , c.TRGET_ID
+	                 , b.BBS_ID
+	                 , COUNT(*) AS CREAT_CO
+	                 , SUM(INQIRE_CO) AS TOT_INQIRE_CO
+	                 , NULL AS DWLD_CO
+	             FROM COMTNBBS a, COMTNBBSMASTER b, COMTNBBSUSE c
+	             WHERE a.BBS_ID = b.BBS_ID 
+	                 AND b.BBS_ID = c.BBS_ID
+	                 AND a.USE_AT = 'Y' 
+	                 AND b.USE_AT = 'Y'
+	                 AND c.USE_AT = 'Y'    
+	                 AND c.TRGET_ID = 'SYSTEM_DEFAULT_BOARD'
+	               	 <![CDATA[ AND a.FRST_REGISTER_PNTTM >= CURDATE() AND a.FRST_REGISTER_PNTTM < CURDATE() + 1 ]]>	
+	             GROUP BY b.SITE_ID
+	                     , b.SYS_TY_CODE
+	                    , c.TRGET_ID
+	                    , b.BBS_ID	             
+	                     	                        
+	             UNION ALL
+            
+	            SELECT 
+	                SITE_ID
+	                 , SYS_TY_CODE
+	                 , TRGET_ID
+	                 , BBS_ID
+	                 , NULL AS CREAT_CO
+	                 , NULL AS TOT_INQIRE_CO
+	                 , COUNT(*) AS DWLD_CO
+	             FROM COMTNDTAUSELOG
+	             WHERE <![CDATA[ OCCRRNC_PNTTM >= CURDATE() AND OCCRRNC_PNTTM < CURDATE() + 1  ]]>	
+	             	AND TRGET_ID IN ('SYSTEM_DEFAULT_BOARD')
+	             GROUP BY 
+	             		SITE_ID
+	                 	, SYS_TY_CODE
+	                    , TRGET_ID
+	                    , BBS_ID
+	    	  ) a
+			  LEFT OUTER JOIN COMTNSITEINFO s ON a.SITE_ID  = s.SITE_ID
+	    	  LEFT OUTER JOIN COMTNBBSMASTER c ON c.BBS_ID = a.BBS_ID
+		 	  WHERE 1 = 1
+		 	  <isNotEmpty property="siteId">
+						AND a.SITE_ID = #siteId#
+					</isNotEmpty>
+			 <isEqual property="pdKind" compareValue="Y">
+			 GROUP BY SITE_NM, TRGET_ID, BBS_NM
+			 ORDER BY siteNm, gbNm, bbsNm
+			 </isEqual>
+			 <isEqual property="pdKind" compareValue="M">
+			 GROUP BY SITE_NM, TRGET_ID, BBS_NM
+			 ORDER BY siteNm, gbNm, bbsNm
+			 </isEqual>
+			 <isEqual property="pdKind" compareValue="D">
+			 GROUP BY SITE_NM, TRGET_ID, BBS_NM
+			 ORDER BY siteNm, gbNm, bbsNm
+			 </isEqual>
+
+	    
+	</select>
+	
+	
+</sqlMap>

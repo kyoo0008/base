@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovLytTmplat_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovBbsTmplat_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovLytTmplatHistory_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovBbsTmplatHistory_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovBBSUse_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovUserInf_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovConfirm_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovBbsSourc_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovBbsSourcHistory_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovLytSourc_SQL_Mysql.xml"/>
+	<sqlMap resource="egovframework/sqlmap/mysql/cop/com/EgovLytSourcHistory_SQL_Mysql.xml"/>
+</sqlMapConfig>
